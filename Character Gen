@@ -1,0 +1,311 @@
+package randomCharGen;
+import java.util.*;
+
+/**
+ * @author Connor Solu
+ * Random Character Generator v1
+ */
+public class RandomGen {
+    String gameClass[] = {"Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Monk", "Paladin", "Ranger", "Rogue", "Sorcerer", "Warlock", "Wizard"};
+    String race[] = {"Dragonborn", "Dwarf", "Elf", "Gnome", "Half-Elf", "Half-Orc", "Halfling", "Human", "Tiefling"};
+    String name[] = {"Yenward", "Thoice", "Solass", "Brestina", "Unarath", "Zangold", "Elorin", "Oolanys", "Oloward", "Aluuvial", "Daruvial", "Prukahn", "Thokul", "Norgretor"};
+    String alignment[] = {"Lawful Good", "Neutral Good", "Chaotic Good", "Lawful Neutral", "Neutral", "Chaotic Neutral", "Lawful Evil", "Neutral Evil", "Chaotic Evil"};
+    String bardCantrips[] = {"Dancing Lights", "Light", "Mage Hand", "Mending", "Message", "Minor Illusion", "Prestidigitation", "True Strike", "Vicious Mockery"};
+    String firstlvlBard[] = {"Animal Friendship", "Bane", "Charm Person", "Comprehend Languages", "Cure Wounds", "Detect Magic", "Disguise Self", "Faerie Fire", "Feather Fall", "Healing Word", "Heroism", "Hideous Laughter", "Identify", "Illusory Script", "Longstrider", "Silent Image", "Sleep", "Speak with Animals", "Thunderwave", "Unseen Servant"};
+    String secondlvlBard[] = {"Animal Messenger", "Blindness/Deafness", "Calm Emotions", "Detect Thoughts", "Enhance Ability", "Enthrall", "Heat Metal", "Hold Person", "Invisibility", "Knock", "Lesser Restoration", "Locate Animal or Plants", "Locate Object", "Magic Mouth", "See Invisibility", "Shatter", "Silence", "Suggestion", "Zone of Thruth"};
+    String thirdlvlBard[] = {"Bestow Curse", "Clairvoyance", "Dispel Magic", "Fear", "Glyph of Warding", "Hypnotic Pattern", "Major Image", "Nondetection", "Plant Growth", "Sending", "Speak with Dead", "Speak with Plants", "Stinking Cloud", "Tiny Hut", "Tongues"};
+    String fourthlvlBard[] = {"Compulsion", "Confusion", "Dimension Door", "Freedom of Movement", "Greater Invisibility", "Hallucinatory Terrain", "Locate Creature", "Polymorph"};
+    String fifthlvlBard[] = {"Animate Objects", "Awaken", "Dominate Person", "Dream", "Geas", "Greater Restoration", "Hold Monster", "Legend Lore", "Mass Cure Wounds", "Mislead", "Modify Memory", "Planar Binding", "Raise Dead", "Scrying", "Seeming", "Teleportation Circle"};
+    String sixthlvlBard[] = {"Eyebite", "Find the Path", "Guards and Wards", "Mass Suggestion", "Otto's Irresistible Dance", "Programmed Illusion", "True Seeing"};
+    String seventhlvlBard[] = {"Etherealness", "Forcecage", "Magnificent Mansion", "Mirage Arcane", "Mordenkainen's Sword", "Project Image", "Regenerate", "Resurrection", "Symbol", "Teleport"};
+    String eighthlvlBard[] = {"Dominate Monster", "Feeblemind", "Glibness", "Mind Blank", "Power Word Stun"};
+    String ninthlvlBard[] = {"Foresight", "Power Word Kill", "True Polymorph"};
+    int str, dex, con, intel, wis, cha, lvl, health, exp, inv;
+    public RandomGen(int lvl){
+        this.lvl = lvl;
+        this.health = 100;
+        this.exp = 0;
+        this.inv = 8;
+    }
+    public void loseHealth(int loss){
+        this.health = health - loss;
+        if (this.health <= 0)   //Checking if character is dead
+            System.out.println("You Have Died.");
+    }
+    public void gainHealth(int gain){
+        this.health = health + gain;
+        if (this.health > 100)   //Limiting health to 100
+            this.health = 100;
+    }
+    public void gainExp(int gain){
+        this.exp = exp + gain;
+        if (this.exp >= 100){   //Checking if a level up is in order
+            this.exp = exp - 100;
+            this.lvl++;
+        }
+    }
+    public void useInvSlot(){
+        this.inv = inv - 1;
+        if (inv == 0)
+            System.out.println("Inventory is full.");
+    }
+    public int getStrength(){
+        int rnd;
+        if (lvl == 15)
+            rnd = new Random().nextInt(11) + 10;
+        else if (lvl == 10)
+            rnd = new Random().nextInt(14) + 7;
+        else
+            rnd = new Random().nextInt(16) + 5;
+        return rnd;
+    }
+    public int getDexterity(){
+        int rnd;
+        if (lvl == 15)
+            rnd = new Random().nextInt(11) + 10;
+        else if (lvl == 10)
+            rnd = new Random().nextInt(14) + 7;
+        else
+            rnd = new Random().nextInt(16) + 5;
+        return rnd;
+    }
+    public int getConstitution(){
+        int rnd;
+        if (lvl == 15)
+            rnd = new Random().nextInt(11) + 10;
+        else if (lvl == 10)
+            rnd = new Random().nextInt(14) + 7;
+        else
+            rnd = new Random().nextInt(16) + 5;
+        return rnd;
+    }
+    public int getIntelligence(){
+        int rnd;
+        if (lvl == 15)
+            rnd = new Random().nextInt(11) + 10;
+        else if (lvl == 10)
+            rnd = new Random().nextInt(14) + 7;
+        else
+            rnd = new Random().nextInt(16) + 5;
+        return rnd;
+    }
+    public int getWisdom(){
+        int rnd;
+        if (lvl == 15)
+            rnd = new Random().nextInt(11) + 10;
+        else if (lvl == 10)
+            rnd = new Random().nextInt(14) + 7;
+        else
+            rnd = new Random().nextInt(16) + 5;
+        return rnd;
+    }
+    public int getCharisma(){
+        int rnd;
+        if (lvl == 15)
+            rnd = new Random().nextInt(11) + 10;
+        else if (lvl == 10)
+            rnd = new Random().nextInt(14) + 7;
+        else
+            rnd = new Random().nextInt(16) + 5;
+        return rnd;
+    }
+    public String getRace(){
+        int rnd = new Random().nextInt(this.race.length);
+        return race[rnd];
+    }
+    public int[] raceBonus(String r){
+        int[] rb = {0, 0, 0, 0, 0, 0};
+        switch (r){   //Adding race bonuses through switch statement  Array order = {str, dex, con, intel, wis, cha}
+            case "Dragonborn":
+                rb[0] += 2;
+                rb[5] += 1;
+                return rb;
+            case "Dwarf":
+                rb[2] += 2;
+                return rb;
+            case "Elf":
+                rb[1] +=2;
+                return rb;
+            case "Gnome":
+                rb[3] += 2;
+                return rb;
+            case "Half-Elf":
+                rb[5] += 2;
+                rb[4] += 1;
+                rb[3] += 1;
+                return rb;
+            case "Halfling":
+                rb[1] += 2;
+                return rb;
+            case "Half-Orc":
+                rb[0] += 2;
+                rb[2] += 1;
+                return rb;
+            case "Human":
+                rb[0] += 1;
+                rb[1] += 1;
+                rb[2] += 1;
+                rb[3] += 1;
+                rb[4] += 1;
+                rb[5] += 1;
+                return rb;
+            case "Tiefling":
+                rb[5] += 2;
+                rb[3] += 1;
+                return rb;
+        }
+        return rb;
+    }
+    public String getGameClass(){
+        int rnd = new Random().nextInt(this.gameClass.length);
+        return gameClass[rnd];
+    }
+    public String getName(){
+        int rnd = new Random().nextInt(this.name.length);
+        return name[rnd];
+    }
+    public String getAlignment(){
+        int rnd = new Random().nextInt(this.alignment.length);
+        return alignment[rnd];
+    }
+    public String[] getBardCantrips(){
+        int rnd1lvl1, rnd2lvl1, rnd1lvl5, rnd2lvl5, rnd3lvl5, rnd1lvl15, rnd2lvl15, rnd3lvl15, rnd4lvl15;
+        switch (lvl){
+            case 1:
+                rnd1lvl1 = new Random().nextInt(this.bardCantrips.length);
+                do{
+                    rnd2lvl1 = new Random().nextInt(this.bardCantrips.length);
+                }while (rnd1lvl1 == rnd2lvl1);
+                return new String[] {bardCantrips[rnd1lvl1], bardCantrips[rnd2lvl1]};
+            case 5:
+                rnd1lvl5 = new Random().nextInt(this.bardCantrips.length);
+                do{
+                    rnd2lvl5 = new Random().nextInt(this.bardCantrips.length);
+                }while (rnd1lvl5 == rnd2lvl5);
+                do{
+                    rnd3lvl5 = new Random().nextInt(this.bardCantrips.length);
+                }while (rnd3lvl5 == rnd1lvl5 || rnd3lvl5 == rnd2lvl5);
+                return new String[] {bardCantrips[rnd1lvl5], bardCantrips[rnd2lvl5], bardCantrips[rnd3lvl5]};
+            case 10: case 15:
+                rnd1lvl15 = new Random().nextInt(this.bardCantrips.length);
+                do{
+                    rnd2lvl15 = new Random().nextInt(this.bardCantrips.length);
+                }while (rnd1lvl15 == rnd2lvl15);
+                do{
+                    rnd3lvl15 = new Random().nextInt(this.bardCantrips.length);
+                }while (rnd3lvl15 == rnd1lvl15 || rnd3lvl15 == rnd2lvl15);
+                do{
+                    rnd4lvl15 = new Random().nextInt(this.bardCantrips.length);
+                }while (rnd4lvl15 == rnd1lvl15 || rnd4lvl15 == rnd2lvl15 || rnd4lvl15 == rnd3lvl15);
+                return new String[] {bardCantrips[rnd1lvl15], bardCantrips[rnd2lvl15], bardCantrips[rnd3lvl15], bardCantrips[rnd4lvl15]};
+        }
+        return new String[] {"Error"};
+    }
+    public String[] getBardSpells(){
+        int rnd1lvl1, rnd2lvl1, rnd1lvl5, rnd2lvl5, rnd3lvl5, rnd4lvl5, rnd5lvl5, rnd6lvl5, rnd7lvl5, rnd8lvl5, rnd1lvl10, rnd2lvl10, rnd3lvl10, rnd4lvl10, rnd5lvl10, rnd6lvl10, rnd7lvl10, rnd8lvl10, rnd9lvl10, rnd10lvl10, rnd11lvl10, rnd12lvl10, rnd13lvl10, rnd14lvl10, rnd1lvl15, rnd2lvl15, rnd3lvl15, rnd4lvl15, rnd5lvl15, rnd6lvl15, rnd7lvl15, rnd8lvl15, rnd9lvl15, rnd10lvl15, rnd11lvl15, rnd12lvl15, rnd13lvl15, rnd14lvl15, rnd15lvl15, rnd16lvl15, rnd17lvl15, rnd18lvl15, rnd19lvl15;
+        switch (lvl){
+            case 1:
+                rnd1lvl1 = new Random().nextInt(this.firstlvlBard.length);
+                do{
+                    rnd2lvl1 = new Random().nextInt(this.firstlvlBard.length);
+                }while (rnd1lvl1 == rnd2lvl1);
+                return new String[] {firstlvlBard[rnd1lvl1], firstlvlBard[rnd2lvl1]};
+            case 5:
+                rnd1lvl5 = new Random().nextInt(this.firstlvlBard.length);
+                do{
+                    rnd2lvl5 = new Random().nextInt(this.firstlvlBard.length);
+                }while (rnd1lvl5 == rnd2lvl5);
+                do{
+                    rnd3lvl5 = new Random().nextInt(this.firstlvlBard.length);
+                }while (rnd3lvl5 == rnd1lvl5 || rnd3lvl5 == rnd2lvl5);
+                do{
+                    rnd4lvl5 = new Random().nextInt(this.firstlvlBard.length);
+                }while (rnd4lvl5 == rnd1lvl5 || rnd4lvl5 == rnd2lvl5 || rnd4lvl5 == rnd3lvl5);
+                rnd5lvl5 = new Random().nextInt(this.secondlvlBard.length);
+                do{
+                    rnd6lvl5 = new Random().nextInt(this.secondlvlBard.length);
+                }while (rnd6lvl5 == rnd5lvl5);
+                do{
+                    rnd7lvl5 = new Random().nextInt(this.secondlvlBard.length);
+                }while (rnd7lvl5 == rnd5lvl5 || rnd7lvl5 == rnd6lvl5);
+                rnd8lvl5 = new Random().nextInt(this.thirdlvlBard.length);
+                return new String[] {firstlvlBard[rnd1lvl5], firstlvlBard[rnd2lvl5], firstlvlBard[rnd3lvl5], firstlvlBard[rnd4lvl5], secondlvlBard[rnd5lvl5], secondlvlBard[rnd6lvl5], secondlvlBard[rnd7lvl5], thirdlvlBard[rnd8lvl5]};
+            case 10:
+                rnd1lvl10 = new Random().nextInt(this.firstlvlBard.length);
+                do{
+                    rnd2lvl10 = new Random().nextInt(this.firstlvlBard.length);
+                }while (rnd1lvl10 == rnd2lvl10);
+                do{
+                    rnd3lvl10 = new Random().nextInt(this.firstlvlBard.length);
+                }while (rnd3lvl10 == rnd1lvl10 || rnd3lvl10 == rnd2lvl10);
+                do{
+                    rnd4lvl10 = new Random().nextInt(this.firstlvlBard.length);
+                }while (rnd4lvl10 == rnd1lvl10 || rnd4lvl10 == rnd2lvl10 || rnd4lvl10 == rnd3lvl10);
+                rnd5lvl10 = new Random().nextInt(this.secondlvlBard.length);
+                do{
+                    rnd6lvl10 = new Random().nextInt(this.secondlvlBard.length);
+                }while (rnd6lvl10 == rnd5lvl10);
+                do{
+                    rnd7lvl10 = new Random().nextInt(this.secondlvlBard.length);
+                }while (rnd7lvl10 == rnd5lvl10 || rnd7lvl10 == rnd6lvl10);
+                rnd8lvl10 = new Random().nextInt(this.thirdlvlBard.length);
+                do{
+                    rnd9lvl10 = new Random().nextInt(this.thirdlvlBard.length);
+                }while (rnd9lvl10 == rnd8lvl10);
+                do{
+                    rnd10lvl10 = new Random().nextInt(this.thirdlvlBard.length);
+                }while (rnd10lvl10 == rnd8lvl10 || rnd10lvl10 == rnd9lvl10);
+                rnd11lvl10 = new Random().nextInt(this.fourthlvlBard.length);
+                do{
+                    rnd12lvl10 = new Random().nextInt(this.fourthlvlBard.length);
+                }while (rnd12lvl10 == rnd11lvl10);
+                do{
+                    rnd13lvl10 = new Random().nextInt(this.fourthlvlBard.length);
+                }while (rnd13lvl10 == rnd11lvl10 || rnd13lvl10 == rnd12lvl10);
+                rnd14lvl10 = new Random().nextInt(this.fifthlvlBard.length);
+                return new String[] {firstlvlBard[rnd1lvl10], firstlvlBard[rnd2lvl10], firstlvlBard[rnd3lvl10], firstlvlBard[rnd4lvl10], secondlvlBard[rnd5lvl10], secondlvlBard[rnd6lvl10], secondlvlBard[rnd7lvl10], thirdlvlBard[rnd8lvl10], thirdlvlBard[rnd9lvl10], thirdlvlBard[rnd10lvl10], fourthlvlBard[rnd11lvl10], fourthlvlBard[rnd12lvl10], fourthlvlBard[rnd13lvl10], fifthlvlBard[rnd14lvl10]};
+            case 15:
+                rnd1lvl15 = new Random().nextInt(this.firstlvlBard.length);
+                do{
+                    rnd2lvl15 = new Random().nextInt(this.firstlvlBard.length);
+                }while (rnd1lvl15 == rnd2lvl15);
+                do{
+                    rnd3lvl15 = new Random().nextInt(this.firstlvlBard.length);
+                }while (rnd3lvl15 == rnd1lvl15 || rnd3lvl15 == rnd2lvl15);
+                do{
+                    rnd4lvl15 = new Random().nextInt(this.firstlvlBard.length);
+                }while (rnd4lvl15 == rnd1lvl15 || rnd4lvl15 == rnd2lvl15 || rnd4lvl15 == rnd3lvl15);
+                rnd5lvl15 = new Random().nextInt(this.secondlvlBard.length);
+                do{
+                    rnd6lvl15 = new Random().nextInt(this.secondlvlBard.length);
+                }while (rnd6lvl15 == rnd5lvl15);
+                do{
+                    rnd7lvl15 = new Random().nextInt(this.secondlvlBard.length);
+                }while (rnd7lvl15 == rnd5lvl15 || rnd7lvl15 == rnd6lvl15);
+                rnd8lvl15 = new Random().nextInt(this.thirdlvlBard.length);
+                do{
+                    rnd9lvl15 = new Random().nextInt(this.thirdlvlBard.length);
+                }while (rnd9lvl15 == rnd8lvl15);
+                do{
+                    rnd10lvl15 = new Random().nextInt(this.thirdlvlBard.length);
+                }while (rnd10lvl15 == rnd8lvl15 || rnd10lvl15 == rnd9lvl15);
+                rnd11lvl15 = new Random().nextInt(this.fourthlvlBard.length);
+                do{
+                    rnd12lvl15 = new Random().nextInt(this.fourthlvlBard.length);
+                }while (rnd12lvl15 == rnd11lvl15);
+                do{
+                    rnd13lvl15 = new Random().nextInt(this.fourthlvlBard.length);
+                }while (rnd13lvl15 == rnd11lvl15 || rnd13lvl15 == rnd12lvl15);
+                rnd14lvl15 = new Random().nextInt(this.fifthlvlBard.length);
+                do{
+                    rnd15lvl15 = new Random().nextInt(this.fifthlvlBard.length);
+                }while (rnd15lvl15 == rnd14lvl15);
+                rnd16lvl15 = new Random().nextInt(this.sixthlvlBard.length);
+                rnd17lvl15 = new Random().nextInt(this.seventhlvlBard.length);
+                rnd18lvl15 = new Random().nextInt(this.eighthlvlBard.length);
+                rnd19lvl15 = new Random().nextInt(this.ninthlvlBard.length);
+                return new String[] {firstlvlBard[rnd1lvl15], firstlvlBard[rnd2lvl15], firstlvlBard[rnd3lvl15], firstlvlBard[rnd4lvl15], secondlvlBard[rnd5lvl15], secondlvlBard[rnd6lvl15], secondlvlBard[rnd7lvl15], thirdlvlBard[rnd8lvl15], thirdlvlBard[rnd9lvl15], thirdlvlBard[rnd10lvl15], fourthlvlBard[rnd11lvl15], fourthlvlBard[rnd12lvl15], fourthlvlBard[rnd13lvl15], fifthlvlBard[rnd14lvl15], fifthlvlBard[rnd15lvl15], sixthlvlBard[rnd16lvl15], seventhlvlBard[rnd17lvl15], eighthlvlBard[rnd18lvl15], ninthlvlBard[rnd19lvl15]};
+        }
+        return new String[] {"Error"};
+    }
+}
