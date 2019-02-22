@@ -1,0 +1,97 @@
+package randomCharGen;
+import java.util.*;
+/**
+ * @author Connor Solu
+ * Random Character Generator Test v1
+ */
+public class RandomGenTest {
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("What difficulty would you like to play?");    //Setting up difficulty of game
+        System.out.println("  Easy, Normal, Hard, or Very Hard?");
+        System.out.println("  (This just changes your character's starting level)");
+        System.out.println("Type Below:");
+        int lvl = 0;
+        while (lvl == 0){   //Ensuring that a correct choice is entered
+            String dif = sc.nextLine();
+            if (dif.equalsIgnoreCase("Easy"))
+                lvl = 15;
+            else if (dif.equalsIgnoreCase("Normal"))
+                lvl = 10;
+            else if (dif.equalsIgnoreCase("Hard"))
+                lvl = 5;
+            else if (dif.equalsIgnoreCase("Very Hard"))
+                lvl = 1;
+            else
+                System.out.println("Please enter a valid difficulty:");
+        }        
+        RandomGen gen = new RandomGen(lvl);   //Initialization of random generator
+        int str, dex, con, intel, wis, cha;   //Initialization and setting of many different variables
+        String c, r, n, a;
+        str = gen.getStrength();
+        dex = gen.getDexterity();
+        con = gen.getConstitution();
+        intel = gen.getIntelligence();
+        wis = gen.getWisdom();
+        cha = gen.getCharisma();
+        c = gen.getGameClass();
+        r = gen.getRace();
+        n = gen.getName();
+        a = gen. getAlignment();
+        int[] rb = gen.raceBonus(r);
+        System.out.println("Your name is: " + n + ".");   //Listing out notable character information
+        System.out.println("Your race is: " + r + ".");
+        System.out.println("Your class is: " + c + ".");
+        System.out.println("Your alignment is: " + a + ".");
+        System.out.println("You level is: " + lvl + ".");
+        System.out.println("You health is: " + gen.health + ".");
+        System.out.println("You stats are as follows:");
+        System.out.println("  Strength: " + str + " + " + rb[0] + " = " + (str + rb[0]));   //Base roll + Race bonus = Total stat
+        System.out.println("  Dexterity: " + dex + " + " + rb[1] + " = " + (dex + rb[1]));
+        System.out.println("  Constitution: " + con + " + " + rb[2] + " = " + (con + rb[2]));
+        System.out.println("  Intelligence: " + intel + " + " + rb[3] + " = " + (intel + rb[3]));
+        System.out.println("  Wisdom: " + wis + " + " + rb[4] + " = " + (wis + rb[4]));
+        System.out.println("  Charisma: " + cha + " + " + rb[5] + " = " + (cha + rb[5]));
+        switch(c){   //Switch statement that determines if player uses magic and prints out their related spells and cantrips
+            case "Bard":
+                System.out.println("Cantrips: " + Arrays.toString(gen.getBardCantrips()));
+                System.out.println("Spells: " + Arrays.toString(gen.getBardSpells()));
+                break;
+            case "Cleric":
+                
+                break;
+            case "Druid":
+                
+                break;
+            case "Paladin":
+                
+                break;
+            case "Ranger":
+                
+                break;
+            case "Sorcerer":
+                
+                break;
+            case "Warlock":
+                
+                break;
+            case "Wizard":
+                
+                break;
+            default:
+                break;
+        }
+        System.out.println(gen.health);
+        gen.loseHealth(50);
+        System.out.println(gen.health);
+        gen.gainHealth(25);
+        System.out.println(gen.health);
+        gen.loseHealth(75);
+        gen.gainExp(50);
+        System.out.println(gen.exp);
+        System.out.println(gen.lvl);
+        gen.gainExp(52);
+        System.out.println(gen.exp);
+        System.out.println(gen.lvl);
+    }
+}
