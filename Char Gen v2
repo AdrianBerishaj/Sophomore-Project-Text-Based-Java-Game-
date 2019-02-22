@@ -279,15 +279,15 @@ public class RandomGenTest {
             }
         }
         int cha;
-        if (str != one || dex != one || con != one || intel != one || wis != one)
+        if (str != one && dex != one && con != one && intel != one && wis != one)
             cha = one;
-        else if (str != two || dex != two || con != two || intel != two || wis != two)
+        else if (str != two && dex != two && con != two && intel != two && wis != two)
             cha = two;
-        else if (str != three || dex != three || con != three || intel != three || wis != three)
+        else if (str != three && dex != three && con != three && intel != three && wis != three)
             cha = three;
-        else if (str != four || dex != four || con != four || intel != four || wis != four)
+        else if (str != four && dex != four && con != four && intel != four && wis != four)
             cha = four;
-        else if (str != five || dex != five || con != five || intel != five || wis != five)
+        else if (str != five && dex != five && con != five && intel != five && wis != five)
             cha = five;
         else
             cha = six;
