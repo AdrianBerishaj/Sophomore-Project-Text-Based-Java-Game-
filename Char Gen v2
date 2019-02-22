@@ -63,10 +63,30 @@ public class RandomGenTest {
         //Choosing stats
         int one = new Random().nextInt(14) + 7;
         int two = new Random().nextInt(14) + 7;
+        if (two == one){
+            while (two == one)
+                two = new Random().nextInt(14) + 7;
+        }    
         int three = new Random().nextInt(14) + 7;
+        if (three == two || three == one){
+            while (three == two || three == one)
+                three = new Random().nextInt(14) + 7;
+        }    
         int four = new Random().nextInt(14) + 7;
+        if (four == three || four == two || four == one){
+            while (four == three || four == two || four == one)
+                four = new Random().nextInt(14) + 7;
+        }   
         int five = new Random().nextInt(14) + 7;
+        if (five == four || five == three || five == two || five == one){
+            while (five == four || five == three || five == two || five == one)
+                five = new Random().nextInt(14) + 7;
+        }
         int six = new Random().nextInt(14) + 7;
+        if (six == five || six == four || six == three || six == two || six == one){
+            while (six == five || six == four || six == three || six == two || six == one)
+                six = new Random().nextInt(14) + 7;
+        }
         System.out.println("Please assign the following randomly generated numbers to the following stats:");
         System.out.println(one + ", " + two + ", " + three + ", " + four + ", " + five + ", " + six);
         System.out.println();
