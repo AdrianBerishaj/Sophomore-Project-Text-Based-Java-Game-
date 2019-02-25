@@ -7,8 +7,9 @@ import java.util.*;
  * @author Connor Solu
  */
 public class Character {
-    String gameClass[] = {"Knight", "Cleric", "Ranger", "Sorcerer"};
     int lvl, health, exp, inv;
+    String name, gameClass;
+    int[] stats;
     public Character(){
         this.lvl = 0;
         this.health = 100;
@@ -51,7 +52,7 @@ public class Character {
         if (inv == 0)
             System.out.println("Inventory is full.");
     }
-    public int getDifficulty(){
+    public void getDifficulty(){
         Scanner sc = new Scanner(System.in);
         //Choosing difficulty
         System.out.println("What difficulty would you like to play?");
@@ -71,12 +72,16 @@ public class Character {
             else
                 System.out.println("Please enter a valid difficulty:");
         }
-        return lvl;
     }
-    public String getCharClass(){
+    public void getName(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the name of your character: ");
+        this.name = sc.nextLine();
+    }
+    public void getCharClass(){
         String c;
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter which class you would like to play:");
+        System.out.println("Enter which class you would like to play: ");
         System.out.println("  Knight, Cleric, Ranger, Sorcerer");
         c = sc.nextLine();
         while(true){
@@ -105,9 +110,9 @@ public class Character {
                 c = sc.nextLine();
             }
         }
-        return c;
+        this.gameClass = c;
     }
-    public int[] getStats(){
+    public void getStats(){
         Scanner sc = new Scanner(System.in);
         int str, dex, con, intel, wis, cha;
         int one = new Random().nextInt(14) + 7;
@@ -341,8 +346,6 @@ public class Character {
             cha = six;
         System.out.println("Therefore, Charisma is assigned the last number.");
         System.out.println("Charisma: " + cha);
-        int[] stats; 
-        stats = new int[]{str, dex, con, intel, wis, cha};
-        return stats;
+        this.stats = new int[]{str, dex, con, intel, wis, cha};
     }
 }
