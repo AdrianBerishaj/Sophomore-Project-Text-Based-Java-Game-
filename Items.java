@@ -1,5 +1,6 @@
-
 package hod_game;
+
+import java.util.Arrays;
 
 
 public class Items<E>
@@ -63,27 +64,28 @@ public class Items<E>
       
        System.arraycopy(equipment, 0, new_equipment, 0, new_equipment.length);  //make new array copy of old (passed) array (return passed array if array not null)
        
-       for(int y = 0; y<equipment.length; y++)  //loop checks to see if equipment is already "full"
+       for(int y = 0; y<new_equipment.length; y++)  //loop checks to see if equipment is already "full"
        {
-           if(equipment[y]!=null)
+           if(new_equipment[y]!=null)
            full_slots++;
        }
        
-      if(full_slots==equipment.length-1)
+      if(full_slots==new_equipment.length-1)
       {
           System.out.println("\n\tYour equipment is full! cannot equip any more items!");
           return equipment;
       }
       
-      for(int z = 0; z<equipment.length; z++)
+      for(int z = 0; z<new_equipment.length; z++)
       {
-          if(equipment[z] == null)
+          if(new_equipment[z] == null)
           {
-              equipment[z] = (E) this;
+              new_equipment[z] = (E) this.name;
               break;
           }
           
       }
+      //System.out.println(Arrays.toString(new_equipment));
       return new_equipment;
   }
 }
