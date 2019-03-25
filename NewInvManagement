@@ -122,7 +122,7 @@ public class Items<E>
       E[] new_inventory = (E[]) new Items[inventory.length];   //create new object array to replace old (passed)
       
       System.arraycopy(inventory, 0, new_inventory, 0, new_inventory.length);
-      
+      int temp = 0;
       for(int i = 0; i < new_inventory.length; i++)
       {
           if(new_inventory[i].equals(item))
@@ -130,7 +130,6 @@ public class Items<E>
               new_inventory[i] = (E) this;
               break;
           }
-          
       }
       return new_inventory;
     }
@@ -207,6 +206,14 @@ public class Items<E>
       else{
           return new Object[][]{inventory, equipment};
       }
+  }
+  public boolean containedIn(E[] array){
+    for(int i = 0; i < array.length; i++){
+        if(array[i].equals(this)) {
+            return true;
+        }
+    }
+    return false;
   }
     @Override
     public boolean equals(Object object) {
