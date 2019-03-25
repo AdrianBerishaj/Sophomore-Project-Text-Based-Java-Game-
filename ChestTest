@@ -1,0 +1,36 @@
+package chests;
+
+import java.util.*;
+
+public class Test {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Character player = new Character();
+        Items mace = new Items("mace",0,2,0,0,0,0,0,0,0,0,0,0,0,0,1);
+        Chest chest = new Chest();
+        Items item = chest.open();
+        int answer = 0;
+        System.out.println("You found a chest! It contained: " + item.name);
+        do{
+            System.out.println("\n\tWould you like to keep the item?");
+            System.out.println("\t\t 1. Yes");
+            System.out.println("\t\t 2. No");
+            answer = sc.nextInt();
+            if(answer == 1){
+                System.out.println("You yank the item from the chest!\nYou gained: " + item.name);
+                player.inventory = item.ADDinventory(player.inventory);
+                player.showInv();
+                break;
+            }
+            else if (answer == 2){
+                System.out.println("You decided to leave the item behind.");
+                break;
+            }
+            else
+                System.out.println("Please enter a valid option.");
+        } while (true);
+        player.inventory = mace.swapInventory(player.inventory, item);
+        player.inventory = mace.dropInventory(player.inventory);
+        player.showInv();
+    }
+}
