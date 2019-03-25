@@ -1,0 +1,29 @@
+package chests;
+
+import java.util.*;
+
+public class Chest {
+    int rand;
+    Items item;
+    Items longsword = new Items("longsword",0,3,0,0,0,0,0,0,0,0,0,0,0,0,1);
+    Items chainmail = new Items("Chainmail",0,0,0,3,0,0,0,0,0,0,0,0,0,0,2);
+    Items mace = new Items("mace",0,2,0,0,0,0,0,0,0,0,0,0,0,0,1);
+    Items bow = new Items("bow",0,0,3,0,0,0,0,0,0,0,0,0,0,0,1);
+    Items BLK_leather = new Items("BLK_leather",0,0,0,3,0,0,0,0,0,0,0,0,0,0,2);
+    Items staff = new Items("staff",0,0,0,0,3,0,0,0,0,0,0,0,0,0,1);
+    Items BLK_robes = new Items("BLK_robes",0,0,0,3,0,0,0,0,0,0,0,0,0,0,2);
+    Items rags = new Items("Rags",0,0,0,1,0,0,0,0,0,0,0,0,0,0,2);
+    Items knife = new Items("Knife",0,1,1,0,0,0,0,0,0,0,0,0,0,0,1);
+    Items crossbow = new Items("Crossbow",0,1,2,0,0,0,0,0,0,0,0,0,0,0,1);
+    Items smallHpPot = new Items("Small Health Potion",10,0,0,0,0,0,0,0,0,0,0,0,0,0,3);
+    Items mediumHpPot = new Items("Health Potion",25,0,0,0,0,0,0,0,0,0,0,0,0,0,3);
+    Items largeHpPot = new Items("Max Health Potion",50,0,0,0,0,0,0,0,0,0,0,0,0,0,3);
+    Items[] possItems = {longsword, chainmail, mace, bow, BLK_leather, staff, BLK_robes, rags, knife, crossbow, smallHpPot, mediumHpPot, largeHpPot};
+    public Chest(){
+        rand = new Random().nextInt(possItems.length);
+        item = possItems[rand];
+    }
+    public Items open(){
+        return item;
+    }
+}
