@@ -119,6 +119,8 @@ public class Items<E>
       return new_inventory;
   }
   public E[] swapInventory(E[] inventory, Items item){
+      if(!item.containedIn(inventory))
+          return inventory;
       E[] new_inventory = (E[]) new Items[inventory.length];   //create new object array to replace old (passed)
       
       System.arraycopy(inventory, 0, new_inventory, 0, new_inventory.length);
@@ -134,6 +136,8 @@ public class Items<E>
       return new_inventory;
     }
   public E[] dropInventory(E[] inventory){
+      if(!this.containedIn(inventory))
+          return inventory;
       E[] new_inventory = (E[]) new Items[inventory.length];   //create new object array to replace old (passed)
       
       System.arraycopy(inventory, 0, new_inventory, 0, new_inventory.length);
@@ -150,6 +154,8 @@ public class Items<E>
       return new_inventory;
   }
   public E[] dropEquipment(E[] equipment){
+      if(!this.containedIn(equipment))
+          return equipment;
       E[] new_equipment = (E[]) new Items[equipment.length];   //create new object array to replace old (passed)
       
       System.arraycopy(equipment, 0, new_equipment, 0, new_equipment.length);
