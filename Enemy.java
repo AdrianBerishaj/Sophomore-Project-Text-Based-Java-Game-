@@ -39,8 +39,6 @@ public class Enemy extends Character {
    {
 		Random randatt = new Random();
 		int enemyDamage = randatt.nextInt(enemyStats[2]); 
-		int playerDamage= randatt.nextInt();
-
                 enemyHealth -= playerDamage;
                 health -= enemyDamage;
         
