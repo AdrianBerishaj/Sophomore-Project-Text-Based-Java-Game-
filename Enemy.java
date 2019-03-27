@@ -14,14 +14,20 @@ public class Enemy extends Character {
     int lvl, enemyHealth, enemyatt, damageDealt, str, dex, con, intel, wis, cha; ;
     Random rand = new Random();
     String enemy = enemyType[rand.nextInt(enemyType.length)];
-    int[] enemyStats;
     private String damageTaken;
-    public Enemy(String enemyType, int lvl, int enemyHealth, int str, int dex, int con, int intel, int wis, int cha)
+    private int[] enemyStats = new int[]{lvl, enemyHealth, str, dex, con, intel, wis, cha};
+    public Enemy(String enemyType, int Elvl, int enemyHealth, int Estr, int Edex, int Econ, int Eintel, int Ewis, int Echa)
     {
+        lvl = Elvl;
+        str = Estr;
+        dex = Edex;
+        con = Econ;
+        intel = Eintel;
+        wis = Ewis;
+        cha = Echa;
+        enemyHealth = 50 + ( 10*Econ);
         
-        this.enemyHealth = 50 + ( 10*con);
-        
-        enemyStats = new int[]{lvl, enemyHealth, str, dex, con, intel, wis, cha};                  
+                     
     }
         
    public void getEnemy()
@@ -46,7 +52,7 @@ public class Enemy extends Character {
    {
        
         this.enemyHealth = enemyHealth - loss;
-        System.out.println("\n\tYou have done " + damageDealt + " damage, but " + enemy + " has done " + damageTaken + " damage back!");
+        System.out.println("\n\tYou have done " + damageDealt + " damage, but " + enemy + " has done " + enemyDamage + " damage back!");
         if (this.enemyHealth <= 0){ 
             System.out.println("Enemy Has Been Yeeted");
         }
