@@ -1,0 +1,92 @@
+package skills;
+
+import java.util.*;
+
+public class Test {
+
+    public static void main(String[] args) {
+        Skills firebolt = new Skills("Firebolt", 20, 0, true);
+        Skills rapidfire = new Skills("Rapid Fire", 10, 0, true);
+        Skills blessing = new Skills("Blessing", 0, 25, true);
+        Skills slash = new Skills("Slash", 15, 0, true);
+        Scanner sc = new Scanner(System.in);
+        String answer;
+        int skeletonhtlh = 200;
+        int PChtlh = 50;
+        System.out.println("A Skeleton Boi approaches.");
+        while(skeletonhtlh > 0){
+            System.out.println("What will you do?");
+            answer = sc.nextLine();
+            if(answer.equalsIgnoreCase("attack")){
+                skeletonhtlh -= 1;
+                System.out.println("You only have your fists and this is a strong boi. (-1 Skeleton HP)");
+            }
+            else if(answer.equalsIgnoreCase("rapid fire")){
+                if(rapidfire.getUses()){
+                    int dmg = rapidfire.use();
+                    skeletonhtlh -= dmg;
+                    System.out.println("That seemed to work! (-" + dmg + " Skeleton HP)");
+                }
+                else
+                    System.out.println("You cannot use this skill right now.");
+            }
+            else if(answer.equalsIgnoreCase("slash")){
+                if(slash.getUses()){
+                    int dmg = slash.use();
+                    skeletonhtlh -= dmg;
+                    System.out.println("That seemed to work! (-" + dmg + " Skeleton HP)");
+                }
+                else
+                    System.out.println("You cannot use this skill right now.");
+            }
+            else if(answer.equalsIgnoreCase("firebolt")){
+                if(firebolt.getUses()){
+                    int dmg = firebolt.use();
+                    skeletonhtlh -= dmg;
+                    System.out.println("That seemed to work! (-" + dmg + " Skeleton HP)");
+                }
+                else
+                    System.out.println("You cannot use this skill right now.");
+            }
+            else if(answer.equalsIgnoreCase("blessing")){
+                if(blessing.getUses()){
+                    if(PChtlh < 100){
+                        int addHP = blessing.use();
+                        PChtlh += addHP;
+                        if(PChtlh > 100)
+                            PChtlh = 100;
+                        System.out.println("You healed yourself for " + addHP + " health. You now have " + PChtlh + " health.");
+                    }
+                    else
+                        System.out.println("You cannot heal yourself anymore!");
+                }
+                else
+                    System.out.println("You cannot use this skill right now.");
+            }
+            else if(answer.equalsIgnoreCase("enemy hp"))
+                System.out.println("The skeleton boi still has " + skeletonhtlh + " health.");
+            else if(answer.equalsIgnoreCase("my hp"))
+                System.out.println("You still have " + PChtlh + " health.");
+            else if(answer.equalsIgnoreCase("recharge")){
+                rapidfire.recharge();
+                slash.recharge();
+                firebolt.recharge();
+                blessing.recharge();
+            }
+            else if(answer.equalsIgnoreCase("show charges")){
+                System.out.println("Rapid Fire: " + rapidfire.getUses() + "\nSlash: " + slash.getUses() + "\nFirebolt: " + firebolt.getUses() + "\nBlessing: " + blessing.getUses());
+            }
+            else if(answer.equalsIgnoreCase("escape"))
+                break;
+            else if(answer.equalsIgnoreCase("help")){
+                System.out.println("You can use the following commands: \n\tAttack\n\tRapid Fire\n\tSlash\n\tFirebolt\n\tBlessing\n\tEnemy HP\n\tMy HP\n\tRecharge\n\tShow Charges\n\tEscape\n\tHelp");
+            }
+            else
+                System.out.println("Please enter a valid choice!");
+        }
+        if(skeletonhtlh <= 0)
+            System.out.println("Congrats! You killed that bitch.");
+        else
+            System.out.println("You suck.");
+    }
+}
