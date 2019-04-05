@@ -1,0 +1,64 @@
+package skills;
+
+import java.util.*;
+
+public class Skills {
+    public String name;
+    public int hp, dmg;
+    public boolean uses;
+    public Skills(String iname, int idmg, int ihp, boolean iuses){
+        name = iname;
+        dmg = idmg;
+        hp = ihp;
+        uses = iuses;
+    }
+    public String getName(){
+      return name;
+    }
+    public boolean getUses(){
+        return uses;
+    }
+    public int use(){
+        if(uses == true){
+            if(name.equalsIgnoreCase("Slash")){  //For Knight
+                int totaldmg = (new Random().nextInt(dmg) + 1) + (new Random().nextInt(dmg) + 1) + (new Random().nextInt(dmg) + 1);
+                this.uses = false;
+                return totaldmg;  //Does a random amount of damage = 3 * Random numbers (0 < random <= dmg)
+            }
+            if(name.equalsIgnoreCase("Rapid Fire")){  //For Ranger
+                int totaldmg = (new Random().nextInt(dmg) + 1) + (new Random().nextInt(dmg) + 1) + (new Random().nextInt(dmg) + 1) + (new Random().nextInt(dmg) + 1) + (new Random().nextInt(dmg) + 1);
+                this.uses = false;
+                return totaldmg;  //Does a random amount of damage = 5 * Random numbers (0 < random <= dmg)
+            }
+            if (name.equalsIgnoreCase("Blessing")){  //For Cleric
+                this.uses = false;
+                return hp;  //Allows PC to heal self htlh amount
+            }
+            if(name.equalsIgnoreCase("Firebolt")){  //For Sorcerer
+                int totaldmg = dmg + (new Random().nextInt(dmg) + 1);
+                this.uses = false;
+                return totaldmg;  //Does dmg + Random number (0 < random <= dmg) damage
+            }
+            else
+                return 0;
+        }
+        else
+            return 0;
+    }
+    public void recharge(){  //Need to do this after every encounter to be able to use the skill again
+        this.uses = true;
+    }
+}
+
+/**
+ * For Character Class:
+ * 
+ * At Declarations:
+ * Skills skill;
+ * 
+ * Under getCharClass():
+ * Knight: skill = new Skills("Slash", 15, 0, true);
+ * Cleric: skill = new Skills("Blessing", 0, 25, true);
+ * Ranger: skill = new Skills("Rapid Fire", 10, 0, true);
+ * Sorcerer: skill = new Skills("Firebolt", 20, 0, true);
+ */
