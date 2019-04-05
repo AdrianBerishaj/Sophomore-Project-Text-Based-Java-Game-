@@ -87,6 +87,6 @@ public class Test {
         if(skeletonhtlh <= 0)
             System.out.println("Congrats! You killed that bitch.");
         else
-            System.out.println("You suck.");
+            System.out.println("You're a bitch.");
     }
 }
