@@ -1,4 +1,4 @@
-package skills;
+ackage hod_game;
 
 import java.util.*;
 
@@ -48,17 +48,24 @@ public class Skills {
     public void recharge(){  //Need to do this after every encounter to be able to use the skill again
         this.uses = true;
     }
+    public String getSkillInfo(){
+        if(name.equalsIgnoreCase("Slash")){  //For Knight
+                String s = "SLASH - Does a random amount of damage to the target. It is calculated by adding three randomly generated numbers that range from 1 to 15.";
+                return s;
+            }
+            if(name.equalsIgnoreCase("Rapid Fire")){  //For Ranger
+                String s = "RAPID FIRE - Does a random amount of damage to the target. It is calculated by adding five randomly generated numbers that range from 1 to 10.";
+                return s;
+            }
+            if (name.equalsIgnoreCase("Blessing")){  //For Cleric
+                String s = "BLESSING - Heals the player character for 25 health.";
+                return s;
+            }
+            if(name.equalsIgnoreCase("Firebolt")){  //For Sorcerer
+                String s = "FIREBOLT - Does a random amount of damage to the target. It is calculated by adding 20 to a randomly generated number that ranges from 1 to 20.";
+                return s;
+            }
+            else
+                return "Not a valid skill.";
+    }
 }
-
-/**
- * For Character Class:
- * 
- * At Declarations:
- * Skills skill;
- * 
- * Under getCharClass():
- * Knight: skill = new Skills("Slash", 15, 0, true);
- * Cleric: skill = new Skills("Blessing", 0, 25, true);
- * Ranger: skill = new Skills("Rapid Fire", 10, 0, true);
- * Sorcerer: skill = new Skills("Firebolt", 20, 0, true);
- */
