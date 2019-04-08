@@ -350,21 +350,42 @@ public class Character<E> {
         System.out.println("Charisma: " + cha);
         this.stats = new int[]{health, str, dex, con, intel, wis, cha};
     }
-     public void showInv()
+     public void showInv() //command "bag"
     {
         for (E inventory1 : inventory) {
             System.out.println(inventory1); 
         }
     }
-     public void showEquip()
+     public void showEquip() //command "equipment"
     {
         for (E equipment1 : equipment) {
             System.out.println(equipment1); 
         }
     }
-     public void showStats()
+     public void showStats() // command "stats"
      {
          System.out.println("\n\tHP: " +stats[0] + "\n\tSTR: " + stats[1] + "\n\tDEX: " + stats[2] + "\n\tCON: " + stats[3] + "\n\tINT: " + stats[4] + "\n\tWIS: " + stats[5] + "\n\tCHA: " + stats[6]);
          
+     }
+     public void help()
+     {
+         System.out.println("\n\n\tbasic commands:");
+         System.out.println("\tforward - move forward");
+         System.out.println("\tback - move back");
+         System.out.println("\tequipment - show player equipment");
+         System.out.println("\tbag - display player inventory");
+         System.out.println("\tstats - display current player stats");
+         //System.out.println("\n\tcommands for managing items:");
+        // System.out.println("\tequip (item name) ");
+        // System.out.println("\td");
+     }
+     public void combatHelp()
+     {
+         System.out.println("\n\n\tcombat commands:");
+         System.out.println("\tattack - attack the enemy head on with a melee attack!");
+         //System.out.println("\tranged attack - attack the enemy from afar with a ranged attack! (need a ranged weapon/ throwable item)");
+         System.out.println("\tidentify - use your wisdom to possibly identify enemy stats and possibly weakpoints! (will consume a turn)");
+         System.out.println("\tany time during combat you may check your current equipment, inventory, and current stats; will not consume a turn");
+         //System.out.println("\tany time during combat you may swap out items or use consumables, but it will cost you a turn!");
      }
 }
