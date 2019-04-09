@@ -1,0 +1,14 @@
+ public int[] SUBstats(int[] stats)
+  {
+     
+     if(type == 1 || type == 2)
+     {
+        int[] new_stats = new int[]{stats[0], stats[1]-ADD_str+SUB_str, stats[2]-ADD_dex+SUB_dex, stats[3]-ADD_con+SUB_con, stats[4]-ADD_int+SUB_int, stats[5]-ADD_wis+SUB_wis, stats[6]-ADD_cha+SUB_cha};  
+        return new_stats;
+     }
+     else
+     {
+         int[] new_stats = new int[]{stats[0]-ADD_hp+SUB_hp, stats[1]-ADD_str+SUB_str, stats[2]-ADD_dex+SUB_dex, stats[3]-ADD_con+SUB_con, stats[4]-ADD_int+SUB_int, stats[5]-ADD_wis+SUB_wis, stats[6]-ADD_cha+SUB_cha};
+         return new_stats;
+     }
+  }
