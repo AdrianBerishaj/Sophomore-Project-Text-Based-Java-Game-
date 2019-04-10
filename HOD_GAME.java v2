@@ -310,27 +310,31 @@ public class HOD_GAME {
                                                     System.out.println(Arrays.toString(player.inventory));
                                                     break;
                                                 case "use":
-                                                    System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
-                                                    System.out.println("\t" + Arrays.toString(player.inventory));
-                                                    try{
-                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                        if(player.inventory[tempa] != null){
-                                                            if(player.inventory[tempa].typeCheckConsumable()){
-                                                                System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                                player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                                player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                     System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                                                     System.out.println("\t" + Arrays.toString(player.inventory));
+                                                     try{
+                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                         if(tempa < player.inventory.length){
+                                                            if(player.inventory[tempa] != null){
+                                                                if(player.inventory[tempa].typeCheckConsumable()){
+                                                                    System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                                    player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                                }
+                                                                else
+                                                                    System.out.println("That is not a usable item.");
                                                             }
                                                             else
-                                                                System.out.println("That is not a usable item.");
-                                                        }
-                                                        else
-                                                            System.out.println("You do not have an item in that slot.");
-                                                    }
-                                                    catch(NumberFormatException e){
-                                                        System.out.println("Please enter a number.");
-                                                        break;
-                                                    }
-                                                    break;
+                                                             System.out.println("You do not have an item in that slot.");
+                                                         }
+                                                         else
+                                                             System.out.println("You do not have an item in that slot.");
+                                                     }
+                                                     catch(NumberFormatException e){
+                                                         System.out.println("Please enter a number.");
+                                                         break;
+                                                     }
+                                                     break;
                                                 case "item stats":
                                                     System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
                                                     try {
@@ -347,10 +351,11 @@ public class HOD_GAME {
                                                                     }
                                                                     else{
                                                                         System.out.println("You do not have an item in that slot. Please try again.");
-                                                                    }           } catch (NumberFormatException e) {
-                                                                        System.out.println("Please try again and enter a number.");
-                                                                        break OUTER_1;
                                                                     }
+                                                                } catch (NumberFormatException e) {
+                                                                    System.out.println("Please try again and enter a number.");
+                                                                    break OUTER_1;
+                                                                }
                                                                 break OUTER_1;
                                                             case 2:
                                                                 System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
@@ -363,10 +368,11 @@ public class HOD_GAME {
                                                                     }
                                                                     else{
                                                                         System.out.println("You do not have an item in that slot. Please try again.");
-                                                                    }           } catch (NumberFormatException e) {
-                                                                        System.out.println("Please try again and enter a number.");
-                                                                        break OUTER_1;
                                                                     }
+                                                                } catch (NumberFormatException e) {
+                                                                    System.out.println("Please try again and enter a number.");
+                                                                    break OUTER_1;
+                                                                }
                                                                 break OUTER_1;
                                                             default:
                                                                 System.out.println("Please try again and enter a valid answer.");
@@ -375,7 +381,8 @@ public class HOD_GAME {
                                                     }catch(NumberFormatException e){
                                                         System.out.println("Please try again and enter a number.");
                                                         break;
-                                                    }           break;
+                                                    }
+                                                    break;
                                                 case "stats":
                                                     player.showStats();
                                                     break;
@@ -578,27 +585,31 @@ public class HOD_GAME {
                                             System.out.println(Arrays.toString(player.inventory));
                                             break;
                                         case "use":
-                                            System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
-                                            System.out.println("\t" + Arrays.toString(player.inventory));
-                                            try{
-                                                int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                if(player.inventory[tempa] != null){
-                                                    if(player.inventory[tempa].typeCheckConsumable()){
-                                                        System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                        player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                        player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                             System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                                             System.out.println("\t" + Arrays.toString(player.inventory));
+                                             try{
+                                                 int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                 if(tempa < player.inventory.length){
+                                                    if(player.inventory[tempa] != null){
+                                                        if(player.inventory[tempa].typeCheckConsumable()){
+                                                            System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                            player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                            player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                        }
+                                                        else
+                                                            System.out.println("That is not a usable item.");
                                                     }
                                                     else
-                                                        System.out.println("That is not a usable item.");
-                                                }
-                                                else
-                                                    System.out.println("You do not have an item in that slot.");
-                                            }
-                                            catch(NumberFormatException e){
-                                                System.out.println("Please enter a number.");
-                                                break;
-                                            }
-                                            break;
+                                                     System.out.println("You do not have an item in that slot.");
+                                                 }
+                                                 else
+                                                     System.out.println("You do not have an item in that slot.");
+                                             }
+                                             catch(NumberFormatException e){
+                                                 System.out.println("Please enter a number.");
+                                                 break;
+                                             }
+                                             break;
                                         case "item stats":
                                             System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
                                             try {
@@ -868,27 +879,31 @@ public class HOD_GAME {
                                             System.out.println(Arrays.toString(player.inventory));
                                             break;
                                         case "use":
-                                            System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
-                                            System.out.println("\t" + Arrays.toString(player.inventory));
-                                            try{
-                                                int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                if(player.inventory[tempa] != null){
-                                                    if(player.inventory[tempa].typeCheckConsumable()){
-                                                        System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                        player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                        player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                             System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                                             System.out.println("\t" + Arrays.toString(player.inventory));
+                                             try{
+                                                 int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                 if(tempa < player.inventory.length){
+                                                    if(player.inventory[tempa] != null){
+                                                        if(player.inventory[tempa].typeCheckConsumable()){
+                                                            System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                            player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                            player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                        }
+                                                        else
+                                                            System.out.println("That is not a usable item.");
                                                     }
                                                     else
-                                                        System.out.println("That is not a usable item.");
-                                                }
-                                                else
-                                                    System.out.println("You do not have an item in that slot.");
-                                            }
-                                            catch(NumberFormatException e){
-                                                System.out.println("Please enter a number.");
-                                                break;
-                                            }
-                                            break;
+                                                     System.out.println("You do not have an item in that slot.");
+                                                 }
+                                                 else
+                                                     System.out.println("You do not have an item in that slot.");
+                                             }
+                                             catch(NumberFormatException e){
+                                                 System.out.println("Please enter a number.");
+                                                 break;
+                                             }
+                                             break;
                                         case "item stats":
                                             System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
                                             try {
@@ -967,60 +982,71 @@ public class HOD_GAME {
                         System.out.println(Arrays.toString(player.inventory));
                         break;
                     case "drop":
-                        System.out.println("From where would you like to drop something?\n\t1. Bag\n\t2. Equipment");
-                        try {
-                            int temp = Integer.parseInt(scan.nextLine());
-                            switch (temp) {
-                                case 1:
-                                    System.out.println("Which item did you want to drop from your bag? Type 1 for first item, 2 for second, and so on.");
-                                    System.out.println("\t" + Arrays.toString(player.inventory));
-                                    try {
-                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                     System.out.println("From where would you like to drop something?\n\t1. Bag\n\t2. Equipment");
+                     try {
+                         int temp = Integer.parseInt(scan.nextLine());
+                         switch (temp) {
+                             case 1:
+                                 System.out.println("Which item did you want to drop from your bag? Type 1 for first item, 2 for second, and so on.");
+                                 System.out.println("\t" + Arrays.toString(player.inventory));
+                                 try {
+                                     int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                     if(tempa < player.inventory.length){
                                         if (player.inventory[tempa] != null) {
                                             System.out.println("You dropped your " + player.inventory[tempa].name + ".");
                                             player.inventory = player.inventory[tempa].dropInventory(player.inventory);
                                             break OUTER_4;
-                                        } else {
-                                            System.out.println("You do not have an item in that slot. Please try again.");
                                         }
-                                    } catch (NumberFormatException e) {
-                                        System.out.println("Please try again and enter a number.");
-                                        break OUTER_4;
-                                    }
-                                    break OUTER_4;
-                                case 2:
-                                    System.out.println("Which item did you want to drop from your equipment? Type 1 for first item, 2 for second, and so on.");
-                                    System.out.println("\t" + Arrays.toString(player.equipment));
-                                    try {
-                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
+                                     }
+                                     else {
+                                         System.out.println("You do not have an item in that slot. Please try again.");
+                                     }
+                                 } catch (NumberFormatException e) {
+                                     System.out.println("Please try again and enter a number.");
+                                     break OUTER_4;
+                                 }
+                                 break OUTER_4;
+                             case 2:
+                                 System.out.println("Which item did you want to drop from your equipment? Type 1 for first item, 2 for second, and so on.");
+                                 System.out.println("\t" + Arrays.toString(player.equipment));
+                                 try {
+                                     int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                     if(tempa < player.equipment.length){
                                         if (player.equipment[tempa] != null) {
                                             System.out.println("You dropped your " + player.equipment[tempa].name + ".");
                                             player.stats = player.equipment[tempa].SUBstats(player.stats);
                                             player.equipment = player.equipment[tempa].dropEquipment(player.equipment);
                                             break OUTER_4;
-                                        } else {
-                                            System.out.println("You do not have an item in that slot. Please try again.");
                                         }
-                                    } catch (NumberFormatException e) {
-                                        System.out.println("Please try again and enter a number.");
-                                        break OUTER_4;
-                                    }
-                                    break;
-                                default:
-                                    System.out.println("Please try again and enter a valid answer.");
-                                    break;
-                            }
-                        }catch(NumberFormatException e){
-                            System.out.println("Please try again and enter a number.");
-                            break;
-                        }
-                        break;
-                    case "equip":
-                        if(!dummy.isFull(player.equipment)){
-                            System.out.println("What item did you want to equip from your bag? Type 1 for first item, 2 for second, and so on.");
-                            System.out.println("\t" + Arrays.toString(player.inventory));
-                            try{
-                                int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
+                                     }
+                                     else {
+                                         System.out.println("You do not have an item in that slot. Please try again.");
+                                     }
+                                 } catch (NumberFormatException e) {
+                                     System.out.println("Please try again and enter a number.");
+                                     break OUTER_4;
+                                 }
+                                 break;
+                             default:
+                                 System.out.println("Please try again and enter a valid answer.");
+                                 break;
+                         }
+                     }catch(NumberFormatException e){
+                         System.out.println("Please try again and enter a number.");
+                         break;
+                     }
+                     break;
+                 case "equip":
+                    if(!dummy.isFull(player.equipment)){
+                        System.out.println("What item did you want to equip from your bag? Type 1 for first item, 2 for second, and so on.");
+                        System.out.println("\t" + Arrays.toString(player.inventory));
+                        try{
+                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                            if(tempa < player.inventory.length){
                                 if(player.inventory[tempa] != null){
                                     System.out.println("You equipped your " + player.inventory[tempa].name + ".");
                                     player.stats = player.inventory[tempa].ADDstats(player.stats);
@@ -1030,23 +1056,27 @@ public class HOD_GAME {
                                     break;
                                 }
                                 else
-                                    System.out.println("You do not have an equipped item in that slot.");
+                                    System.out.println("You do not have an item in that slot.");
                             }
-                            catch(NumberFormatException e){
-                                System.out.println("Please enter a number.");
-                                break;
-                            }
+                            else
+                                System.out.println("You do not have an equipped item in that slot.");
+                        }
+                        catch(NumberFormatException e){
+                            System.out.println("Please enter a number.");
                             break;
                         }
-                        else
-                            System.out.println("Your equipment is full! You can't equip an item.");
                         break;
-                    case "unequip":
-                        if(!dummy.isFull(player.inventory)){
-                            System.out.println("What item did you want to unequip from your equipment? Type 1 for first item, 2 for second, and so on.");
-                            System.out.println("\t" + Arrays.toString(player.equipment));
-                            try{
-                                int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                    }
+                    else
+                        System.out.println("Your equipment is full! You can't equip an item.");
+                    break;
+                case "unequip":
+                    if(!dummy.isFull(player.inventory)){
+                        System.out.println("What item did you want to unequip from your equipment? Type 1 for first item, 2 for second, and so on.");
+                        System.out.println("\t" + Arrays.toString(player.equipment));
+                        try{
+                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                            if(tempa < player.equipment.length){
                                 if(player.equipment[tempa] != null){
                                     System.out.println("You unequipped your " + player.equipment[tempa].name + ".");
                                     player.stats = player.equipment[tempa].SUBstats(player.stats);
@@ -1056,22 +1086,26 @@ public class HOD_GAME {
                                     break;
                                 }
                                 else
-                                    System.out.println("You do not have an equipped item in that slot.");
+                                    System.out.println("You do not have an item in that slot.");
                             }
-                            catch(NumberFormatException e){
-                                System.out.println("Please enter a number.");
-                                break;
-                            }
+                            else
+                                System.out.println("You do not have an equipped item in that slot.");
+                        }
+                        catch(NumberFormatException e){
+                            System.out.println("Please enter a number.");
                             break;
                         }
-                      else
-                        System.out.println("Your bag is full! You can't unequip an item.");
-                      break;
-                    case "use":
-                        System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
-                        System.out.println("\t" + Arrays.toString(player.inventory));
-                        try{
-                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                        break;
+                    }
+                  else
+                    System.out.println("Your bag is full! You can't unequip an item.");
+                  break;
+                 case "use":
+                     System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                     System.out.println("\t" + Arrays.toString(player.inventory));
+                     try{
+                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                         if(tempa < player.inventory.length){
                             if(player.inventory[tempa] != null){
                                 if(player.inventory[tempa].typeCheckConsumable()){
                                     System.out.println("You use " + player.inventory[tempa].name + ".");
@@ -1082,58 +1116,72 @@ public class HOD_GAME {
                                     System.out.println("That is not a usable item.");
                             }
                             else
-                                System.out.println("You do not have an item in that slot.");
-                        }
-                        catch(NumberFormatException e){
-                            System.out.println("Please enter a number.");
-                            break;
-                        }
-                        break;
-                    case "item stats":
-                        System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
-                        try {
-                            int temp = Integer.parseInt(scan.nextLine());
-                            switch (temp) {
-                                case 1:
-                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                    System.out.println("\tBag: " + Arrays.toString(player.inventory));
-                                    try {
-                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                             System.out.println("You do not have an item in that slot.");
+                         }
+                         else
+                             System.out.println("You do not have an item in that slot.");
+                     }
+                     catch(NumberFormatException e){
+                         System.out.println("Please enter a number.");
+                         break;
+                     }
+                     break;
+                 case "item stats":
+                     System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                     try {
+                         int temp = Integer.parseInt(scan.nextLine());
+                         switch (temp) {
+                             case 1:
+                                 System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                 System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                 try {
+                                     int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                     if(tempa < player.inventory.length){
                                         if(player.inventory[tempa] != null){
                                             System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
                                             player.inventory[tempa].getStats();
                                         }
-                                        else{
-                                            System.out.println("You do not have an item in that slot. Please try again.");
-                                        } } catch (NumberFormatException e) {
-                                            System.out.println("Please try again and enter a number.");
-                                        break OUTER_5;
-                                    }
-                                    break OUTER_5;
-                                case 2:
-                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                    System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
-                                    try {
-                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
+                                     }
+                                     else{
+                                         System.out.println("You do not have an item in that slot. Please try again.");
+                                     }
+                                 } catch (NumberFormatException e) {
+                                     System.out.println("Please try again and enter a number.");
+                                     break OUTER_5;
+                                 }
+                                 break OUTER_5;
+                             case 2:
+                                 System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                 System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                 try {
+                                     int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                     if(tempa < player.equipment.length){
                                         if(player.equipment[tempa] != null){
                                             System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
                                             player.equipment[tempa].getStats();
                                         }
-                                        else{
-                                            System.out.println("You do not have an item in that slot. Please try again.");
-                                        } } catch (NumberFormatException e) {
-                                            System.out.println("Please try again and enter a number.");
-                                        break OUTER_5;
-                                    }
-                                    break OUTER_5;
-                                default:
-                                    System.out.println("Please try again and enter a valid answer.");
-                                    break;
-                            }
-                        }catch(NumberFormatException e){
-                            System.out.println("Please try again and enter a number.");
-                            break;
-                        } break;
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
+                                     }
+                                     else{
+                                         System.out.println("You do not have an item in that slot. Please try again.");
+                                     }
+                                 } catch (NumberFormatException e) {
+                                     System.out.println("Please try again and enter a number.");
+                                     break OUTER_5;
+                                 }
+                                 break OUTER_5;
+                             default:
+                                 System.out.println("Please try again and enter a valid answer.");
+                                 break;
+                         }
+                     }catch(NumberFormatException e){
+                         System.out.println("Please try again and enter a number.");
+                         break;
+                     }
+                     break;
                     case "stats":
                         player.showStats();
                         break;
@@ -1394,72 +1442,79 @@ public class HOD_GAME {
                                              System.out.println(Arrays.toString(player.inventory));
                                              break;
                                          case "use":
-                                            System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
-                                            System.out.println("\t" + Arrays.toString(player.inventory));
-                                            try{
-                                                int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                if(player.inventory[tempa] != null){
-                                                    if(player.inventory[tempa].typeCheckConsumable()){
-                                                        System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                        player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                        player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                             System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                                             System.out.println("\t" + Arrays.toString(player.inventory));
+                                             try{
+                                                 int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                 if(tempa < player.inventory.length){
+                                                    if(player.inventory[tempa] != null){
+                                                        if(player.inventory[tempa].typeCheckConsumable()){
+                                                            System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                            player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                            player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                        }
+                                                        else
+                                                            System.out.println("That is not a usable item.");
                                                     }
                                                     else
-                                                        System.out.println("That is not a usable item.");
+                                                     System.out.println("You do not have an item in that slot.");
+                                                 }
+                                                 else
+                                                     System.out.println("You do not have an item in that slot.");
+                                             }
+                                             catch(NumberFormatException e){
+                                                 System.out.println("Please enter a number.");
+                                                 break;
+                                             }
+                                             break;
+                                        case "item stats":
+                                            System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                            try {
+                                                int temp = Integer.parseInt(scan.nextLine());
+                                                switch (temp) {
+                                                    case 1:
+                                                        System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                        System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                        try {
+                                                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                            if(player.inventory[tempa] != null){
+                                                                System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                                player.inventory[tempa].getStats();
+                                                            }
+                                                            else{
+                                                                System.out.println("You do not have an item in that slot. Please try again.");
+                                                            }
+                                                        } catch (NumberFormatException e) {
+                                                            System.out.println("Please try again and enter a number.");
+                                                            break OUTER_6;
+                                                        }
+                                                        break OUTER_6;
+                                                    case 2:
+                                                        System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                        System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                        try {
+                                                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                            if(player.equipment[tempa] != null){
+                                                                System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                                player.equipment[tempa].getStats();
+                                                            }
+                                                            else{
+                                                                System.out.println("You do not have an item in that slot. Please try again.");
+                                                            }
+                                                        } catch (NumberFormatException e) {
+                                                            System.out.println("Please try again and enter a number.");
+                                                            break OUTER_6;
+                                                        }
+                                                        break OUTER_6;
+                                                    default:
+                                                        System.out.println("Please try again and enter a valid answer.");
+                                                        break;
                                                 }
-                                                else
-                                                    System.out.println("You do not have an item in that slot.");
-                                            }
-                                            catch(NumberFormatException e){
-                                                System.out.println("Please enter a number.");
+                                            }catch(NumberFormatException e){
+                                                System.out.println("Please try again and enter a number.");
                                                 break;
                                             }
                                             break;
-                                         case "item stats":
-                                             System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
-                                             try {
-                                                 int temp = Integer.parseInt(scan.nextLine());
-                                                 switch (temp) {
-                                                     case 1:
-                                                         System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                         System.out.println("\tBag: " + Arrays.toString(player.inventory));
-                                                         try {
-                                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                             if(player.inventory[tempa] != null){
-                                                                 System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                                                 player.inventory[tempa].getStats();
-                                                             }
-                                                             else{
-                                                                 System.out.println("You do not have an item in that slot. Please try again.");
-                                                             }   } catch (NumberFormatException e) {
-                                                                 System.out.println("Please try again and enter a number.");
-                                                                 break OUTER_6;
-                                                             }
-                                                         break OUTER_6;
-                                                     case 2:
-                                                         System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                         System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
-                                                         try {
-                                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                             if(player.equipment[tempa] != null){
-                                                                 System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                                                 player.equipment[tempa].getStats();
-                                                             }
-                                                             else{
-                                                                 System.out.println("You do not have an item in that slot. Please try again.");
-                                                             }   } catch (NumberFormatException e) {
-                                                                 System.out.println("Please try again and enter a number.");
-                                                                 break OUTER_6;
-                                                             }
-                                                         break OUTER_6;
-                                                     default:
-                                                         System.out.println("Please try again and enter a valid answer.");
-                                                         break;
-                                                 }
-                                             }catch(NumberFormatException e){
-                                                 System.out.println("Please try again and enter a number.");
-                                                 break;
-                                             }   break;
                                          case "stats":
                                              player.showStats();
                                              break;
@@ -1657,74 +1712,78 @@ public class HOD_GAME {
                                          break;
                                      case "use":
                                          System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
-                                        System.out.println("\t" + Arrays.toString(player.inventory));
-                                        try{
-                                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                            if(player.inventory[tempa] != null){
-                                                if(player.inventory[tempa].typeCheckConsumable()){
-                                                    System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                    player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                         System.out.println("\t" + Arrays.toString(player.inventory));
+                                         try{
+                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                             if(tempa < player.inventory.length){
+                                                if(player.inventory[tempa] != null){
+                                                    if(player.inventory[tempa].typeCheckConsumable()){
+                                                        System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                        player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                        player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                    }
+                                                    else
+                                                        System.out.println("That is not a usable item.");
                                                 }
                                                 else
-                                                    System.out.println("That is not a usable item.");
-                                            }
-                                            else
-                                                System.out.println("You do not have an item in that slot.");
-                                        }
-                                        catch(NumberFormatException e){
-                                            System.out.println("Please enter a number.");
-                                            break;
-                                        }
-                                        break;
-                                     case "item stats":
-                                         System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
-                                         try {
-                                             int temp = Integer.parseInt(scan.nextLine());
-                                             switch (temp) {
-                                                 case 1:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tBag: " + Arrays.toString(player.inventory));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.inventory[tempa] != null){
-                                                             System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                                             player.inventory[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_7;
-                                                     }
-                                                     break OUTER_7;
-                                                 case 2:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.equipment[tempa] != null){
-                                                             System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                                             player.equipment[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_7;
-                                                     }
-                                                     break OUTER_7;
-                                                 default:
-                                                     System.out.println("Please try again and enter a valid answer.");
-                                                     break;
+                                                 System.out.println("You do not have an item in that slot.");
                                              }
-                                         }catch(NumberFormatException e){
-                                             System.out.println("Please try again and enter a number.");
+                                             else
+                                                 System.out.println("You do not have an item in that slot.");
+                                         }
+                                         catch(NumberFormatException e){
+                                             System.out.println("Please enter a number.");
                                              break;
                                          }
                                          break;
+                                    case "item stats":
+                                        System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                        try {
+                                            int temp = Integer.parseInt(scan.nextLine());
+                                            switch (temp) {
+                                                case 1:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.inventory[tempa] != null){
+                                                            System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                            player.inventory[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_7;
+                                                    }
+                                                    break OUTER_7;
+                                                case 2:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.equipment[tempa] != null){
+                                                            System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                            player.equipment[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_7;
+                                                    }
+                                                    break OUTER_7;
+                                                default:
+                                                    System.out.println("Please try again and enter a valid answer.");
+                                                    break;
+                                            }
+                                        }catch(NumberFormatException e){
+                                            System.out.println("Please try again and enter a number.");
+                                            break;
+                                        }
+                                        break;
                                      case "stats":
                                          player.showStats();
                                          break;
@@ -1944,74 +2003,78 @@ public class HOD_GAME {
                                          break;
                                      case "use":
                                          System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
-                                        System.out.println("\t" + Arrays.toString(player.inventory));
-                                        try{
-                                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                            if(player.inventory[tempa] != null){
-                                                if(player.inventory[tempa].typeCheckConsumable()){
-                                                    System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                    player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                         System.out.println("\t" + Arrays.toString(player.inventory));
+                                         try{
+                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                             if(tempa < player.inventory.length){
+                                                if(player.inventory[tempa] != null){
+                                                    if(player.inventory[tempa].typeCheckConsumable()){
+                                                        System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                        player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                        player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                    }
+                                                    else
+                                                        System.out.println("That is not a usable item.");
                                                 }
                                                 else
-                                                    System.out.println("That is not a usable item.");
-                                            }
-                                            else
-                                                System.out.println("You do not have an item in that slot.");
-                                        }
-                                        catch(NumberFormatException e){
-                                            System.out.println("Please enter a number.");
-                                            break;
-                                        }
-                                        break;
-                                     case "item stats":
-                                         System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
-                                         try {
-                                             int temp = Integer.parseInt(scan.nextLine());
-                                             switch (temp) {
-                                                 case 1:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tBag: " + Arrays.toString(player.inventory));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.inventory[tempa] != null){
-                                                             System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                                             player.inventory[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_8;
-                                                     }
-                                                     break OUTER_8;
-                                                 case 2:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.equipment[tempa] != null){
-                                                             System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                                             player.equipment[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_8;
-                                                     }
-                                                     break OUTER_8;
-                                                 default:
-                                                     System.out.println("Please try again and enter a valid answer.");
-                                                     break;
+                                                 System.out.println("You do not have an item in that slot.");
                                              }
-                                         }catch(NumberFormatException e){
-                                             System.out.println("Please try again and enter a number.");
+                                             else
+                                                 System.out.println("You do not have an item in that slot.");
+                                         }
+                                         catch(NumberFormatException e){
+                                             System.out.println("Please enter a number.");
                                              break;
                                          }
                                          break;
+                                    case "item stats":
+                                        System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                        try {
+                                            int temp = Integer.parseInt(scan.nextLine());
+                                            switch (temp) {
+                                                case 1:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.inventory[tempa] != null){
+                                                            System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                            player.inventory[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_8;
+                                                    }
+                                                    break OUTER_8;
+                                                case 2:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.equipment[tempa] != null){
+                                                            System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                            player.equipment[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_8;
+                                                    }
+                                                    break OUTER_8;
+                                                default:
+                                                    System.out.println("Please try again and enter a valid answer.");
+                                                    break;
+                                            }
+                                        }catch(NumberFormatException e){
+                                            System.out.println("Please try again and enter a number.");
+                                            break;
+                                        }
+                                        break;
                                      case "stats":
                                          player.showStats();
                                          break;
@@ -2051,11 +2114,16 @@ public class HOD_GAME {
                                  System.out.println("\t" + Arrays.toString(player.inventory));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if (player.inventory[tempa] != null) {
-                                         System.out.println("You dropped your " + player.inventory[tempa].name + ".");
-                                         player.inventory = player.inventory[tempa].dropInventory(player.inventory);
-                                         break OUTER_9;
-                                     } else {
+                                     if(tempa < player.inventory.length){
+                                        if (player.inventory[tempa] != null) {
+                                            System.out.println("You dropped your " + player.inventory[tempa].name + ".");
+                                            player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                            break OUTER_9;
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
+                                     }
+                                     else {
                                          System.out.println("You do not have an item in that slot. Please try again.");
                                      }
                                  } catch (NumberFormatException e) {
@@ -2068,12 +2136,17 @@ public class HOD_GAME {
                                  System.out.println("\t" + Arrays.toString(player.equipment));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if (player.equipment[tempa] != null) {
-                                         System.out.println("You dropped your " + player.equipment[tempa].name + ".");
-                                         player.stats = player.equipment[tempa].SUBstats(player.stats);
-                                         player.equipment = player.equipment[tempa].dropEquipment(player.equipment);
-                                         break OUTER_9;
-                                     } else {
+                                     if(tempa < player.equipment.length){
+                                        if (player.equipment[tempa] != null) {
+                                            System.out.println("You dropped your " + player.equipment[tempa].name + ".");
+                                            player.stats = player.equipment[tempa].SUBstats(player.stats);
+                                            player.equipment = player.equipment[tempa].dropEquipment(player.equipment);
+                                            break OUTER_9;
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
+                                     }
+                                     else {
                                          System.out.println("You do not have an item in that slot. Please try again.");
                                      }
                                  } catch (NumberFormatException e) {
@@ -2096,13 +2169,17 @@ public class HOD_GAME {
                         System.out.println("\t" + Arrays.toString(player.inventory));
                         try{
                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                            if(player.inventory[tempa] != null){
-                                System.out.println("You equipped your " + player.inventory[tempa].name + ".");
-                                player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                Items[][] temp = player.inventory[tempa].equip(player.inventory, player.equipment);
-                                player.inventory = temp[0];
-                                player.equipment = temp[1];
-                                break;
+                            if(tempa < player.inventory.length){
+                                if(player.inventory[tempa] != null){
+                                    System.out.println("You equipped your " + player.inventory[tempa].name + ".");
+                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                    Items[][] temp = player.inventory[tempa].equip(player.inventory, player.equipment);
+                                    player.inventory = temp[0];
+                                    player.equipment = temp[1];
+                                    break;
+                                }
+                                else
+                                    System.out.println("You do not have an item in that slot.");
                             }
                             else
                                 System.out.println("You do not have an equipped item in that slot.");
@@ -2122,13 +2199,17 @@ public class HOD_GAME {
                         System.out.println("\t" + Arrays.toString(player.equipment));
                         try{
                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                            if(player.equipment[tempa] != null){
-                                System.out.println("You unequipped your " + player.equipment[tempa].name + ".");
-                                player.stats = player.equipment[tempa].SUBstats(player.stats);
-                                Items[][] temp = player.equipment[tempa].unequip(player.inventory, player.equipment);
-                                player.inventory = temp[0];
-                                player.equipment = temp[1];
-                                break;
+                            if(tempa < player.equipment.length){
+                                if(player.equipment[tempa] != null){
+                                    System.out.println("You unequipped your " + player.equipment[tempa].name + ".");
+                                    player.stats = player.equipment[tempa].SUBstats(player.stats);
+                                    Items[][] temp = player.equipment[tempa].unequip(player.inventory, player.equipment);
+                                    player.inventory = temp[0];
+                                    player.equipment = temp[1];
+                                    break;
+                                }
+                                else
+                                    System.out.println("You do not have an item in that slot.");
                             }
                             else
                                 System.out.println("You do not have an equipped item in that slot.");
@@ -2147,14 +2228,18 @@ public class HOD_GAME {
                      System.out.println("\t" + Arrays.toString(player.inventory));
                      try{
                          int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                         if(player.inventory[tempa] != null){
-                             if(player.inventory[tempa].typeCheckConsumable()){
-                                 System.out.println("You use " + player.inventory[tempa].name + ".");
-                                 player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                 player.inventory = player.inventory[tempa].dropInventory(player.inventory);
-                             }
-                             else
-                                 System.out.println("That is not a usable item.");
+                         if(tempa < player.inventory.length){
+                            if(player.inventory[tempa] != null){
+                                if(player.inventory[tempa].typeCheckConsumable()){
+                                    System.out.println("You use " + player.inventory[tempa].name + ".");
+                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                    player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                }
+                                else
+                                    System.out.println("That is not a usable item.");
+                            }
+                            else
+                                System.out.println("You do not have an item in that slot.");
                          }
                          else
                              System.out.println("You do not have an item in that slot.");
@@ -2174,9 +2259,13 @@ public class HOD_GAME {
                                  System.out.println("\tBag: " + Arrays.toString(player.inventory));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if(player.inventory[tempa] != null){
-                                         System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                         player.inventory[tempa].getStats();
+                                     if(tempa < player.inventory.length){
+                                        if(player.inventory[tempa] != null){
+                                            System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                            player.inventory[tempa].getStats();
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
                                      }
                                      else{
                                          System.out.println("You do not have an item in that slot. Please try again.");
@@ -2191,9 +2280,13 @@ public class HOD_GAME {
                                  System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if(player.equipment[tempa] != null){
-                                         System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                         player.equipment[tempa].getStats();
+                                     if(tempa < player.equipment.length){
+                                        if(player.equipment[tempa] != null){
+                                            System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                            player.equipment[tempa].getStats();
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
                                      }
                                      else{
                                          System.out.println("You do not have an item in that slot. Please try again.");
@@ -2470,71 +2563,78 @@ public class HOD_GAME {
                                              break;
                                          case "use":
                                              System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
-                                            System.out.println("\t" + Arrays.toString(player.inventory));
-                                            try{
-                                                int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                if(player.inventory[tempa] != null){
-                                                    if(player.inventory[tempa].typeCheckConsumable()){
-                                                        System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                        player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                        player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                             System.out.println("\t" + Arrays.toString(player.inventory));
+                                             try{
+                                                 int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                 if(tempa < player.inventory.length){
+                                                    if(player.inventory[tempa] != null){
+                                                        if(player.inventory[tempa].typeCheckConsumable()){
+                                                            System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                            player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                            player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                        }
+                                                        else
+                                                            System.out.println("That is not a usable item.");
                                                     }
                                                     else
-                                                        System.out.println("That is not a usable item.");
+                                                     System.out.println("You do not have an item in that slot.");
+                                                 }
+                                                 else
+                                                     System.out.println("You do not have an item in that slot.");
+                                             }
+                                             catch(NumberFormatException e){
+                                                 System.out.println("Please enter a number.");
+                                                 break;
+                                             }
+                                             break;
+                                        case "item stats":
+                                            System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                            try {
+                                                int temp = Integer.parseInt(scan.nextLine());
+                                                switch (temp) {
+                                                    case 1:
+                                                        System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                        System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                        try {
+                                                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                            if(player.inventory[tempa] != null){
+                                                                System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                                player.inventory[tempa].getStats();
+                                                            }
+                                                            else{
+                                                                System.out.println("You do not have an item in that slot. Please try again.");
+                                                            }
+                                                        } catch (NumberFormatException e) {
+                                                            System.out.println("Please try again and enter a number.");
+                                                            break OUTER_11;
+                                                        }
+                                                        break OUTER_11;
+                                                    case 2:
+                                                        System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                        System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                        try {
+                                                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                            if(player.equipment[tempa] != null){
+                                                                System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                                player.equipment[tempa].getStats();
+                                                            }
+                                                            else{
+                                                                System.out.println("You do not have an item in that slot. Please try again.");
+                                                            }
+                                                        } catch (NumberFormatException e) {
+                                                            System.out.println("Please try again and enter a number.");
+                                                            break OUTER_11;
+                                                        }
+                                                        break OUTER_11;
+                                                    default:
+                                                        System.out.println("Please try again and enter a valid answer.");
+                                                        break;
                                                 }
-                                                else
-                                                    System.out.println("You do not have an item in that slot.");
-                                            }
-                                            catch(NumberFormatException e){
-                                                System.out.println("Please enter a number.");
+                                            }catch(NumberFormatException e){
+                                                System.out.println("Please try again and enter a number.");
                                                 break;
                                             }
                                             break;
-                                         case "item stats":
-                                             System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
-                                             try {
-                                                 int temp = Integer.parseInt(scan.nextLine());
-                                                 switch (temp) {
-                                                     case 1:
-                                                         System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                         System.out.println("\tBag: " + Arrays.toString(player.inventory));
-                                                         try {
-                                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                             if(player.inventory[tempa] != null){
-                                                                 System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                                                 player.inventory[tempa].getStats();
-                                                             }
-                                                             else{
-                                                                 System.out.println("You do not have an item in that slot. Please try again.");
-                                                             }   } catch (NumberFormatException e) {
-                                                                 System.out.println("Please try again and enter a number.");
-                                                                 break OUTER_11;
-                                                             }
-                                                         break OUTER_11;
-                                                     case 2:
-                                                         System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                         System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
-                                                         try {
-                                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                             if(player.equipment[tempa] != null){
-                                                                 System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                                                 player.equipment[tempa].getStats();
-                                                             }
-                                                             else{
-                                                                 System.out.println("You do not have an item in that slot. Please try again.");
-                                                             }   } catch (NumberFormatException e) {
-                                                                 System.out.println("Please try again and enter a number.");
-                                                                 break OUTER_11;
-                                                             }
-                                                         break OUTER_11;
-                                                     default:
-                                                         System.out.println("Please try again and enter a valid answer.");
-                                                         break;
-                                                 }
-                                             }catch(NumberFormatException e){
-                                                 System.out.println("Please try again and enter a number.");
-                                                 break;
-                                             }   break;
                                          case "stats":
                                              player.showStats();
                                              break;
@@ -2721,74 +2821,78 @@ public class HOD_GAME {
                                          break;
                                      case "use":
                                          System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
-                                        System.out.println("\t" + Arrays.toString(player.inventory));
-                                        try{
-                                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                            if(player.inventory[tempa] != null){
-                                                if(player.inventory[tempa].typeCheckConsumable()){
-                                                    System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                    player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                         System.out.println("\t" + Arrays.toString(player.inventory));
+                                         try{
+                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                             if(tempa < player.inventory.length){
+                                                if(player.inventory[tempa] != null){
+                                                    if(player.inventory[tempa].typeCheckConsumable()){
+                                                        System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                        player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                        player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                    }
+                                                    else
+                                                        System.out.println("That is not a usable item.");
                                                 }
                                                 else
-                                                    System.out.println("That is not a usable item.");
-                                            }
-                                            else
-                                                System.out.println("You do not have an item in that slot.");
-                                        }
-                                        catch(NumberFormatException e){
-                                            System.out.println("Please enter a number.");
-                                            break;
-                                        }
-                                        break;
-                                     case "item stats":
-                                         System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
-                                         try {
-                                             int temp = Integer.parseInt(scan.nextLine());
-                                             switch (temp) {
-                                                 case 1:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tBag: " + Arrays.toString(player.inventory));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.inventory[tempa] != null){
-                                                             System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                                             player.inventory[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_12;
-                                                     }
-                                                     break OUTER_12;
-                                                 case 2:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.equipment[tempa] != null){
-                                                             System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                                             player.equipment[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_12;
-                                                     }
-                                                     break OUTER_12;
-                                                 default:
-                                                     System.out.println("Please try again and enter a valid answer.");
-                                                     break;
+                                                 System.out.println("You do not have an item in that slot.");
                                              }
-                                         }catch(NumberFormatException e){
-                                             System.out.println("Please try again and enter a number.");
+                                             else
+                                                 System.out.println("You do not have an item in that slot.");
+                                         }
+                                         catch(NumberFormatException e){
+                                             System.out.println("Please enter a number.");
                                              break;
                                          }
                                          break;
+                                    case "item stats":
+                                        System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                        try {
+                                            int temp = Integer.parseInt(scan.nextLine());
+                                            switch (temp) {
+                                                case 1:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.inventory[tempa] != null){
+                                                            System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                            player.inventory[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_12;
+                                                    }
+                                                    break OUTER_12;
+                                                case 2:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.equipment[tempa] != null){
+                                                            System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                            player.equipment[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_12;
+                                                    }
+                                                    break OUTER_12;
+                                                default:
+                                                    System.out.println("Please try again and enter a valid answer.");
+                                                    break;
+                                            }
+                                        }catch(NumberFormatException e){
+                                            System.out.println("Please try again and enter a number.");
+                                            break;
+                                        }
+                                        break;
                                      case "stats":
                                          player.showStats();
                                          break;
@@ -3002,74 +3106,78 @@ public class HOD_GAME {
                                          break;
                                      case "use":
                                          System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
-                                        System.out.println("\t" + Arrays.toString(player.inventory));
-                                        try{
-                                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                            if(player.inventory[tempa] != null){
-                                                if(player.inventory[tempa].typeCheckConsumable()){
-                                                    System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                    player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                         System.out.println("\t" + Arrays.toString(player.inventory));
+                                         try{
+                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                             if(tempa < player.inventory.length){
+                                                if(player.inventory[tempa] != null){
+                                                    if(player.inventory[tempa].typeCheckConsumable()){
+                                                        System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                        player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                        player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                    }
+                                                    else
+                                                        System.out.println("That is not a usable item.");
                                                 }
                                                 else
-                                                    System.out.println("That is not a usable item.");
-                                            }
-                                            else
-                                                System.out.println("You do not have an item in that slot.");
-                                        }
-                                        catch(NumberFormatException e){
-                                            System.out.println("Please enter a number.");
-                                            break;
-                                        }
-                                        break;
-                                     case "item stats":
-                                         System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
-                                         try {
-                                             int temp = Integer.parseInt(scan.nextLine());
-                                             switch (temp) {
-                                                 case 1:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tBag: " + Arrays.toString(player.inventory));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.inventory[tempa] != null){
-                                                             System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                                             player.inventory[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_13;
-                                                     }
-                                                     break OUTER_13;
-                                                 case 2:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.equipment[tempa] != null){
-                                                             System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                                             player.equipment[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_13;
-                                                     }
-                                                     break OUTER_13;
-                                                 default:
-                                                     System.out.println("Please try again and enter a valid answer.");
-                                                     break;
+                                                 System.out.println("You do not have an item in that slot.");
                                              }
-                                         }catch(NumberFormatException e){
-                                             System.out.println("Please try again and enter a number.");
+                                             else
+                                                 System.out.println("You do not have an item in that slot.");
+                                         }
+                                         catch(NumberFormatException e){
+                                             System.out.println("Please enter a number.");
                                              break;
                                          }
                                          break;
+                                    case "item stats":
+                                        System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                        try {
+                                            int temp = Integer.parseInt(scan.nextLine());
+                                            switch (temp) {
+                                                case 1:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.inventory[tempa] != null){
+                                                            System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                            player.inventory[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_13;
+                                                    }
+                                                    break OUTER_13;
+                                                case 2:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.equipment[tempa] != null){
+                                                            System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                            player.equipment[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_13;
+                                                    }
+                                                    break OUTER_13;
+                                                default:
+                                                    System.out.println("Please try again and enter a valid answer.");
+                                                    break;
+                                            }
+                                        }catch(NumberFormatException e){
+                                            System.out.println("Please try again and enter a number.");
+                                            break;
+                                        }
+                                        break;
                                      case "stats":
                                          player.showStats();
                                          break;
@@ -3109,11 +3217,16 @@ public class HOD_GAME {
                                  System.out.println("\t" + Arrays.toString(player.inventory));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if (player.inventory[tempa] != null) {
-                                         System.out.println("You dropped your " + player.inventory[tempa].name + ".");
-                                         player.inventory = player.inventory[tempa].dropInventory(player.inventory);
-                                         break OUTER_14;
-                                     } else {
+                                     if(tempa < player.inventory.length){
+                                        if (player.inventory[tempa] != null) {
+                                            System.out.println("You dropped your " + player.inventory[tempa].name + ".");
+                                            player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                            break OUTER_14;
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
+                                     }
+                                     else {
                                          System.out.println("You do not have an item in that slot. Please try again.");
                                      }
                                  } catch (NumberFormatException e) {
@@ -3126,12 +3239,17 @@ public class HOD_GAME {
                                  System.out.println("\t" + Arrays.toString(player.equipment));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if (player.equipment[tempa] != null) {
-                                         System.out.println("You dropped your " + player.equipment[tempa].name + ".");
-                                         player.stats = player.equipment[tempa].SUBstats(player.stats);
-                                         player.equipment = player.equipment[tempa].dropEquipment(player.equipment);
-                                         break OUTER_14;
-                                     } else {
+                                     if(tempa < player.equipment.length){
+                                        if (player.equipment[tempa] != null) {
+                                            System.out.println("You dropped your " + player.equipment[tempa].name + ".");
+                                            player.stats = player.equipment[tempa].SUBstats(player.stats);
+                                            player.equipment = player.equipment[tempa].dropEquipment(player.equipment);
+                                            break OUTER_14;
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
+                                     }
+                                     else {
                                          System.out.println("You do not have an item in that slot. Please try again.");
                                      }
                                  } catch (NumberFormatException e) {
@@ -3154,13 +3272,17 @@ public class HOD_GAME {
                         System.out.println("\t" + Arrays.toString(player.inventory));
                         try{
                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                            if(player.inventory[tempa] != null){
-                                System.out.println("You equipped your " + player.inventory[tempa].name + ".");
-                                player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                Items[][] temp = player.inventory[tempa].equip(player.inventory, player.equipment);
-                                player.inventory = temp[0];
-                                player.equipment = temp[1];
-                                break;
+                            if(tempa < player.inventory.length){
+                                if(player.inventory[tempa] != null){
+                                    System.out.println("You equipped your " + player.inventory[tempa].name + ".");
+                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                    Items[][] temp = player.inventory[tempa].equip(player.inventory, player.equipment);
+                                    player.inventory = temp[0];
+                                    player.equipment = temp[1];
+                                    break;
+                                }
+                                else
+                                    System.out.println("You do not have an item in that slot.");
                             }
                             else
                                 System.out.println("You do not have an equipped item in that slot.");
@@ -3180,13 +3302,17 @@ public class HOD_GAME {
                         System.out.println("\t" + Arrays.toString(player.equipment));
                         try{
                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                            if(player.equipment[tempa] != null){
-                                System.out.println("You unequipped your " + player.equipment[tempa].name + ".");
-                                player.stats = player.equipment[tempa].SUBstats(player.stats);
-                                Items[][] temp = player.equipment[tempa].unequip(player.inventory, player.equipment);
-                                player.inventory = temp[0];
-                                player.equipment = temp[1];
-                                break;
+                            if(tempa < player.equipment.length){
+                                if(player.equipment[tempa] != null){
+                                    System.out.println("You unequipped your " + player.equipment[tempa].name + ".");
+                                    player.stats = player.equipment[tempa].SUBstats(player.stats);
+                                    Items[][] temp = player.equipment[tempa].unequip(player.inventory, player.equipment);
+                                    player.inventory = temp[0];
+                                    player.equipment = temp[1];
+                                    break;
+                                }
+                                else
+                                    System.out.println("You do not have an item in that slot.");
                             }
                             else
                                 System.out.println("You do not have an equipped item in that slot.");
@@ -3205,14 +3331,18 @@ public class HOD_GAME {
                      System.out.println("\t" + Arrays.toString(player.inventory));
                      try{
                          int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                         if(player.inventory[tempa] != null){
-                             if(player.inventory[tempa].typeCheckConsumable()){
-                                 System.out.println("You use " + player.inventory[tempa].name + ".");
-                                 player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                 player.inventory = player.inventory[tempa].dropInventory(player.inventory);
-                             }
-                             else
-                                 System.out.println("That is not a usable item.");
+                         if(tempa < player.inventory.length){
+                            if(player.inventory[tempa] != null){
+                                if(player.inventory[tempa].typeCheckConsumable()){
+                                    System.out.println("You use " + player.inventory[tempa].name + ".");
+                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                    player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                }
+                                else
+                                    System.out.println("That is not a usable item.");
+                            }
+                            else
+                                System.out.println("You do not have an item in that slot.");
                          }
                          else
                              System.out.println("You do not have an item in that slot.");
@@ -3232,9 +3362,13 @@ public class HOD_GAME {
                                  System.out.println("\tBag: " + Arrays.toString(player.inventory));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if(player.inventory[tempa] != null){
-                                         System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                         player.inventory[tempa].getStats();
+                                     if(tempa < player.inventory.length){
+                                        if(player.inventory[tempa] != null){
+                                            System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                            player.inventory[tempa].getStats();
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
                                      }
                                      else{
                                          System.out.println("You do not have an item in that slot. Please try again.");
@@ -3249,9 +3383,13 @@ public class HOD_GAME {
                                  System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if(player.equipment[tempa] != null){
-                                         System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                         player.equipment[tempa].getStats();
+                                     if(tempa < player.equipment.length){
+                                        if(player.equipment[tempa] != null){
+                                            System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                            player.equipment[tempa].getStats();
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
                                      }
                                      else{
                                          System.out.println("You do not have an item in that slot. Please try again.");
@@ -3504,74 +3642,78 @@ public class HOD_GAME {
                                          break;
                                      case "use":
                                          System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
-                                        System.out.println("\t" + Arrays.toString(player.inventory));
-                                        try{
-                                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                            if(player.inventory[tempa] != null){
-                                                if(player.inventory[tempa].typeCheckConsumable()){
-                                                    System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                    player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                         System.out.println("\t" + Arrays.toString(player.inventory));
+                                         try{
+                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                             if(tempa < player.inventory.length){
+                                                if(player.inventory[tempa] != null){
+                                                    if(player.inventory[tempa].typeCheckConsumable()){
+                                                        System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                        player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                        player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                    }
+                                                    else
+                                                        System.out.println("That is not a usable item.");
                                                 }
                                                 else
-                                                    System.out.println("That is not a usable item.");
-                                            }
-                                            else
-                                                System.out.println("You do not have an item in that slot.");
-                                        }
-                                        catch(NumberFormatException e){
-                                            System.out.println("Please enter a number.");
-                                            break;
-                                        }
-                                        break;
-                                     case "item stats":
-                                         System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
-                                         try {
-                                             int temp = Integer.parseInt(scan.nextLine());
-                                             switch (temp) {
-                                                 case 1:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tBag: " + Arrays.toString(player.inventory));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.inventory[tempa] != null){
-                                                             System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                                             player.inventory[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_15;
-                                                     }
-                                                     break OUTER_15;
-                                                 case 2:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.equipment[tempa] != null){
-                                                             System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                                             player.equipment[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_15;
-                                                     }
-                                                     break OUTER_15;
-                                                 default:
-                                                     System.out.println("Please try again and enter a valid answer.");
-                                                     break;
+                                                 System.out.println("You do not have an item in that slot.");
                                              }
-                                         }catch(NumberFormatException e){
-                                             System.out.println("Please try again and enter a number.");
+                                             else
+                                                 System.out.println("You do not have an item in that slot.");
+                                         }
+                                         catch(NumberFormatException e){
+                                             System.out.println("Please enter a number.");
                                              break;
                                          }
                                          break;
+                                    case "item stats":
+                                        System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                        try {
+                                            int temp = Integer.parseInt(scan.nextLine());
+                                            switch (temp) {
+                                                case 1:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.inventory[tempa] != null){
+                                                            System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                            player.inventory[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_15;
+                                                    }
+                                                    break OUTER_15;
+                                                case 2:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.equipment[tempa] != null){
+                                                            System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                            player.equipment[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_15;
+                                                    }
+                                                    break OUTER_15;
+                                                default:
+                                                    System.out.println("Please try again and enter a valid answer.");
+                                                    break;
+                                            }
+                                        }catch(NumberFormatException e){
+                                            System.out.println("Please try again and enter a number.");
+                                            break;
+                                        }
+                                        break;
                                      case "stats":
                                          player.showStats();
                                          break;
@@ -3779,74 +3921,78 @@ public class HOD_GAME {
                                          break;
                                      case "use":
                                          System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
-                                        System.out.println("\t" + Arrays.toString(player.inventory));
-                                        try{
-                                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                            if(player.inventory[tempa] != null){
-                                                if(player.inventory[tempa].typeCheckConsumable()){
-                                                    System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                    player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                         System.out.println("\t" + Arrays.toString(player.inventory));
+                                         try{
+                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                             if(tempa < player.inventory.length){
+                                                if(player.inventory[tempa] != null){
+                                                    if(player.inventory[tempa].typeCheckConsumable()){
+                                                        System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                        player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                        player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                    }
+                                                    else
+                                                        System.out.println("That is not a usable item.");
                                                 }
                                                 else
-                                                    System.out.println("That is not a usable item.");
-                                            }
-                                            else
-                                                System.out.println("You do not have an item in that slot.");
-                                        }
-                                        catch(NumberFormatException e){
-                                            System.out.println("Please enter a number.");
-                                            break;
-                                        }
-                                        break;
-                                     case "item stats":
-                                         System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
-                                         try {
-                                             int temp = Integer.parseInt(scan.nextLine());
-                                             switch (temp) {
-                                                 case 1:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tBag: " + Arrays.toString(player.inventory));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.inventory[tempa] != null){
-                                                             System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                                             player.inventory[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_17;
-                                                     }
-                                                     break OUTER_17;
-                                                 case 2:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.equipment[tempa] != null){
-                                                             System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                                             player.equipment[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_17;
-                                                     }
-                                                     break OUTER_17;
-                                                 default:
-                                                     System.out.println("Please try again and enter a valid answer.");
-                                                     break;
+                                                 System.out.println("You do not have an item in that slot.");
                                              }
-                                         }catch(NumberFormatException e){
-                                             System.out.println("Please try again and enter a number.");
+                                             else
+                                                 System.out.println("You do not have an item in that slot.");
+                                         }
+                                         catch(NumberFormatException e){
+                                             System.out.println("Please enter a number.");
                                              break;
                                          }
                                          break;
+                                    case "item stats":
+                                        System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                        try {
+                                            int temp = Integer.parseInt(scan.nextLine());
+                                            switch (temp) {
+                                                case 1:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.inventory[tempa] != null){
+                                                            System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                            player.inventory[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_17;
+                                                    }
+                                                    break OUTER_17;
+                                                case 2:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.equipment[tempa] != null){
+                                                            System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                            player.equipment[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_17;
+                                                    }
+                                                    break OUTER_17;
+                                                default:
+                                                    System.out.println("Please try again and enter a valid answer.");
+                                                    break;
+                                            }
+                                        }catch(NumberFormatException e){
+                                            System.out.println("Please try again and enter a number.");
+                                            break;
+                                        }
+                                        break;
                                      case "stats":
                                          player.showStats();
                                          break;
@@ -3886,11 +4032,16 @@ public class HOD_GAME {
                                  System.out.println("\t" + Arrays.toString(player.inventory));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if (player.inventory[tempa] != null) {
-                                         System.out.println("You dropped your " + player.inventory[tempa].name + ".");
-                                         player.inventory = player.inventory[tempa].dropInventory(player.inventory);
-                                         break OUTER_18;
-                                     } else {
+                                     if(tempa < player.inventory.length){
+                                        if (player.inventory[tempa] != null) {
+                                            System.out.println("You dropped your " + player.inventory[tempa].name + ".");
+                                            player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                            break OUTER_18;
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
+                                     }
+                                     else {
                                          System.out.println("You do not have an item in that slot. Please try again.");
                                      }
                                  } catch (NumberFormatException e) {
@@ -3903,12 +4054,17 @@ public class HOD_GAME {
                                  System.out.println("\t" + Arrays.toString(player.equipment));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if (player.equipment[tempa] != null) {
-                                         System.out.println("You dropped your " + player.equipment[tempa].name + ".");
-                                         player.stats = player.equipment[tempa].SUBstats(player.stats);
-                                         player.equipment = player.equipment[tempa].dropEquipment(player.equipment);
-                                         break OUTER_18;
-                                     } else {
+                                     if(tempa < player.equipment.length){
+                                        if (player.equipment[tempa] != null) {
+                                            System.out.println("You dropped your " + player.equipment[tempa].name + ".");
+                                            player.stats = player.equipment[tempa].SUBstats(player.stats);
+                                            player.equipment = player.equipment[tempa].dropEquipment(player.equipment);
+                                            break OUTER_18;
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
+                                     }
+                                     else {
                                          System.out.println("You do not have an item in that slot. Please try again.");
                                      }
                                  } catch (NumberFormatException e) {
@@ -3931,13 +4087,17 @@ public class HOD_GAME {
                         System.out.println("\t" + Arrays.toString(player.inventory));
                         try{
                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                            if(player.inventory[tempa] != null){
-                                System.out.println("You equipped your " + player.inventory[tempa].name + ".");
-                                player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                Items[][] temp = player.inventory[tempa].equip(player.inventory, player.equipment);
-                                player.inventory = temp[0];
-                                player.equipment = temp[1];
-                                break;
+                            if(tempa < player.inventory.length){
+                                if(player.inventory[tempa] != null){
+                                    System.out.println("You equipped your " + player.inventory[tempa].name + ".");
+                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                    Items[][] temp = player.inventory[tempa].equip(player.inventory, player.equipment);
+                                    player.inventory = temp[0];
+                                    player.equipment = temp[1];
+                                    break;
+                                }
+                                else
+                                    System.out.println("You do not have an item in that slot.");
                             }
                             else
                                 System.out.println("You do not have an equipped item in that slot.");
@@ -3957,13 +4117,17 @@ public class HOD_GAME {
                         System.out.println("\t" + Arrays.toString(player.equipment));
                         try{
                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                            if(player.equipment[tempa] != null){
-                                System.out.println("You unequipped your " + player.equipment[tempa].name + ".");
-                                player.stats = player.equipment[tempa].SUBstats(player.stats);
-                                Items[][] temp = player.equipment[tempa].unequip(player.inventory, player.equipment);
-                                player.inventory = temp[0];
-                                player.equipment = temp[1];
-                                break;
+                            if(tempa < player.equipment.length){
+                                if(player.equipment[tempa] != null){
+                                    System.out.println("You unequipped your " + player.equipment[tempa].name + ".");
+                                    player.stats = player.equipment[tempa].SUBstats(player.stats);
+                                    Items[][] temp = player.equipment[tempa].unequip(player.inventory, player.equipment);
+                                    player.inventory = temp[0];
+                                    player.equipment = temp[1];
+                                    break;
+                                }
+                                else
+                                    System.out.println("You do not have an item in that slot.");
                             }
                             else
                                 System.out.println("You do not have an equipped item in that slot.");
@@ -3982,14 +4146,18 @@ public class HOD_GAME {
                      System.out.println("\t" + Arrays.toString(player.inventory));
                      try{
                          int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                         if(player.inventory[tempa] != null){
-                             if(player.inventory[tempa].typeCheckConsumable()){
-                                 System.out.println("You use " + player.inventory[tempa].name + ".");
-                                 player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                 player.inventory = player.inventory[tempa].dropInventory(player.inventory);
-                             }
-                             else
-                                 System.out.println("That is not a usable item.");
+                         if(tempa < player.inventory.length){
+                            if(player.inventory[tempa] != null){
+                                if(player.inventory[tempa].typeCheckConsumable()){
+                                    System.out.println("You use " + player.inventory[tempa].name + ".");
+                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                    player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                }
+                                else
+                                    System.out.println("That is not a usable item.");
+                            }
+                            else
+                                System.out.println("You do not have an item in that slot.");
                          }
                          else
                              System.out.println("You do not have an item in that slot.");
@@ -4009,9 +4177,13 @@ public class HOD_GAME {
                                  System.out.println("\tBag: " + Arrays.toString(player.inventory));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if(player.inventory[tempa] != null){
-                                         System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                         player.inventory[tempa].getStats();
+                                     if(tempa < player.inventory.length){
+                                        if(player.inventory[tempa] != null){
+                                            System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                            player.inventory[tempa].getStats();
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
                                      }
                                      else{
                                          System.out.println("You do not have an item in that slot. Please try again.");
@@ -4026,9 +4198,13 @@ public class HOD_GAME {
                                  System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if(player.equipment[tempa] != null){
-                                         System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                         player.equipment[tempa].getStats();
+                                     if(tempa < player.equipment.length){
+                                        if(player.equipment[tempa] != null){
+                                            System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                            player.equipment[tempa].getStats();
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
                                      }
                                      else{
                                          System.out.println("You do not have an item in that slot. Please try again.");
