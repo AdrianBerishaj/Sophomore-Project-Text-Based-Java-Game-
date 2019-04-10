@@ -23,11 +23,11 @@ public class GUI {
 
     JFrame window;
     Container cont;
-    JPanel titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel;
+    JPanel titleNamePanel, startButtonPanel, mainTextPanel;
     JLabel titleNameLabel;
     Font titleFont = new Font("Arial", Font.PLAIN, 50);
     Font textFont = new Font("Arial", Font.PLAIN, 30);
-    JButton startButton, choice1, choice2, choice3, choice4;
+    JButton startButton;
     JTextArea mainTextArea;
     
     
@@ -91,14 +91,8 @@ public class GUI {
         mainTextArea.setFont(textFont);
         mainTextArea.setLineWrap(true);
         mainTextPanel.add(mainTextArea);
-        
-        choiceButtonPanel = new JPanel();
-        choiceButtonPanel.setBounds(250,350,300,150);
-        choiceButtonPanel.setBackground(Color.black);
-        choiceButtonPanel.setLayout(new GridLayout(4,1));
-        cont.add(choiceButtonPanel);
-        
-        
+   
+       
     }
     
     public class TitleScreenHandler implements ActionListener{
