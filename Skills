@@ -20,7 +20,7 @@ public class Skills {
     }
     public int use(int[] stats){
         if(uses == true){
-            if(name.equalsIgnoreCase("Slash")){  //For Knight
+            if(name.equalsIgnoreCase("Dash Attack")){  //For Knight
                 int totaldmg = (new Random().nextInt(dmg) + 1) + (new Random().nextInt(dmg) + 1) + (new Random().nextInt(dmg) + 1) + (new Random().nextInt(stats[1] + 1));
                 this.uses = false;
                 return totaldmg;  //Does a random amount of damage = 3 * Random numbers (0 < random <= dmg)
@@ -50,8 +50,8 @@ public class Skills {
         this.uses = true;
     }
     public String getSkillInfo(){
-        if(name.equalsIgnoreCase("Slash")){  //For Knight
-                String s = "SLASH - Does a random amount of damage to the target. It is calculated by adding three randomly generated numbers that range from 1 to 15 and one randomly generated number capped by your Strength stat.";
+        if(name.equalsIgnoreCase("Dash Attack")){  //For Knight
+                String s = "DASH ATTACK - Does a random amount of damage to the target. It is calculated by adding three randomly generated numbers that range from 1 to 15 and one randomly generated number capped by your Strength stat.";
                 return s;
             }
             if(name.equalsIgnoreCase("Rapid Fire")){  //For Ranger
