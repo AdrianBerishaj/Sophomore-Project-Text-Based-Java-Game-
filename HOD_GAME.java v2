@@ -104,6 +104,7 @@ public class HOD_GAME {
                         player.help();
                         break;
                     case "forward":
+                    case "f":
                         area1_pp = area1_pp.getForeLink();
                         System.out.println(area1_pp.getData());
                         switch (area1_pp.getData()) {
@@ -129,6 +130,7 @@ public class HOD_GAME {
                                         OUTER_1:
                                         switch (input) {
                                             case "attack":
+                                            case "a":
                                                 if (player.stats[2]>=bounty_hunter.enemyStats[3]) {
                                                     int dmgDealt = rand.nextInt(player.stats[1]);
                                                     int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
@@ -403,6 +405,7 @@ public class HOD_GAME {
                                     OUTER_2:
                                     switch (input) {
                                         case "attack":
+                                        case "a":
                                             if (player.stats[2]>=a1_enemy.enemyStats[3]) {
                                                 int dmgDealt = rand.nextInt(player.stats[1]);
                                                 int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
@@ -692,6 +695,7 @@ public class HOD_GAME {
                                     OUTER_3:
                                     switch (input) {
                                         case "attack":
+                                        case "a":
                                             if (player.stats[2]>=bigBoi.enemyStats[3]) {
                                                 int dmgDealt = rand.nextInt(player.stats[1]);
                                                 int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
@@ -1179,6 +1183,7 @@ public class HOD_GAME {
                      player.help();
                      break;
                  case "forward":
+                 case "f":
                      area2_pp = area2_pp.getForeLink();
                      System.out.println(area2_pp.getData());
                      switch (area2_pp.getData()) {
@@ -1214,6 +1219,7 @@ public class HOD_GAME {
                                      OUTER_6:
                                      switch (input) {
                                          case "attack":
+                                         case "a":
                                              if (player.stats[2]>=Giant_Angry_Thing.enemyStats[3]) {
                                                  int dmgDealt = rand.nextInt(player.stats[1]);
                                                  int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
@@ -1483,6 +1489,7 @@ public class HOD_GAME {
                                  OUTER_7:
                                  switch (input) {
                                      case "attack":
+                                     case "a":
                                          if (player.stats[2]>=a2_enemy.enemyStats[3]) {
                                              int dmgDealt = rand.nextInt(player.stats[1]);
                                              int EdmgDealt = rand.nextInt(a2_enemy.enemyStats[2]);
@@ -1769,6 +1776,7 @@ public class HOD_GAME {
                                  OUTER_8:
                                  switch (input) {
                                      case "attack":
+                                     case "a":
                                          if (player.stats[2]>=bigBoi.enemyStats[3]) {
                                              int dmgDealt = rand.nextInt(player.stats[1]);
                                              int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
@@ -2253,6 +2261,7 @@ public class HOD_GAME {
                      player.help();
                      break;
                  case "forward":
+                 case "f":
                      area3_pp = area3_pp.getForeLink();
                      System.out.println(area3_pp.getData());
                      switch (area3_pp.getData()) {
@@ -2287,6 +2296,7 @@ public class HOD_GAME {
                                      OUTER_11:
                                      switch (input) {
                                          case "attack":
+                                         case "a":
                                              if (player.stats[2]>=Hellish_Abomination.enemyStats[3]) {
                                                  int dmgDealt = rand.nextInt(player.stats[1]);
                                                  int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
@@ -2549,6 +2559,7 @@ public class HOD_GAME {
                                  OUTER_12:
                                  switch (input) {
                                      case "attack":
+                                     case "a":
                                          if (player.stats[2]>=a3_enemy.enemyStats[3]) {
                                              int dmgDealt = rand.nextInt(player.stats[1]);
                                              int EdmgDealt = rand.nextInt(a3_enemy.enemyStats[2]);
@@ -2829,6 +2840,7 @@ public class HOD_GAME {
                                  OUTER_13:
                                  switch (input) {
                                      case "attack":
+                                     case "a":
                                          if (player.stats[2]>=bigBoi.enemyStats[3]) {
                                              int dmgDealt = rand.nextInt(player.stats[1]);
                                              int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
@@ -3309,6 +3321,7 @@ public class HOD_GAME {
                      player.help();
                      break;
                  case "forward":
+                 case "f":
                      area4_pp = area4_pp.getForeLink();
                      System.out.println(area4_pp.getData());
                      switch (area4_pp.getData()) {
@@ -3335,6 +3348,7 @@ public class HOD_GAME {
                                  OUTER_15:
                                  switch (input) {
                                      case "attack":
+                                     case "a":
                                          if (player.stats[2]>=a4_enemy.enemyStats[3]) {
                                              int dmgDealt = rand.nextInt(player.stats[1]);
                                              int EdmgDealt = rand.nextInt(a4_enemy.enemyStats[2]);
@@ -3609,6 +3623,7 @@ public class HOD_GAME {
                                  OUTER_17:
                                  switch (input) {
                                      case "attack":
+                                     case "a":
                                          if (player.stats[2]>=bigBoi.enemyStats[3]) {
                                              int dmgDealt = rand.nextInt(player.stats[1]);
                                              int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
