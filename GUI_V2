@@ -98,29 +98,7 @@ public class GUI {
         choiceButtonPanel.setLayout(new GridLayout(4,1));
         cont.add(choiceButtonPanel);
         
-        choice1 = new JButton("Choice 1");
-        choice1.setBackground(Color.black);
-        choice1.setForeground(Color.white);
-        choice1.setFont(textFont);
-        choiceButtonPanel.add(choice1);
         
-        choice2 = new JButton("Choice 2");
-        choice2.setBackground(Color.black);
-        choice2.setForeground(Color.white);
-        choice2.setFont(textFont);
-        choiceButtonPanel.add(choice2);
-        
-        choice3 = new JButton("Choice 3");
-        choice3.setBackground(Color.black);
-        choice3.setForeground(Color.white);
-        choice3.setFont(textFont);
-        choiceButtonPanel.add(choice3);
-        
-        choice4 = new JButton("Choice 4");
-        choice4.setBackground(Color.black);
-        choice4.setForeground(Color.white);
-        choice4.setFont(textFont);
-        choiceButtonPanel.add(choice4);
     }
     
     public class TitleScreenHandler implements ActionListener{
