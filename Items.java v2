@@ -90,13 +90,13 @@ public class Items<E>
       
        System.arraycopy(equipment, 0, new_equipment, 0, new_equipment.length);  //make new array copy of old (passed) array (return passed array if array not null)
        
-       for(int y = 0; y<new_equipment.length; y++)  //loop checks to see if equipment is already "full"
+       for(int y = 0; y < new_equipment.length; y++)  //loop checks to see if equipment is already "full"
        {
            if(new_equipment[y]!=null)
-           full_slots++;
+            full_slots++;
        }
        
-      if(full_slots==new_equipment.length-1)
+      if(full_slots == new_equipment.length)
       {
           System.out.println("\n\tYour equipment is full! cannot equip any more items!");
           return equipment;
@@ -124,10 +124,10 @@ public class Items<E>
        for(int y = 0; y<new_inventory.length; y++)  //loop checks to see if inventory is already "full"
        {
            if(new_inventory[y]!=null)
-           full_slots++;
+            full_slots++;
        }
        
-      if(full_slots==new_inventory.length-1)
+      if(full_slots==new_inventory.length)
       {
           System.out.println("\n\tYour inventory is full! You cannot carry any more items!");
           return inventory;
@@ -169,10 +169,12 @@ public class Items<E>
       
       for(int i = 0; i < new_inventory.length; i++)
       {
-          if(new_inventory[i].equals(this))
-          {
-              new_inventory[i] = null;
-              break;
+          if(new_inventory[i] != null){
+            if(new_inventory[i].equals(this))
+            {
+                new_inventory[i] = null;
+                break;
+            }
           }
           
       }
@@ -186,10 +188,12 @@ public class Items<E>
       
       for(int i = 0; i < new_equipment.length; i++)
       {
-          if(new_equipment[i].equals(this))
-          {
-              new_equipment[i] = null;
-              break;
+          if(new_equipment[i] != null){
+            if(new_equipment[i].equals(this))
+            {
+                new_equipment[i] = null;
+                break;
+            }
           }
           
       }
@@ -203,9 +207,11 @@ public class Items<E>
       Items[] new_equipment = (Items[]) new Items[equipment.length];
       System.arraycopy(equipment, 0, new_equipment, 0, new_equipment.length);
        for(int i = 0; i < new_inventory.length; i++){
-          if(new_inventory[i].equals(this)) {
-               temp++;
-               break;
+           if(new_inventory[i] != null){
+            if(new_inventory[i].equals(this)) {
+                 temp++;
+                 break;
+            }
            }
        }
       if(temp > 0){
@@ -225,10 +231,12 @@ public class Items<E>
       Items[] new_equipment = (Items[]) new Items[equipment.length];
       System.arraycopy(equipment, 0, new_equipment, 0, new_equipment.length);
        for(int i = 0; i < new_equipment.length; i++){
-            if(new_equipment[i].equals(this)) {
-                temp++;
-                break;
-            }
+           if(new_equipment[i] != null){
+                if(new_equipment[i].equals(this)) {
+                    temp++;
+                    break;
+                }
+           }
        }
       if(temp > 0){
           new_equipment = this.dropEquipment(equipment);
@@ -247,6 +255,18 @@ public class Items<E>
         }
     }
     return false;
+  }
+  public boolean isFull(Items[] array){
+      int full_slots = 0;
+      for(int y = 0; y < array.length; y++)  //loop checks to see if inventory is already "full"
+       {
+           if(array[y]!=null)
+                full_slots++;
+       }
+      if(full_slots == array.length)
+          return true;
+      else
+          return false;
   }
     @Override
     public boolean equals(Object object) 
