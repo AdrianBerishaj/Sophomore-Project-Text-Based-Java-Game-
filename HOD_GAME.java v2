@@ -201,7 +201,7 @@ public class HOD_GAME {
                                         if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                             if (player.stats[2]>=bounty_hunter.enemyStats[3]) {
                                                 int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
-                                                int HPgained = player.skill.use();
+                                                int HPgained = player.skill.use(player.stats);
                                                 System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                                 player.stats[0] += HPgained;
                                                 System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -218,7 +218,7 @@ public class HOD_GAME {
                                                 }
                                             }
                                             if (player.stats[2]<bounty_hunter.enemyStats[3]) {
-                                                int HPgained = player.skill.use();
+                                                int HPgained = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
                                                 System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                 player.stats[0] -= EdmgDealt;
@@ -238,7 +238,7 @@ public class HOD_GAME {
                                         }
                                         else{
                                             if (player.stats[2]>=bounty_hunter.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
+                                                int dmgDealt = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
                                                 System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                                 bounty_hunter.enemyStats[1] -= dmgDealt;
@@ -266,7 +266,7 @@ public class HOD_GAME {
                                                 }
                                             }
                                             if (player.stats[2]<bounty_hunter.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
+                                                int dmgDealt = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
                                                 System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                 player.stats[0] -= EdmgDealt;
@@ -476,7 +476,7 @@ public class HOD_GAME {
                                         if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                             if (player.stats[2]>=a1_enemy.enemyStats[3]) {
                                                 int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                                int HPgained = player.skill.use();
+                                                int HPgained = player.skill.use(player.stats);
                                                 System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                                 player.stats[0] += HPgained;
                                                 System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -493,7 +493,7 @@ public class HOD_GAME {
                                                 }
                                             }
                                             if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                                int HPgained = player.skill.use();
+                                                int HPgained = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                                 System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                 player.stats[0] -= EdmgDealt;
@@ -513,7 +513,7 @@ public class HOD_GAME {
                                         }
                                         else{
                                             if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
+                                                int dmgDealt = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                                 System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                                 a1_enemy.enemyStats[1] -= dmgDealt;
@@ -539,7 +539,7 @@ public class HOD_GAME {
                                                 }
                                             }
                                             if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
+                                                int dmgDealt = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                                 System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                 player.stats[0] -= EdmgDealt;
@@ -760,7 +760,7 @@ public class HOD_GAME {
                                 if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                     if (player.stats[2]>=a1_enemy.enemyStats[3]) {
                                         int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        int HPgained = player.skill.use();
+                                        int HPgained = player.skill.use(player.stats);
                                         System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                         player.stats[0] += HPgained;
                                         System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -777,7 +777,7 @@ public class HOD_GAME {
                                         }
                                     }
                                     if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                        int HPgained = player.skill.use();
+                                        int HPgained = player.skill.use(player.stats);
                                         int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                         System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                         player.stats[0] -= EdmgDealt;
@@ -797,7 +797,7 @@ public class HOD_GAME {
                                 }
                                 else{
                                     if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                        int dmgDealt = player.skill.use();
+                                        int dmgDealt = player.skill.use(player.stats);
                                         int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                         System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                         a1_enemy.enemyStats[1] -= dmgDealt;
@@ -823,7 +823,7 @@ public class HOD_GAME {
                                         }
                                     }
                                     if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                        int dmgDealt = player.skill.use();
+                                        int dmgDealt = player.skill.use(player.stats);
                                         int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                         System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                         player.stats[0] -= EdmgDealt;
@@ -1274,7 +1274,7 @@ public class HOD_GAME {
                                         if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                             if (player.stats[2]>=Giant_Angry_Thing.enemyStats[3]) {
                                                 int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
-                                                int HPgained = player.skill.use();
+                                                int HPgained = player.skill.use(player.stats);
                                                 System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                                 player.stats[0] += HPgained;
                                                 System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -1290,7 +1290,7 @@ public class HOD_GAME {
                                                 }
                                             }
                                             if (player.stats[2]<Giant_Angry_Thing.enemyStats[3]) {
-                                                int HPgained = player.skill.use();
+                                                int HPgained = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
                                                 System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                 player.stats[0] -= EdmgDealt;
@@ -1309,7 +1309,7 @@ public class HOD_GAME {
                                         }
                                         else{
                                             if (player.stats[2]>=Giant_Angry_Thing.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
+                                                int dmgDealt = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
                                                 System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                                 Giant_Angry_Thing.enemyStats[1] -= dmgDealt;
@@ -1336,7 +1336,7 @@ public class HOD_GAME {
                                                 }
                                             }
                                             if (player.stats[2]<Giant_Angry_Thing.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
+                                                int dmgDealt = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
                                                 System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                 player.stats[0] -= EdmgDealt;
@@ -1541,7 +1541,7 @@ public class HOD_GAME {
                                         if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                             if (player.stats[2]>=a1_enemy.enemyStats[3]) {
                                                 int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                                int HPgained = player.skill.use();
+                                                int HPgained = player.skill.use(player.stats);
                                                 System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                                 player.stats[0] += HPgained;
                                                 System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -1557,7 +1557,7 @@ public class HOD_GAME {
                                                 }
                                             }
                                             if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                                int HPgained = player.skill.use();
+                                                int HPgained = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                                 System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                 player.stats[0] -= EdmgDealt;
@@ -1576,7 +1576,7 @@ public class HOD_GAME {
                                         }
                                         else{
                                             if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
+                                                int dmgDealt = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                                 System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                                 a1_enemy.enemyStats[1] -= dmgDealt;
@@ -1601,7 +1601,7 @@ public class HOD_GAME {
                                                 }
                                             }
                                             if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
+                                                int dmgDealt = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                                 System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                 player.stats[0] -= EdmgDealt;
@@ -1822,7 +1822,7 @@ public class HOD_GAME {
                                 if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                     if (player.stats[2]>=a1_enemy.enemyStats[3]) {
                                         int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        int HPgained = player.skill.use();
+                                        int HPgained = player.skill.use(player.stats);
                                         System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                         player.stats[0] += HPgained;
                                         System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -1838,7 +1838,7 @@ public class HOD_GAME {
                                         }
                                     }
                                     if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                        int HPgained = player.skill.use();
+                                        int HPgained = player.skill.use(player.stats);
                                         int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                         System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                         player.stats[0] -= EdmgDealt;
@@ -1857,7 +1857,7 @@ public class HOD_GAME {
                                 }
                                 else{
                                     if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                        int dmgDealt = player.skill.use();
+                                        int dmgDealt = player.skill.use(player.stats);
                                         int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                         System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                         a1_enemy.enemyStats[1] -= dmgDealt;
@@ -1882,7 +1882,7 @@ public class HOD_GAME {
                                         }
                                     }
                                     if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                        int dmgDealt = player.skill.use();
+                                        int dmgDealt = player.skill.use(player.stats);
                                         int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                         System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                         player.stats[0] -= EdmgDealt;
@@ -2331,7 +2331,7 @@ public class HOD_GAME {
                                         if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                             if (player.stats[2]>=Hellish_Abomination.enemyStats[3]) {
                                                 int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
-                                                int HPgained = player.skill.use();
+                                                int HPgained = player.skill.use(player.stats);
                                                 System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                                 player.stats[0] += HPgained;
                                                 System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -2346,7 +2346,7 @@ public class HOD_GAME {
                                                 }
                                             }
                                             if (player.stats[2]<Hellish_Abomination.enemyStats[3]) {
-                                                int HPgained = player.skill.use();
+                                                int HPgained = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
                                                 System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                 player.stats[0] -= EdmgDealt;
@@ -2364,7 +2364,7 @@ public class HOD_GAME {
                                         }
                                         else{
                                             if (player.stats[2]>=Hellish_Abomination.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
+                                                int dmgDealt = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
                                                 System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                                 Hellish_Abomination.enemyStats[1] -= dmgDealt;
@@ -2391,7 +2391,7 @@ public class HOD_GAME {
                                                 }
                                             }
                                             if (player.stats[2]<Hellish_Abomination.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
+                                                int dmgDealt = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
                                                 System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                 player.stats[0] -= EdmgDealt;
@@ -2589,7 +2589,7 @@ public class HOD_GAME {
                                         if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                             if (player.stats[2]>=a1_enemy.enemyStats[3]) {
                                                 int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                                int HPgained = player.skill.use();
+                                                int HPgained = player.skill.use(player.stats);
                                                 System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                                 player.stats[0] += HPgained;
                                                 System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -2604,7 +2604,7 @@ public class HOD_GAME {
                                                 }
                                             }
                                             if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                                int HPgained = player.skill.use();
+                                                int HPgained = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                                 System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                 player.stats[0] -= EdmgDealt;
@@ -2622,7 +2622,7 @@ public class HOD_GAME {
                                         }
                                         else{
                                             if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
+                                                int dmgDealt = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                                 System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                                 a1_enemy.enemyStats[1] -= dmgDealt;
@@ -2646,7 +2646,7 @@ public class HOD_GAME {
                                                 }
                                             }
                                             if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
+                                                int dmgDealt = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                                 System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                 player.stats[0] -= EdmgDealt;
@@ -2864,7 +2864,7 @@ public class HOD_GAME {
                                 if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                     if (player.stats[2]>=a1_enemy.enemyStats[3]) {
                                         int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        int HPgained = player.skill.use();
+                                        int HPgained = player.skill.use(player.stats);
                                         System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                         player.stats[0] += HPgained;
                                         System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -2879,7 +2879,7 @@ public class HOD_GAME {
                                         }
                                     }
                                     if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                        int HPgained = player.skill.use();
+                                        int HPgained = player.skill.use(player.stats);
                                         int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                         System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                         player.stats[0] -= EdmgDealt;
@@ -2897,7 +2897,7 @@ public class HOD_GAME {
                                 }
                                 else{
                                     if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                        int dmgDealt = player.skill.use();
+                                        int dmgDealt = player.skill.use(player.stats);
                                         int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                         System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                         a1_enemy.enemyStats[1] -= dmgDealt;
@@ -2921,7 +2921,7 @@ public class HOD_GAME {
                                         }
                                     }
                                     if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                        int dmgDealt = player.skill.use();
+                                        int dmgDealt = player.skill.use(player.stats);
                                         int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                         System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                         player.stats[0] -= EdmgDealt;
@@ -3353,7 +3353,7 @@ public class HOD_GAME {
                                         if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                             if (player.stats[2]>=a1_enemy.enemyStats[3]) {
                                                 int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                                int HPgained = player.skill.use();
+                                                int HPgained = player.skill.use(player.stats);
                                                 System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                                 player.stats[0] += HPgained;
                                                 System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -3367,7 +3367,7 @@ public class HOD_GAME {
                                                 }
                                             }
                                             if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                                int HPgained = player.skill.use();
+                                                int HPgained = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                                 System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                 player.stats[0] -= EdmgDealt;
@@ -3384,7 +3384,7 @@ public class HOD_GAME {
                                         }
                                         else{
                                             if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
+                                                int dmgDealt = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                                 System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                                 a1_enemy.enemyStats[1] -= dmgDealt;
@@ -3407,7 +3407,7 @@ public class HOD_GAME {
                                                 }
                                             }
                                             if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
+                                                int dmgDealt = player.skill.use(player.stats);
                                                 int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                                 System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                 player.stats[0] -= EdmgDealt;
@@ -3622,7 +3622,7 @@ public class HOD_GAME {
                                 if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                     if (player.stats[2]>=a1_enemy.enemyStats[3]) {
                                         int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        int HPgained = player.skill.use();
+                                        int HPgained = player.skill.use(player.stats);
                                         System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                         player.stats[0] += HPgained;
                                         System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -3636,7 +3636,7 @@ public class HOD_GAME {
                                         }
                                     }
                                     if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                        int HPgained = player.skill.use();
+                                        int HPgained = player.skill.use(player.stats);
                                         int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                         System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                         player.stats[0] -= EdmgDealt;
@@ -3653,7 +3653,7 @@ public class HOD_GAME {
                                 }
                                 else{
                                     if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                        int dmgDealt = player.skill.use();
+                                        int dmgDealt = player.skill.use(player.stats);
                                         int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                         System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                         a1_enemy.enemyStats[1] -= dmgDealt;
@@ -3676,7 +3676,7 @@ public class HOD_GAME {
                                         }
                                     }
                                     if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                        int dmgDealt = player.skill.use();
+                                        int dmgDealt = player.skill.use(player.stats);
                                         int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                         System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                         player.stats[0] -= EdmgDealt;
@@ -3988,4 +3988,3 @@ public class HOD_GAME {
         
     }//MAIN END
 }//CLASS (HOD_GAME) END
-  
