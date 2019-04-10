@@ -312,7 +312,7 @@ public class HOD_GAME {
                                     System.out.println("\t" + Arrays.toString(player.inventory));
                                     try{
                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                        if(player.inventory[tempa] != null || !player.inventory[tempa].typeCheckComsumable()){
+                                        if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
                                             System.out.println("You use " + player.inventory[tempa].name + ".");
                                             player.stats = player.inventory[tempa].ADDstats(player.stats);
                                             player.inventory = player.inventory[tempa].dropInventory(player.inventory);
@@ -583,7 +583,7 @@ public class HOD_GAME {
                                     System.out.println("\t" + Arrays.toString(player.inventory));
                                     try{
                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                        if(player.inventory[tempa] != null || !player.inventory[tempa].typeCheckComsumable()){
+                                        if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
                                             System.out.println("You use " + player.inventory[tempa].name + ".");
                                             player.stats = player.inventory[tempa].ADDstats(player.stats);
                                             player.inventory = player.inventory[tempa].dropInventory(player.inventory);
@@ -867,7 +867,7 @@ public class HOD_GAME {
                             System.out.println("\t" + Arrays.toString(player.inventory));
                             try{
                                 int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                if(player.inventory[tempa] != null || !player.inventory[tempa].typeCheckComsumable()){
+                                if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
                                     System.out.println("You use " + player.inventory[tempa].name + ".");
                                     player.stats = player.inventory[tempa].ADDstats(player.stats);
                                     player.inventory = player.inventory[tempa].dropInventory(player.inventory);
@@ -1058,7 +1058,7 @@ public class HOD_GAME {
                         System.out.println("\t" + Arrays.toString(player.inventory));
                         try{
                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                            if(player.inventory[tempa] != null || !player.inventory[tempa].typeCheckComsumable()){
+                            if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
                                 System.out.println("You use " + player.inventory[tempa].name + ".");
                                 player.stats = player.inventory[tempa].ADDstats(player.stats);
                                 player.inventory = player.inventory[tempa].dropInventory(player.inventory);
@@ -1381,7 +1381,7 @@ public class HOD_GAME {
                                     System.out.println("\t" + Arrays.toString(player.inventory));
                                     try{
                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                        if(player.inventory[tempa] != null || !player.inventory[tempa].typeCheckComsumable()){
+                                        if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
                                             System.out.println("You use " + player.inventory[tempa].name + ".");
                                             player.stats = player.inventory[tempa].ADDstats(player.stats);
                                             player.inventory = player.inventory[tempa].dropInventory(player.inventory);
@@ -1644,7 +1644,7 @@ public class HOD_GAME {
                                     System.out.println("\t" + Arrays.toString(player.inventory));
                                     try{
                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                        if(player.inventory[tempa] != null || !player.inventory[tempa].typeCheckComsumable()){
+                                        if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
                                             System.out.println("You use " + player.inventory[tempa].name + ".");
                                             player.stats = player.inventory[tempa].ADDstats(player.stats);
                                             player.inventory = player.inventory[tempa].dropInventory(player.inventory);
@@ -1925,7 +1925,7 @@ public class HOD_GAME {
                             System.out.println("\t" + Arrays.toString(player.inventory));
                             try{
                                 int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                if(player.inventory[tempa] != null || !player.inventory[tempa].typeCheckComsumable()){
+                                if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
                                     System.out.println("You use " + player.inventory[tempa].name + ".");
                                     player.stats = player.inventory[tempa].ADDstats(player.stats);
                                     player.inventory = player.inventory[tempa].dropInventory(player.inventory);
@@ -2116,7 +2116,7 @@ public class HOD_GAME {
                         System.out.println("\t" + Arrays.toString(player.inventory));
                         try{
                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                            if(player.inventory[tempa] != null || !player.inventory[tempa].typeCheckComsumable()){
+                            if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
                                 System.out.println("You use " + player.inventory[tempa].name + ".");
                                 player.stats = player.inventory[tempa].ADDstats(player.stats);
                                 player.inventory = player.inventory[tempa].dropInventory(player.inventory);
@@ -2436,7 +2436,7 @@ public class HOD_GAME {
                                     System.out.println("\t" + Arrays.toString(player.inventory));
                                     try{
                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                        if(player.inventory[tempa] != null || !player.inventory[tempa].typeCheckComsumable()){
+                                        if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
                                             System.out.println("You use " + player.inventory[tempa].name + ".");
                                             player.stats = player.inventory[tempa].ADDstats(player.stats);
                                             player.inventory = player.inventory[tempa].dropInventory(player.inventory);
@@ -2688,7 +2688,7 @@ public class HOD_GAME {
                                     System.out.println("\t" + Arrays.toString(player.inventory));
                                     try{
                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                        if(player.inventory[tempa] != null || !player.inventory[tempa].typeCheckComsumable()){
+                                        if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
                                             System.out.println("You use " + player.inventory[tempa].name + ".");
                                             player.stats = player.inventory[tempa].ADDstats(player.stats);
                                             player.inventory = player.inventory[tempa].dropInventory(player.inventory);
@@ -2963,7 +2963,7 @@ public class HOD_GAME {
                             System.out.println("\t" + Arrays.toString(player.inventory));
                             try{
                                 int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                if(player.inventory[tempa] != null || !player.inventory[tempa].typeCheckComsumable()){
+                                if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
                                     System.out.println("You use " + player.inventory[tempa].name + ".");
                                     player.stats = player.inventory[tempa].ADDstats(player.stats);
                                     player.inventory = player.inventory[tempa].dropInventory(player.inventory);
@@ -3154,7 +3154,7 @@ public class HOD_GAME {
                         System.out.println("\t" + Arrays.toString(player.inventory));
                         try{
                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                            if(player.inventory[tempa] != null || !player.inventory[tempa].typeCheckComsumable()){
+                            if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
                                 System.out.println("You use " + player.inventory[tempa].name + ".");
                                 player.stats = player.inventory[tempa].ADDstats(player.stats);
                                 player.inventory = player.inventory[tempa].dropInventory(player.inventory);
@@ -3448,7 +3448,7 @@ public class HOD_GAME {
                                     System.out.println("\t" + Arrays.toString(player.inventory));
                                     try{
                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                        if(player.inventory[tempa] != null || !player.inventory[tempa].typeCheckComsumable()){
+                                        if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
                                             System.out.println("You use " + player.inventory[tempa].name + ".");
                                             player.stats = player.inventory[tempa].ADDstats(player.stats);
                                             player.inventory = player.inventory[tempa].dropInventory(player.inventory);
@@ -3717,7 +3717,7 @@ public class HOD_GAME {
                             System.out.println("\t" + Arrays.toString(player.inventory));
                             try{
                                 int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                if(player.inventory[tempa] != null || !player.inventory[tempa].typeCheckComsumable()){
+                                if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
                                     System.out.println("You use " + player.inventory[tempa].name + ".");
                                     player.stats = player.inventory[tempa].ADDstats(player.stats);
                                     player.inventory = player.inventory[tempa].dropInventory(player.inventory);
@@ -3908,7 +3908,7 @@ public class HOD_GAME {
                         System.out.println("\t" + Arrays.toString(player.inventory));
                         try{
                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                            if(player.inventory[tempa] != null || !player.inventory[tempa].typeCheckComsumable()){
+                            if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
                                 System.out.println("You use " + player.inventory[tempa].name + ".");
                                 player.stats = player.inventory[tempa].ADDstats(player.stats);
                                 player.inventory = player.inventory[tempa].dropInventory(player.inventory);
