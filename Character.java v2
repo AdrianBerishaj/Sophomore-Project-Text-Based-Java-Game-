@@ -399,7 +399,7 @@ public class Character<E> {
      public void help()
      {
          System.out.println("\n\n\tbasic commands:");
-         System.out.println("\tforward - move forward");
+         System.out.println("\tforward (or f) - move forward");
          System.out.println("\tback - move back");
          System.out.println("\tequipment - show player equipment");
          System.out.println("\tbag - display player inventory");
@@ -416,7 +416,7 @@ public class Character<E> {
      public void combatHelp()
      {
          System.out.println("\n\n\tcombat commands:");
-         System.out.println("\tattack - attack the enemy head on with a melee attack!");
+         System.out.println("\tattack (or a) - attack the enemy head on with a melee attack!");
          System.out.println("\tuse skill - uses your character's skill! It can only be used once per battle.");
          System.out.println("\tskill info - display info of player's skill");
          System.out.println("\tuse - use any usable item from your bag");
