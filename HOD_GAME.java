@@ -70,6 +70,7 @@ public class HOD_GAME {
                for(int i = 0; i<area1_L-1; i++)
                {
                    area1.addNode(rand.nextInt(3));
+                   //area1.addNode(0);
                }
                Area.listLength(area1);
                Area area1_pp = area1;
@@ -95,6 +96,8 @@ public class HOD_GAME {
             while (area1_cleared == false) {
                 System.out.println("\n\t\tWhat would you like to do?");
                 input = scan.nextLine();
+              OUTER_4:
+                OUTER_5:
                 switch (input) {
                     case "help":
                         player.help();
@@ -102,352 +105,303 @@ public class HOD_GAME {
                     case "forward":
                         area1_pp = area1_pp.getForeLink();
                         System.out.println(area1_pp.getData());
-                switch (area1_pp.getData()) {
-                    case 0:
-                        int area1_encounter;
-                        area1_encounter = area1.area_1_Encounter(rand.nextInt(4), player.stats[2], player.name);
-                        if(area1_encounter<1000)
-                            player.stats[0] = player.stats[0] - area1_encounter;
-                        else if(area1_encounter == 1111)
-                        {
-                            Items Bandit_Dagger = new Items("Bandit Dagger",0,2,5,0,0,0,0,0,0,0,0,0,0,0,1); //gives +2 str, +5 dex
-                            player.inventory = Bandit_Dagger.ADDinventory(player.inventory);
-                        }
-                        else if(area1_encounter == 1112)
-                        {
-                                    Enemy bounty_hunter = new Enemy(5, 100, 15, 15, 8, 5, 5, 3); 
+                        switch (area1_pp.getData()) {
+                            case 0:
+                                int area1_encounter;
+                                area1_encounter = area1.area_1_Encounter(rand.nextInt(4), player.stats[2], player.name);
+                                if(area1_encounter<1000)
+                                    player.stats[0] = player.stats[0] - area1_encounter;
+                                else if(area1_encounter == 1111)
+                                {
+                                    Items Bandit_Dagger = new Items("Bandit Dagger",0,2,5,0,0,0,0,0,0,0,0,0,0,0,1); //gives +2 str, +5 dex
+                                    player.inventory = Bandit_Dagger.ADDinventory(player.inventory);
+                                }
+                                else if(area1_encounter == 1112)
+                                {
+                                    Enemy bounty_hunter = new Enemy(5, 100, 15, 15, 8, 5, 5, 3);
                                     System.out.println("\n\n----------------------------F I G H T !!!----------------------------");
                                     System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
                                     OUTER:
-                                     while (true) {
-                                    System.out.println("\nWhat will you do " + player.name + "?");
-                                     input = scan.nextLine();
-                                     switch (input) {
-                                        //if(input.equals("ranged attack"))
-                                        //{
-                                        //
-                                        //}
-                                         case "attack":
-                                                 if (player.stats[2]>=bounty_hunter.enemyStats[3]) {
-                                                int dmgDealt = rand.nextInt(player.stats[1]);
-                                                int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
-                                                 System.out.println("The enemy has taken " + dmgDealt + " damage!");
-                                                 bounty_hunter.enemyStats[1] -= dmgDealt;
-                                                 if (bounty_hunter.enemyStats[1]<0) {
-                                                 System.out.println("ENEMY DEFEATED!!!");
-                                                 System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                 System.out.println("\n\n\tUpon killing the bounty hunter, you've looted his Bandit Dagger!");
-                                                 Items Bandit_Dagger = new Items("Bandit Dagger",0,2,5,0,0,0,0,0,0,0,0,0,0,0,1); //gives +2 str, +5 dex
-                                                 player.inventory = Bandit_Dagger.ADDinventory(player.inventory);
-                                                 player.stats[0] = MAX_HEALTH;
-                                                 player.skill.recharge();
-                                                 break OUTER;
-                                                                                }
-                                                  System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                                     player.stats[0] -= EdmgDealt;
-                                                     if (player.stats[0]<0) {
-                                                     System.out.println("YOU DIED");
+                                    while (true) {
+                                        System.out.println("\nWhat will you do " + player.name + "?");
+                                        input = scan.nextLine();
+                                        OUTER_1:
+                                        switch (input) {
+                                            case "attack":
+                                                if (player.stats[2]>=bounty_hunter.enemyStats[3]) {
+                                                    int dmgDealt = rand.nextInt(player.stats[1]);
+                                                    int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
+                                                    System.out.println("The enemy has taken " + dmgDealt + " damage!");
+                                                    bounty_hunter.enemyStats[1] -= dmgDealt;
+                                                    if (bounty_hunter.enemyStats[1]<0) {
+                                                        System.out.println("ENEMY DEFEATED!!!");
+                                                        System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                        System.out.println("\n\n\tUpon killing the bounty hunter, you've looted his Bandit Dagger!");
+                                                        Items Bandit_Dagger = new Items("Bandit Dagger",0,2,5,0,0,0,0,0,0,0,0,0,0,0,1); //gives +2 str, +5 dex
+                                                        player.inventory = Bandit_Dagger.ADDinventory(player.inventory);
+                                                        player.stats[0] = MAX_HEALTH;
+                                                        player.skill.recharge();
+                                                        break OUTER;
+                                                    }
+                                                    System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                    player.stats[0] -= EdmgDealt;
+                                                    if (player.stats[0]<0) {
+                                                        System.out.println("YOU DIED");
                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                         area1_cleared = true;
-                                                         area2_cleared = true;
-                                                         area3_cleared = true;
-                                                         area4_cleared = true;
-                                                         running = false;
-                                                         break OUTER;
-                                                                            }
-                                                                                            }
-                                    if (player.stats[2]<bounty_hunter.enemyStats[3]) {
-                                        int dmgDealt = rand.nextInt(player.stats[1]);
-                                        int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
-                                        System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area1_cleared = true;
-                                            area2_cleared = true;
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
+                                                        area1_cleared = true;
+                                                        area2_cleared = true;
+                                                        area3_cleared = true;
+                                                        area4_cleared = true;
+                                                        running = false;
+                                                        break OUTER;
+                                                    }
+                                                }
+                                                if (player.stats[2]<bounty_hunter.enemyStats[3]) {
+                                                    int dmgDealt = rand.nextInt(player.stats[1]);
+                                                    int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
+                                                    System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                    player.stats[0] -= EdmgDealt;
+                                                    if (player.stats[0]<0) {
+                                                        System.out.println("YOU DIED");
+                                                        System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                        area1_cleared = true;
+                                                        area2_cleared = true;
+                                                        area3_cleared = true;
+                                                        area4_cleared = true;
+                                                        running = false;
+                                                        break OUTER;
+                                                    }
+                                                    System.out.println("The enemy has taken " + dmgDealt + " damage!");
+                                                    bounty_hunter.enemyStats[1] -= dmgDealt;
+                                                    if (bounty_hunter.enemyStats[1]<0) {
+                                                        System.out.println("ENEMY DEFEATED!!!");
+                                                        System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                        System.out.println("\n\n\tUpon killing the bounty hunter, you've looted his Bandit Dagger!");
+                                                        Items Bandit_Dagger = new Items("Bandit Dagger",0,2,5,0,0,0,0,0,0,0,0,0,0,0,1); //gives +2 str, +5 dex
+                                                        player.inventory = Bandit_Dagger.ADDinventory(player.inventory);
+                                                        player.stats[0] = MAX_HEALTH;
+                                                        player.skill.recharge();
+                                                        break OUTER;
+                                                    }
+                                                }
+                                                break;
+                                            case "identify":
+                                                if(player.stats[5]>=7)
+                                                {
+                                                    System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
+                                                    bounty_hunter.showEnemyStats();
+                                                }
+                                                else
+                                                {
+                                                    System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
+                                                }
+                                                break;
+                                            case "use skill":
+                                                if(player.skill.uses){
+                                                    if(player.skill.getName().equalsIgnoreCase("Blessing")){
+                                                        if (player.stats[2]>=bounty_hunter.enemyStats[3]) {
+                                                            int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
+                                                            int HPgained = player.skill.use();
+                                                            System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                            player.stats[0] += HPgained;
+                                                            System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER;
+                                                            }
+                                                        }
+                                                        if (player.stats[2]<bounty_hunter.enemyStats[3]) {
+                                                            int HPgained = player.skill.use();
+                                                            int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER;
+                                                            }
+                                                            System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                            player.stats[0] += HPgained;
+                                                        }
+                                                    }
+                                                    else{
+                                                        if (player.stats[2]>=bounty_hunter.enemyStats[3]) {
+                                                            int dmgDealt = player.skill.use();
+                                                            int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
+                                                            System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
+                                                            bounty_hunter.enemyStats[1] -= dmgDealt;
+                                                            if (bounty_hunter.enemyStats[1]<0) {
+                                                                System.out.println("ENEMY DEFEATED!!!");
+                                                                System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                                System.out.println("\n\n\tUpon killing the bounty hunter, you've looted his Bandit Dagger!");
+                                                                Items Bandit_Dagger = new Items("Bandit Dagger",0,2,5,0,0,0,0,0,0,0,0,0,0,0,1); //gives +2 str, +5 dex
+                                                                player.inventory = Bandit_Dagger.ADDinventory(player.inventory);
+                                                                player.stats[0] = MAX_HEALTH;
+                                                                player.skill.recharge();
+                                                                break OUTER;
+                                                            }
+                                                            System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER;
+                                                            }
+                                                        }
+                                                        if (player.stats[2]<bounty_hunter.enemyStats[3]) {
+                                                            int dmgDealt = player.skill.use();
+                                                            int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER;
+                                                            }
+                                                            System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
+                                                            bounty_hunter.enemyStats[1] -= dmgDealt;
+                                                            if (bounty_hunter.enemyStats[1]<0) {
+                                                                System.out.println("ENEMY DEFEATED!!!");
+                                                                System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                                System.out.println("\n\n\tUpon killing the bounty hunter, you've looted his Bandit Dagger!");
+                                                                Items Bandit_Dagger = new Items("Bandit Dagger",0,2,5,0,0,0,0,0,0,0,0,0,0,0,1); //gives +2 str, +5 dex
+                                                                player.inventory = Bandit_Dagger.ADDinventory(player.inventory);
+                                                                player.stats[0] = MAX_HEALTH;
+                                                                player.skill.recharge();
+                                                                break OUTER;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                    System.out.println("You cannot use that skill again this battle!");
+                                                break;  case "skill info":
+                                                    System.out.println("\t"+player.skill.getSkillInfo());
+                                                    break;
+                                                case "equipment":
+                                                    System.out.println(Arrays.toString(player.equipment));
+                                                    break;
+                                                case "bag":
+                                                    System.out.println(Arrays.toString(player.inventory));
+                                                    break;
+                                                case "use":
+                                                    System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\t" + Arrays.toString(player.inventory));
+                                                    try{
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
+                                                            System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                            player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                            player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                        }
+                                                        else
+                                                            System.out.println("That is not a usable item or you do not have an item in that slot.");
+                                                    }
+                                                    catch(NumberFormatException e){
+                                                        System.out.println("Please enter a number.");
+                                                        break;
+                                                    }
+                                                    break;
+                                                case "item stats":
+                                                    System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                                    try {
+                                                        int temp = Integer.parseInt(scan.nextLine());
+                                                        switch (temp) {
+                                                            case 1:
+                                                                System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                                System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                                try {
+                                                                    int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                                    if(player.inventory[tempa] != null){
+                                                                        System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                                        player.inventory[tempa].getStats();
+                                                                    }
+                                                                    else{
+                                                                        System.out.println("You do not have an item in that slot. Please try again.");
+                                                                    }           } catch (NumberFormatException e) {
+                                                                        System.out.println("Please try again and enter a number.");
+                                                                        break OUTER_1;
+                                                                    }
+                                                                break OUTER_1;
+                                                            case 2:
+                                                                System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                                System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                                try {
+                                                                    int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                                    if(player.equipment[tempa] != null){
+                                                                        System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                                        player.equipment[tempa].getStats();
+                                                                    }
+                                                                    else{
+                                                                        System.out.println("You do not have an item in that slot. Please try again.");
+                                                                    }           } catch (NumberFormatException e) {
+                                                                        System.out.println("Please try again and enter a number.");
+                                                                        break OUTER_1;
+                                                                    }
+                                                                break OUTER_1;
+                                                            default:
+                                                                System.out.println("Please try again and enter a valid answer.");
+                                                                break;
+                                                        }
+                                                    }catch(NumberFormatException e){
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break;
+                                                    }           break;
+                                                case "stats":
+                                                    player.showStats();
+                                                    break;
+                                                case "combat help":
+                                                    player.combatHelp();
+                                                    break;
+                                                default:
+                                                    System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
+                                                    break;
                                         }
-                                        System.out.println("The enemy has taken " + dmgDealt + " damage!");
-                                        bounty_hunter.enemyStats[1] -= dmgDealt;
-                                        if (bounty_hunter.enemyStats[1]<0) {
-                                            System.out.println("ENEMY DEFEATED!!!");
-                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                            System.out.println("\n\n\tUpon killing the bounty hunter, you've looted his Bandit Dagger!");
-                                            Items Bandit_Dagger = new Items("Bandit Dagger",0,2,5,0,0,0,0,0,0,0,0,0,0,0,1); //gives +2 str, +5 dex
-                                            player.inventory = Bandit_Dagger.ADDinventory(player.inventory);
-                                            player.stats[0] = MAX_HEALTH;
-                                            player.skill.recharge();
-                                            break OUTER;
-                                        }
-                                    }
-                                    break;
-                                case "identify":
-                                    if(player.stats[5]>=7)
-                                    {
-                                        System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
-                                        bounty_hunter.showEnemyStats();
-                                    }
-                                    else
-                                    {
-                                        System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
-                                    }
-                                    break;
-                                case "use skill":
-                                    if(player.skill.uses){
-                                        if(player.skill.getName().equalsIgnoreCase("Blessing")){
-                                            if (player.stats[2]>=bounty_hunter.enemyStats[3]) {
-                                                int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
-                                                int HPgained = player.skill.use();
-                                                System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                                player.stats[0] += HPgained;
-                                                System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area1_cleared = true;
-                                                    area2_cleared = true;
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                            }
-                                            if (player.stats[2]<bounty_hunter.enemyStats[3]) {
-                                                int HPgained = player.skill.use();
-                                                int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
-                                                System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area1_cleared = true;
-                                                    area2_cleared = true;
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                                System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                                player.stats[0] += HPgained;
-                                            }
-                                        }
-                                        else{
-                                            if (player.stats[2]>=bounty_hunter.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
-                                                int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
-                                                System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
-                                                bounty_hunter.enemyStats[1] -= dmgDealt;
-                                                if (bounty_hunter.enemyStats[1]<0) {
-                                                    System.out.println("ENEMY DEFEATED!!!");
-                                                    System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                    System.out.println("\n\n\tUpon killing the bounty hunter, you've looted his Bandit Dagger!");
-                                                    Items Bandit_Dagger = new Items("Bandit Dagger",0,2,5,0,0,0,0,0,0,0,0,0,0,0,1); //gives +2 str, +5 dex
-                                                    player.inventory = Bandit_Dagger.ADDinventory(player.inventory);
-                                                    player.stats[0] = MAX_HEALTH;
-                                                    player.skill.recharge();
-                                                    break OUTER;
-                                                }
-                                                System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area1_cleared = true;
-                                                    area2_cleared = true;
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                            }
-                                            if (player.stats[2]<bounty_hunter.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
-                                                int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
-                                                System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area1_cleared = true;
-                                                    area2_cleared = true;
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                                System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
-                                                bounty_hunter.enemyStats[1] -= dmgDealt;
-                                                if (bounty_hunter.enemyStats[1]<0) {
-                                                    System.out.println("ENEMY DEFEATED!!!");
-                                                    System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                    System.out.println("\n\n\tUpon killing the bounty hunter, you've looted his Bandit Dagger!");
-                                                    Items Bandit_Dagger = new Items("Bandit Dagger",0,2,5,0,0,0,0,0,0,0,0,0,0,0,1); //gives +2 str, +5 dex
-                                                    player.inventory = Bandit_Dagger.ADDinventory(player.inventory);
-                                                    player.stats[0] = MAX_HEALTH;
-                                                    player.skill.recharge();
-                                                    break OUTER;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    else
-                                        System.out.println("You cannot use that skill again this battle!");
+                                    }//NORMAL COMBAT END
+                                }
+                                else if(area1_encounter == 1113)
+                                {
+                                    Items DEX_Boost_Potion = new Items("DEX_Boost Potion",0,0,25,0,0,0,0,0,0,0,0,0,0,0,4);
+                                    player.inventory = DEX_Boost_Potion.ADDinventory(player.inventory);
+                                }
                                 break;
-                                case "skill info":
-                                    System.out.println("\t"+player.skill.getSkillInfo());
-                                    break;
-                                case "equipment":
-                                    System.out.println(Arrays.toString(player.equipment));
-                                    break;
-                                case "bag":
-                                    System.out.println(Arrays.toString(player.inventory));
-                                    break;
-                                case "stats":
-                                    player.showStats();
-                                    break;
-                                case "combat help":
-                                    player.combatHelp();
-                                    break;
-                                default:
-                                    System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
-                                    break;
-                            }//SWITCH INPUT - NORMAL COMBAT END
-                        }//NORMAL COMBAT END
-                        }
-                        else if(area1_encounter == 1113)
-                        {
-                            Items DEX_Boost_Potion = new Items("DEX_Boost Potion",0,0,25,0,0,0,0,0,0,0,0,0,0,0,4);
-                            player.inventory = DEX_Boost_Potion.ADDinventory(player.inventory);
-                        }
-                        break;
-                    case 1:
-                        a1_enemy.getEnemy();
-                        System.out.println("\n\n----------------------------F I G H T !!!----------------------------");
-                        System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
-                        OUTER:
-                        while (true) {
-                            System.out.println("\nWhat will you do " + player.name + "?");
-                            input = scan.nextLine();
-                            switch (input) {
-                                //if(input.equals("ranged attack"))
-                                //{
-                                //
-                                //}
-                                case "attack":
-                                    if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                        int dmgDealt = rand.nextInt(player.stats[1]);
-                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        System.out.println("The enemy has taken " + dmgDealt + " damage!");
-                                        a1_enemy.enemyStats[1] -= dmgDealt;
-                                        if (a1_enemy.enemyStats[1]<0) {
-                                            System.out.println("ENEMY DEFEATED!!!");
-                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                            a1_enemy.newEnemy();
-                                            player.stats[0] = MAX_HEALTH;
-                                            player.skill.recharge();
-                                            break OUTER;
-                                        }
-                                        System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area1_cleared = true;
-                                            area2_cleared = true;
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                    }
-                                    if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                        int dmgDealt = rand.nextInt(player.stats[1]);
-                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area1_cleared = true;
-                                            area2_cleared = true;
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                        System.out.println("The enemy has taken " + dmgDealt + " damage!");
-                                        a1_enemy.enemyStats[1] -= dmgDealt;
-                                        if (a1_enemy.enemyStats[1]<0) {
-                                            System.out.println("ENEMY DEFEATED!!!");
-                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                            a1_enemy.newEnemy();
-                                            player.stats[0] = MAX_HEALTH;
-                                            player.skill.recharge();
-                                            break OUTER;
-                                        }
-                                    }
-                                    break;
-                                case "identify":
-                                    if(player.stats[5]>=7)
-                                    {
-                                        System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
-                                        a1_enemy.showEnemyStats();
-                                    }
-                                    else
-                                    {
-                                        System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
-                                    }
-                                    break;
-                                case "use skill":
-                                    if(player.skill.uses){
-                                        if(player.skill.getName().equalsIgnoreCase("Blessing")){
+                            case 1:
+                                a1_enemy.getEnemy();
+                                System.out.println("\n\n----------------------------F I G H T !!!----------------------------");
+                                System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
+                                OUTER:
+                                while (true) {
+                                    System.out.println("\nWhat will you do " + player.name + "?");
+                                    input = scan.nextLine();
+                                    OUTER_2:
+                                    switch (input) {
+                                        case "attack":
                                             if (player.stats[2]>=a1_enemy.enemyStats[3]) {
+                                                int dmgDealt = rand.nextInt(player.stats[1]);
                                                 int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                                int HPgained = player.skill.use();
-                                                System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                                player.stats[0] += HPgained;
-                                                System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area1_cleared = true;
-                                                    area2_cleared = true;
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                            }
-                                            if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                                int HPgained = player.skill.use();
-                                                int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                                System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area1_cleared = true;
-                                                    area2_cleared = true;
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                                System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                                player.stats[0] += HPgained;
-                                            }
-                                        }
-                                        else{
-                                            if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
-                                                int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                                System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
+                                                System.out.println("The enemy has taken " + dmgDealt + " damage!");
                                                 a1_enemy.enemyStats[1] -= dmgDealt;
                                                 if (a1_enemy.enemyStats[1]<0) {
                                                     System.out.println("ENEMY DEFEATED!!!");
@@ -471,7 +425,7 @@ public class HOD_GAME {
                                                 }
                                             }
                                             if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
+                                                int dmgDealt = rand.nextInt(player.stats[1]);
                                                 int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                                 System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                 player.stats[0] -= EdmgDealt;
@@ -485,7 +439,7 @@ public class HOD_GAME {
                                                     running = false;
                                                     break OUTER;
                                                 }
-                                                System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
+                                                System.out.println("The enemy has taken " + dmgDealt + " damage!");
                                                 a1_enemy.enemyStats[1] -= dmgDealt;
                                                 if (a1_enemy.enemyStats[1]<0) {
                                                     System.out.println("ENEMY DEFEATED!!!");
@@ -496,258 +450,496 @@ public class HOD_GAME {
                                                     break OUTER;
                                                 }
                                             }
-                                        }
+                                            break;
+                                        case "identify":
+                                            if(player.stats[5]>=7)
+                                            {
+                                                System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
+                                                a1_enemy.showEnemyStats();
+                                            }
+                                            else
+                                            {
+                                                System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
+                                            }
+                                            break;
+                                        case "use skill":
+                                            if(player.skill.uses){
+                                                if(player.skill.getName().equalsIgnoreCase("Blessing")){
+                                                    if (player.stats[2]>=a1_enemy.enemyStats[3]) {
+                                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
+                                                        int HPgained = player.skill.use();
+                                                        System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                        player.stats[0] += HPgained;
+                                                        System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                        player.stats[0] -= EdmgDealt;
+                                                        if (player.stats[0]<0) {
+                                                            System.out.println("YOU DIED");
+                                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                            area1_cleared = true;
+                                                            area2_cleared = true;
+                                                            area3_cleared = true;
+                                                            area4_cleared = true;
+                                                            running = false;
+                                                            break OUTER;
+                                                        }
+                                                    }
+                                                    if (player.stats[2]<a1_enemy.enemyStats[3]) {
+                                                        int HPgained = player.skill.use();
+                                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
+                                                        System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                        player.stats[0] -= EdmgDealt;
+                                                        if (player.stats[0]<0) {
+                                                            System.out.println("YOU DIED");
+                                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                            area1_cleared = true;
+                                                            area2_cleared = true;
+                                                            area3_cleared = true;
+                                                            area4_cleared = true;
+                                                            running = false;
+                                                            break OUTER;
+                                                        }
+                                                        System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                        player.stats[0] += HPgained;
+                                                    }
+                                                }
+                                                else{
+                                                    if (player.stats[2]>=a1_enemy.enemyStats[3]) {
+                                                        int dmgDealt = player.skill.use();
+                                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
+                                                        System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
+                                                        a1_enemy.enemyStats[1] -= dmgDealt;
+                                                        if (a1_enemy.enemyStats[1]<0) {
+                                                            System.out.println("ENEMY DEFEATED!!!");
+                                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                            a1_enemy.newEnemy();
+                                                            player.stats[0] = MAX_HEALTH;
+                                                            player.skill.recharge();
+                                                            break OUTER;
+                                                        }
+                                                        System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                        player.stats[0] -= EdmgDealt;
+                                                        if (player.stats[0]<0) {
+                                                            System.out.println("YOU DIED");
+                                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                            area1_cleared = true;
+                                                            area2_cleared = true;
+                                                            area3_cleared = true;
+                                                            area4_cleared = true;
+                                                            running = false;
+                                                            break OUTER;
+                                                        }
+                                                    }
+                                                    if (player.stats[2]<a1_enemy.enemyStats[3]) {
+                                                        int dmgDealt = player.skill.use();
+                                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
+                                                        System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                        player.stats[0] -= EdmgDealt;
+                                                        if (player.stats[0]<0) {
+                                                            System.out.println("YOU DIED");
+                                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                            area1_cleared = true;
+                                                            area2_cleared = true;
+                                                            area3_cleared = true;
+                                                            area4_cleared = true;
+                                                            running = false;
+                                                            break OUTER;
+                                                        }
+                                                        System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
+                                                        a1_enemy.enemyStats[1] -= dmgDealt;
+                                                        if (a1_enemy.enemyStats[1]<0) {
+                                                            System.out.println("ENEMY DEFEATED!!!");
+                                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                            a1_enemy.newEnemy();
+                                                            player.stats[0] = MAX_HEALTH;
+                                                            player.skill.recharge();
+                                                            break OUTER;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else
+                                                System.out.println("You cannot use that skill again this battle!");
+                                            break;
+                                        case "skill info":
+                                            System.out.println("\t"+player.skill.getSkillInfo());
+                                            break;
+                                        case "equipment":
+                                            System.out.println(Arrays.toString(player.equipment));
+                                            break;
+                                        case "bag":
+                                            System.out.println(Arrays.toString(player.inventory));
+                                            break;
+                                        case "use":
+                                            System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                                            System.out.println("\t" + Arrays.toString(player.inventory));
+                                            try{
+                                                int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
+                                                    System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                    player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                }
+                                                else
+                                                    System.out.println("That is not a usable item or you do not have an item in that slot.");
+                                            }
+                                            catch(NumberFormatException e){
+                                                System.out.println("Please enter a number.");
+                                                break;
+                                            }
+                                            break;
+                                        case "item stats":
+                                            System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                            try {
+                                                int temp = Integer.parseInt(scan.nextLine());
+                                                switch (temp) {
+                                                    case 1:
+                                                        System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                        System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                        try {
+                                                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                            if(player.inventory[tempa] != null){
+                                                                System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                                player.inventory[tempa].getStats();
+                                                            }
+                                                            else{
+                                                                System.out.println("You do not have an item in that slot. Please try again.");
+                                                            }
+                                                        } catch (NumberFormatException e) {
+                                                            System.out.println("Please try again and enter a number.");
+                                                            break OUTER_2;
+                                                        }
+                                                        break OUTER_2;
+                                                    case 2:
+                                                        System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                        System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                        try {
+                                                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                            if(player.equipment[tempa] != null){
+                                                                System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                                player.equipment[tempa].getStats();
+                                                            }
+                                                            else{
+                                                                System.out.println("You do not have an item in that slot. Please try again.");
+                                                            }
+                                                        } catch (NumberFormatException e) {
+                                                            System.out.println("Please try again and enter a number.");
+                                                            break OUTER_2;
+                                                        }
+                                                        break OUTER_2;
+                                                    default:
+                                                        System.out.println("Please try again and enter a valid answer.");
+                                                        break;
+                                                }
+                                            }catch(NumberFormatException e){
+                                                System.out.println("Please try again and enter a number.");
+                                                break;
+                                            }
+                                            break;
+                                        case "stats":
+                                            player.showStats();
+                                            break;
+                                        case "combat help":
+                                            player.combatHelp();
+                                            break;
+                                        default:
+                                            System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
+                                            break;
                                     }
-                                    else
-                                        System.out.println("You cannot use that skill again this battle!");
+                                }//NORMAL COMBAT END
                                 break;
-                                case "skill info":
-                                    System.out.println("\t"+player.skill.getSkillInfo());
-                                    break;
-                                case "equipment":
-                                    System.out.println(Arrays.toString(player.equipment));
-                                    break;
-                                case "bag":
-                                    System.out.println(Arrays.toString(player.inventory));
-                                    break;
-                                case "stats":
-                                    player.showStats();
-                                    break;
-                                case "combat help":
-                                    player.combatHelp();
-                                    break;
-                                default:
-                                    System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
-                                    break;
-                            }//SWITCH INPUT - NORMAL COMBAT END
-                        }//NORMAL COMBAT END
-                        break;
-                    case 2:
-                        System.out.println("You found a chest! It contained: " + area1_chest.open());
-                OUTER:
-                while (true) {
-                    System.out.println("\n\tWould you like to keep the item?");
-                    System.out.println("\t\t 1. Yes");
-                    System.out.println("\t\t 2. No");
-                    input = scan.nextLine();
-                    switch (input) {
-                        case "1":
-                            System.out.println("You yank the item from the chest!\nYou gained: " + area1_chest.open());
-                            player.inventory = area1_chest.open().ADDinventory(player.inventory);
-                            System.out.println(Arrays.toString(player.inventory));
-                            area1_chest.newItem();
-                            break OUTER;
-                        case "2":
-                            System.out.println("You decided to leave the item behind.");
-                            area1_chest.newItem();
-                            break OUTER;
-                        default:
-                            System.out.println("Please enter a valid option.");
-                            break;
-                    }
-                } //CHEST END
-                        break;
-                    case 3:
-                        Enemy bigBoi = new Enemy(100, 100, 100, 1, 1, 1, 1, 1);
-                        System.out.println("\n\n----------------------------I T ' S   B O S S   T I M E   B O i S----------------------------");
-                        System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
-                OUTER:
-                while (true) {
-                    System.out.println("\nWhat will you do " + player.name + "?");
-                    input = scan.nextLine();
-                    switch (input) {
-                        case "attack":
-                            if (player.stats[2]>=bigBoi.enemyStats[3]) {
-                                int dmgDealt = rand.nextInt(player.stats[1]);
-                                int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
-                                System.out.println("The enemy has taken " + dmgDealt + " damage!");
-                                bigBoi.enemyStats[1] -= dmgDealt;
-                                if (bigBoi.enemyStats[1]<0) {
-                                    System.out.println("ENEMY DEFEATED!!!");
-                                    System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
-                                    bigBoi.enemyStats[1] = 100;
-                                    player.stats[0] = MAX_HEALTH;
-                                    break OUTER;
-                                }
-                                System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                player.stats[0] -= EdmgDealt;
-                                if (player.stats[0]<0) {
-                                    System.out.println("YOU DIED");
-                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                    area1_cleared = true;
-                                    area2_cleared = true;
-                                    area3_cleared = true;
-                                    area4_cleared = true;
-                                    running = false;
-                                    break OUTER;
-                                }
-                            }
-                            if (player.stats[2]<bigBoi.enemyStats[3]) {
-                                int dmgDealt = rand.nextInt(player.stats[1]);
-                                int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
-                                System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                player.stats[0] -= EdmgDealt;
-                                if (player.stats[0]<0) {
-                                    System.out.println("YOU DIED");
-                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                    area1_cleared = true;
-                                    area2_cleared = true;
-                                    area3_cleared = true;
-                                    area4_cleared = true;
-                                    running = false;
-                                    break OUTER;
-                                }
-                                System.out.println("The enemy has taken " + dmgDealt + " damage!");
-                                bigBoi.enemyStats[1] -= dmgDealt;
-                                if (bigBoi.enemyStats[1]<0) {
-                                    System.out.println("ENEMY DEFEATED!!!");
-                                    System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
-                                    bigBoi.enemyStats[1] = 100;
-                                    player.stats[0] = MAX_HEALTH;
-                                    break OUTER;
-                                }
-                            }
-                            break;
-                        case "identify":
-                            if(player.stats[5]>=7)
-                            {
-                                System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
-                                bigBoi.showEnemyStats();
-                            }
-                            else
-                            {
-                                System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
-                            }
-                            break;
-                        case "use skill":
-                            if(player.skill.uses){
-                                if(player.skill.getName().equalsIgnoreCase("Blessing")){
-                                    if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        int HPgained = player.skill.use();
-                                        System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                        player.stats[0] += HPgained;
-                                        System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area1_cleared = true;
-                                            area2_cleared = true;
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
+                            case 2:
+                                System.out.println("You found a chest! It contained: " + area1_chest.open());
+                                OUTER:
+                                while (true) {
+                                    System.out.println("\n\tWould you like to keep the item?");
+                                    System.out.println("\t\t 1. Yes");
+                                    System.out.println("\t\t 2. No");
+                                    input = scan.nextLine();
+                                    switch (input) {
+                                        case "1":
+                                            System.out.println("You yank the item from the chest!\nYou gained: " + area1_chest.open());
+                                            player.inventory = area1_chest.open().ADDinventory(player.inventory);
+                                            System.out.println(Arrays.toString(player.inventory));
+                                            area1_chest.newItem();
                                             break OUTER;
-                                        }
+                                        case "2":
+                                            System.out.println("You decided to leave the item behind.");
+                                            area1_chest.newItem();
+                                            break OUTER;
+                                        default:
+                                            System.out.println("Please enter a valid option.");
+                                            break;
                                     }
-                                    if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                        int HPgained = player.skill.use();
-                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area1_cleared = true;
-                                            area2_cleared = true;
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                        System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                        player.stats[0] += HPgained;
+                                } //CHEST END
+                                break;
+                            case 3:
+                                Enemy bigBoi = new Enemy(100, 1, 100, 1, 1, 1, 1, 1);
+                                System.out.println("\n\n----------------------------I T ' S   B O S S   T I M E   B O i S----------------------------");
+                                System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
+                                OUTER:
+                                while (true) {
+                                    System.out.println("\nWhat will you do " + player.name + "?");
+                                    input = scan.nextLine();
+                                    OUTER_3:
+                                    switch (input) {
+                                        case "attack":
+                                            if (player.stats[2]>=bigBoi.enemyStats[3]) {
+                                                int dmgDealt = rand.nextInt(player.stats[1]);
+                                                int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                System.out.println("The enemy has taken " + dmgDealt + " damage!");
+                                                bigBoi.enemyStats[1] -= dmgDealt;
+                                                if (bigBoi.enemyStats[1]<0) {
+                                                    System.out.println("ENEMY DEFEATED!!!");
+                                                    System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
+                                                    bigBoi.enemyStats[1] = 100;
+                                                    player.stats[0] = MAX_HEALTH;
+                                                    break OUTER;
+                                                }
+                                                System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                player.stats[0] -= EdmgDealt;
+                                                if (player.stats[0]<0) {
+                                                    System.out.println("YOU DIED");
+                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                    area1_cleared = true;
+                                                    area2_cleared = true;
+                                                    area3_cleared = true;
+                                                    area4_cleared = true;
+                                                    running = false;
+                                                    break OUTER;
+                                                }
+                                            }
+                                            if (player.stats[2]<bigBoi.enemyStats[3]) {
+                                                int dmgDealt = rand.nextInt(player.stats[1]);
+                                                int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                player.stats[0] -= EdmgDealt;
+                                                if (player.stats[0]<0) {
+                                                    System.out.println("YOU DIED");
+                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                    area1_cleared = true;
+                                                    area2_cleared = true;
+                                                    area3_cleared = true;
+                                                    area4_cleared = true;
+                                                    running = false;
+                                                    break OUTER;
+                                                }
+                                                System.out.println("The enemy has taken " + dmgDealt + " damage!");
+                                                bigBoi.enemyStats[1] -= dmgDealt;
+                                                if (bigBoi.enemyStats[1]<0) {
+                                                    System.out.println("ENEMY DEFEATED!!!");
+                                                    System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
+                                                    bigBoi.enemyStats[1] = 100;
+                                                    player.stats[0] = MAX_HEALTH;
+                                                    break OUTER;
+                                                }
+                                            }
+                                            break;
+                                        case "identify":
+                                            if(player.stats[5]>=7)
+                                            {
+                                                System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
+                                                bigBoi.showEnemyStats();
+                                            }
+                                            else
+                                            {
+                                                System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
+                                            }
+                                            break;
+                                        case "use skill":
+                                            if(player.skill.uses){
+                                                if(player.skill.getName().equalsIgnoreCase("Blessing")){
+                                                    if (player.stats[2]>=bigBoi.enemyStats[3]) {
+                                                        int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                        int HPgained = player.skill.use();
+                                                        System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                        player.stats[0] += HPgained;
+                                                        System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                        player.stats[0] -= EdmgDealt;
+                                                        if (player.stats[0]<0) {
+                                                            System.out.println("YOU DIED");
+                                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                            area1_cleared = true;
+                                                            area2_cleared = true;
+                                                            area3_cleared = true;
+                                                            area4_cleared = true;
+                                                            running = false;
+                                                            break OUTER;
+                                                        }
+                                                    }
+                                                    if (player.stats[2]<bigBoi.enemyStats[3]) {
+                                                        int HPgained = player.skill.use();
+                                                        int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                        System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                        player.stats[0] -= EdmgDealt;
+                                                        if (player.stats[0]<0) {
+                                                            System.out.println("YOU DIED");
+                                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                            area1_cleared = true;
+                                                            area2_cleared = true;
+                                                            area3_cleared = true;
+                                                            area4_cleared = true;
+                                                            running = false;
+                                                            break OUTER;
+                                                        }
+                                                        System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                        player.stats[0] += HPgained;
+                                                    }
+                                                }
+                                                else{
+                                                    if (player.stats[2]>=bigBoi.enemyStats[3]) {
+                                                        int dmgDealt = player.skill.use();
+                                                        int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                        System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
+                                                        bigBoi.enemyStats[1] -= dmgDealt;
+                                                        if (bigBoi.enemyStats[1]<0) {
+                                                            System.out.println("ENEMY DEFEATED!!!");
+                                                            System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
+                                                            bigBoi.newEnemy();
+                                                            player.stats[0] = MAX_HEALTH;
+                                                            player.skill.recharge();
+                                                            break OUTER;
+                                                        }
+                                                        System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                        player.stats[0] -= EdmgDealt;
+                                                        if (player.stats[0]<0) {
+                                                            System.out.println("YOU DIED");
+                                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                            area1_cleared = true;
+                                                            area2_cleared = true;
+                                                            area3_cleared = true;
+                                                            area4_cleared = true;
+                                                            running = false;
+                                                            break OUTER;
+                                                        }
+                                                    }
+                                                    if (player.stats[2]<bigBoi.enemyStats[3]) {
+                                                        int dmgDealt = player.skill.use();
+                                                        int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                        System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                        player.stats[0] -= EdmgDealt;
+                                                        if (player.stats[0]<0) {
+                                                            System.out.println("YOU DIED");
+                                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                            area1_cleared = true;
+                                                            area2_cleared = true;
+                                                            area3_cleared = true;
+                                                            area4_cleared = true;
+                                                            running = false;
+                                                            break OUTER;
+                                                        }
+                                                        System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
+                                                        bigBoi.enemyStats[1] -= dmgDealt;
+                                                        if (bigBoi.enemyStats[1]<0) {
+                                                            System.out.println("ENEMY DEFEATED!!!");
+                                                            System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
+                                                            bigBoi.newEnemy();
+                                                            player.stats[0] = MAX_HEALTH;
+                                                            player.skill.recharge();
+                                                            break OUTER;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else
+                                                System.out.println("You cannot use that skill again this battle!");
+                                            break;
+                                        case "skill info":
+                                            System.out.println("\t"+player.skill.getSkillInfo());
+                                            break;
+                                        case "equipment":
+                                            System.out.println(Arrays.toString(player.equipment));
+                                            break;
+                                        case "bag":
+                                            System.out.println(Arrays.toString(player.inventory));
+                                            break;
+                                        case "use":
+                                            System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                                            System.out.println("\t" + Arrays.toString(player.inventory));
+                                            try{
+                                                int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
+                                                    System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                    player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                }
+                                                else
+                                                    System.out.println("That is not a usable item or you do not have an item in that slot.");
+                                            }
+                                            catch(NumberFormatException e){
+                                                System.out.println("Please enter a number.");
+                                                break;
+                                            }
+                                            break;
+                                        case "item stats":
+                                            System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                            try {
+                                                int temp = Integer.parseInt(scan.nextLine());
+                                                switch (temp) {
+                                                    case 1:
+                                                        System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                        System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                        try {
+                                                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                            if(player.inventory[tempa] != null){
+                                                                System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                                player.inventory[tempa].getStats();
+                                                            }
+                                                            else{
+                                                                System.out.println("You do not have an item in that slot. Please try again.");
+                                                            }
+                                                        } catch (NumberFormatException e) {
+                                                            System.out.println("Please try again and enter a number.");
+                                                            break OUTER_3;
+                                                        }
+                                                        break OUTER_3;
+                                                    case 2:
+                                                        System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                        System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                        try {
+                                                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                            if(player.equipment[tempa] != null){
+                                                                System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                                player.equipment[tempa].getStats();
+                                                            }
+                                                            else{
+                                                                System.out.println("You do not have an item in that slot. Please try again.");
+                                                            }
+                                                        } catch (NumberFormatException e) {
+                                                            System.out.println("Please try again and enter a number.");
+                                                            break OUTER_3;
+                                                        }
+                                                        break OUTER_3;
+                                                    default:
+                                                        System.out.println("Please try again and enter a valid answer.");
+                                                        break;
+                                                }
+                                            }catch(NumberFormatException e){
+                                                System.out.println("Please try again and enter a number.");
+                                                break;
+                                            }
+                                            break;
+                                        case "stats":
+                                            player.showStats();
+                                            break;
+                                        case "combat help":
+                                            player.combatHelp();
+                                            break;
+                                        case "help":
+                                            player.help();
+                                            break;
+                                        default:
+                                            System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
+                                            break;
                                     }
-                                }
-                                else{
-                                    if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                        int dmgDealt = player.skill.use();
-                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
-                                        a1_enemy.enemyStats[1] -= dmgDealt;
-                                        if (a1_enemy.enemyStats[1]<0) {
-                                            System.out.println("ENEMY DEFEATED!!!");
-                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                            a1_enemy.newEnemy();
-                                            player.stats[0] = MAX_HEALTH;
-                                            player.skill.recharge();
-                                            break OUTER;
-                                        }
-                                        System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area1_cleared = true;
-                                            area2_cleared = true;
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                    }
-                                    if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                        int dmgDealt = player.skill.use();
-                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area1_cleared = true;
-                                            area2_cleared = true;
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                        System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
-                                        a1_enemy.enemyStats[1] -= dmgDealt;
-                                        if (a1_enemy.enemyStats[1]<0) {
-                                            System.out.println("ENEMY DEFEATED!!!");
-                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                            a1_enemy.newEnemy();
-                                            player.stats[0] = MAX_HEALTH;
-                                            player.skill.recharge();
-                                            break OUTER;
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                                System.out.println("You cannot use that skill again this battle!");
-                        break;
-                        case "skill info":
-                            System.out.println("\t"+player.skill.getSkillInfo());
-                            break;
-                        case "equipment":
-                            System.out.println(Arrays.toString(player.equipment));
-                            break;
-                        case "bag":
-                            System.out.println(Arrays.toString(player.inventory));
-                            break;
-                        case "stats":
-                            player.showStats();
-                            break;
-                        case "combat help":
-                            player.combatHelp();
-                            break;
-                        case "help":
-                            player.help();
-                            break;
-                        default:
-                            System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
-                            break;
-                    } //SWITCH INPUT - BOSS FIGHT END
-                } // BOSS FIGHT END
-                        break;
-                    case 4:
-                        System.out.println("You have found the exit to the area! But alas... you only get deeper into this hell hole instead of having freedom");
-                        area1_cleared = true;
-                        break;
-                    default:
-                        break;
-                } // AREA GET DATA END
+                                } // BOSS FIGHT END
+                                break;
+                            case 4:
+                                System.out.println("You have found the exit to the area! But alas... you only get deeper into this hell hole instead of having freedom");
+                                area1_cleared = true;
+                                break;
+                            default:
+                                break;
+                        } // AREA GET DATA END
                         break;
                     case "equipment":
                         System.out.println(Arrays.toString(player.equipment));
@@ -755,6 +947,160 @@ public class HOD_GAME {
                     case "bag":
                         System.out.println(Arrays.toString(player.inventory));
                         break;
+                    case "drop":
+                        System.out.println("From where would you like to drop something?\n\t1. Bag\n\t2. Equipment");
+                        try {
+                            int temp = Integer.parseInt(scan.nextLine());
+                            switch (temp) {
+                                case 1:
+                                    System.out.println("Which item did you want to drop from your bag? Type 1 for first item, 2 for second, and so on.");
+                                    System.out.println("\t" + Arrays.toString(player.inventory));
+                                    try {
+                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                        if (player.inventory[tempa] != null) {
+                                            System.out.println("You dropped your " + player.inventory[tempa].name + ".");
+                                            player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                            break OUTER_4;
+                                        } else {
+                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                        }
+                                    } catch (NumberFormatException e) {
+                                        System.out.println("Please try again and enter a number.");
+                                        break OUTER_4;
+                                    }
+                                    break OUTER_4;
+                                case 2:
+                                    System.out.println("Which item did you want to drop from your equipment? Type 1 for first item, 2 for second, and so on.");
+                                    System.out.println("\t" + Arrays.toString(player.equipment));
+                                    try {
+                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                        if (player.equipment[tempa] != null) {
+                                            System.out.println("You dropped your " + player.equipment[tempa].name + ".");
+                                            player.stats = player.equipment[tempa].SUBstats(player.stats);
+                                            player.equipment = player.equipment[tempa].dropEquipment(player.equipment);
+                                            break OUTER_4;
+                                        } else {
+                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                        }
+                                    } catch (NumberFormatException e) {
+                                        System.out.println("Please try again and enter a number.");
+                                        break OUTER_4;
+                                    }
+                                    break;
+                                default:
+                                    System.out.println("Please try again and enter a valid answer.");
+                                    break;
+                            }
+                        }catch(NumberFormatException e){
+                            System.out.println("Please try again and enter a number.");
+                            break;
+                        }
+                        break;
+                    case "equip":
+                        System.out.println("What item did you want to equip from your bag? Type 1 for first item, 2 for second, and so on.");
+                        System.out.println("\t" + Arrays.toString(player.inventory));
+                        try{
+                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                            if(player.inventory[tempa] != null){
+                                System.out.println("You equipped your " + player.inventory[tempa].name + ".");
+                                player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                Items[][] temp = player.inventory[tempa].equip(player.inventory, player.equipment);
+                                player.inventory = temp[0];
+                                player.equipment = temp[1];
+                                break;
+                            }
+                            else
+                                System.out.println("You do not have an equipped item in that slot.");
+                        }
+                        catch(NumberFormatException e){
+                            System.out.println("Please enter a number.");
+                            break;
+                        }
+                        break;
+                    case "unequip":
+                        System.out.println("What item did you want to unequip from your equipment? Type 1 for first item, 2 for second, and so on.");
+                        System.out.println("\t" + Arrays.toString(player.equipment));
+                        try{
+                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                            if(player.equipment[tempa] != null){
+                                System.out.println("You unequipped your " + player.equipment[tempa].name + ".");
+                                player.stats = player.equipment[tempa].SUBstats(player.stats);
+                                Items[][] temp = player.equipment[tempa].unequip(player.inventory, player.equipment);
+                                player.inventory = temp[0];
+                                player.equipment = temp[1];
+                                break;
+                            }
+                            else
+                                System.out.println("You do not have an equipped item in that slot.");
+                        }
+                        catch(NumberFormatException e){
+                            System.out.println("Please enter a number.");
+                            break;
+                        }
+                        break;
+                    case "use":
+                        System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                        System.out.println("\t" + Arrays.toString(player.inventory));
+                        try{
+                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                            if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
+                                System.out.println("You use " + player.inventory[tempa].name + ".");
+                                player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                            }
+                            else
+                                System.out.println("That is not a usable item or you do not have an item in that slot.");
+                        }
+                        catch(NumberFormatException e){
+                            System.out.println("Please enter a number.");
+                            break;
+                        }
+                        break;
+                    case "item stats":
+                        System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                        try {
+                            int temp = Integer.parseInt(scan.nextLine());
+                            switch (temp) {
+                                case 1:
+                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                    System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                    try {
+                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                        if(player.inventory[tempa] != null){
+                                            System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                            player.inventory[tempa].getStats();
+                                        }
+                                        else{
+                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                        } } catch (NumberFormatException e) {
+                                            System.out.println("Please try again and enter a number.");
+                                        break OUTER_5;
+                                    }
+                                    break OUTER_5;
+                                case 2:
+                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                    System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                    try {
+                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                        if(player.equipment[tempa] != null){
+                                            System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                            player.equipment[tempa].getStats();
+                                        }
+                                        else{
+                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                        } } catch (NumberFormatException e) {
+                                            System.out.println("Please try again and enter a number.");
+                                        break OUTER_5;
+                                    }
+                                    break OUTER_5;
+                                default:
+                                    System.out.println("Please try again and enter a valid answer.");
+                                    break;
+                            }
+                        }catch(NumberFormatException e){
+                            System.out.println("Please try again and enter a number.");
+                            break;
+                        } break;
                     case "stats":
                         player.showStats();
                         break;
@@ -764,7 +1110,7 @@ public class HOD_GAME {
                     default:
                         System.out.println("enter a valid command (use \"help\" for a list of basic commands)");
                         break;
-                } //SWITCH INPUT - AREA TRAVERSAL END
+                }
             } //WHILE AREA_1 CLEARED END
           ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
@@ -778,6 +1124,7 @@ public class HOD_GAME {
                for(int i = 0; i<area2_L-1; i++)
                {
                    area2.addNode(rand.nextInt(3));
+                   //area2.addNode(0);
                }
                Area.listLength(area2);
                Area area2_pp = area2;
@@ -787,676 +1134,1027 @@ public class HOD_GAME {
           /////////////////////////////AREA 2 CREATION////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-          
+          if(area2_cleared == false)
+          {
+              System.out.println("\n\n\tYou some how find yourself in a forest like area. Massive vegatation and gigantic forest creatures are visable everywhere around you."
+                     + "\n\tYou decide there really is no going back now, and continue to press on.");
+          }
           while(area2_cleared == false)
           {
-             System.out.println("\n\n\tYou some how find yourself in a forest like area. Massive vegatation and gigantic forest creatures are visable everywhere around you."
-                     + "\n\tYou decide there really is no going back now, and continue to press on.");
              System.out.println("\n\t\tWhat would you like to do?");
                 input = scan.nextLine();
-                switch (input) {
-                    case "help":
-                        player.help();
-                        break;
-                    case "forward":
-                        area2_pp = area2_pp.getForeLink();
-                        System.out.println(area2_pp.getData());
-                switch (area2_pp.getData()) {
-                    case 0:
-                        int area2_encounter;
-                        area2_encounter = area1.area_1_Encounter(rand.nextInt(4), player.stats[4], player.name);
-                        if(area2_encounter<1000)
-                            player.stats[0] = player.stats[0] - area2_encounter;
-                        else if(area2_encounter == 2221)
-                        {
-                            for(int i = 1; i<player.stats.length; i++)
-                                player.stats[i] = player.stats[i] - 3; 
-                        }
-                        else if(area2_encounter == 2222)
-                        {
-                            for(int i = 1; i<player.stats.length; i++)
-                                player.stats[i] = player.stats[i] + 3;
-                        }
-                        else if(area2_encounter == 2223)
-                        {
-                            player.stats[4] = player.stats[4] + 5;
-                        }
-                        else if(area2_encounter == 2224)
-                        {
-                            player.stats[4] = player.stats[4] + 5;
-                            Enemy Giant_Angry_Thing = new Enemy(10, 120, 25, 15, 10, 10, 4, 1);
-                            System.out.println("\n\n----------------------------F I G H T !!!----------------------------");
-                                    System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
-                                    OUTER:
-                                     while (true) {
-                                    System.out.println("\nWhat will you do " + player.name + "?");
+              OUTER_9:
+             OUTER_10:
+             switch (input) {
+                 case "help":
+                     player.help();
+                     break;
+                 case "forward":
+                     area2_pp = area2_pp.getForeLink();
+                     System.out.println(area2_pp.getData());
+                     switch (area2_pp.getData()) {
+                         case 0:
+                             int area2_encounter;
+                             area2_encounter = area2.area_2_Encounter(rand.nextInt(4), player.stats[4], player.name);
+                             if(area2_encounter<1000)
+                                 player.stats[0] = player.stats[0] - area2_encounter;
+                             else if(area2_encounter == 2221)
+                             {
+                                 for(int i = 1; i<player.stats.length; i++)
+                                     player.stats[i] = player.stats[i] - 3;
+                             }
+                             else if(area2_encounter == 2222)
+                             {
+                                 for(int i = 1; i<player.stats.length; i++)
+                                     player.stats[i] = player.stats[i] + 3;
+                             }
+                             else if(area2_encounter == 2223)
+                             {
+                                 player.stats[4] = player.stats[4] + 5;
+                             }
+                             else if(area2_encounter == 2224)
+                             {
+                                 player.stats[4] = player.stats[4] + 5;
+                                 Enemy Giant_Angry_Thing = new Enemy(10, 120, 25, 15, 10, 10, 4, 1);
+                                 System.out.println("\n\n----------------------------F I G H T !!!----------------------------");
+                                 System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
+                                 OUTER:
+                                 while (true) {
+                                     System.out.println("\nWhat will you do " + player.name + "?");
                                      input = scan.nextLine();
+                                     OUTER_6:
                                      switch (input) {
-                                        //if(input.equals("ranged attack"))
-                                        //{
-                                        //
-                                        //}
                                          case "attack":
-                                                 if (player.stats[2]>=Giant_Angry_Thing.enemyStats[3]) {
-                                                int dmgDealt = rand.nextInt(player.stats[1]);
-                                                int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
+                                             if (player.stats[2]>=Giant_Angry_Thing.enemyStats[3]) {
+                                                 int dmgDealt = rand.nextInt(player.stats[1]);
+                                                 int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
                                                  System.out.println("The enemy has taken " + dmgDealt + " damage!");
                                                  Giant_Angry_Thing.enemyStats[1] -= dmgDealt;
                                                  if (Giant_Angry_Thing.enemyStats[1]<0) {
+                                                     System.out.println("ENEMY DEFEATED!!!");
+                                                     System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                     System.out.println("\n\n\tUpon killing the Giant angry looking thing, you've looted its claw as a weapon!");
+                                                     Items Giant_Claw = new Items("Giant Claw",0,6,-2,0,0,0,0,0,0,0,0,0,0,0,1); //gives +6 str, -2 dex
+                                                     player.inventory = Giant_Claw.ADDinventory(player.inventory);
+                                                     player.stats[0] = MAX_HEALTH;
+                                                     player.skill.recharge();
+                                                     break OUTER;
+                                                 }
+                                                 System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                 player.stats[0] -= EdmgDealt;
+                                                 if (player.stats[0]<0) {
+                                                     System.out.println("YOU DIED");
+                                                     System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                     area2_cleared = true;
+                                                     area3_cleared = true;
+                                                     area4_cleared = true;
+                                                     running = false;
+                                                     break OUTER;
+                                                 }
+                                             }
+                                             if (player.stats[2]<Giant_Angry_Thing.enemyStats[3]) {
+                                                 int dmgDealt = rand.nextInt(player.stats[1]);
+                                                 int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
+                                                 System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                 player.stats[0] -= EdmgDealt;
+                                                 if (player.stats[0]<0) {
+                                                     System.out.println("YOU DIED");
+                                                     System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                     area2_cleared = true;
+                                                     area3_cleared = true;
+                                                     area4_cleared = true;
+                                                     running = false;
+                                                     break OUTER;
+                                                 }
+                                                 System.out.println("The enemy has taken " + dmgDealt + " damage!");
+                                                 Giant_Angry_Thing.enemyStats[1] -= dmgDealt;
+                                                 if (Giant_Angry_Thing.enemyStats[1]<0) {
+                                                     System.out.println("ENEMY DEFEATED!!!");
+                                                     System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                     System.out.println("\n\n\tUpon killing the Giant angry looking thing, you've looted its claw as a weapon!");
+                                                     Items Giant_Claw = new Items("Giant Claw",0,6,-2,0,0,0,0,0,0,0,0,0,0,0,1); //gives +6 str, -2 dex
+                                                     player.inventory = Giant_Claw.ADDinventory(player.inventory);
+                                                     player.stats[0] = MAX_HEALTH;
+                                                     player.skill.recharge();
+                                                     break OUTER;
+                                                 }
+                                             }
+                                             break;
+                                         case "identify":
+                                             if(player.stats[5]>=7)
+                                             {
+                                                 System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
+                                                 Giant_Angry_Thing.showEnemyStats();
+                                             }
+                                             else
+                                             {
+                                                 System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
+                                             }
+                                             break;
+                                         case "use skill":
+                                             if(player.skill.uses){
+                                                 if(player.skill.getName().equalsIgnoreCase("Blessing")){
+                                                     if (player.stats[2]>=Giant_Angry_Thing.enemyStats[3]) {
+                                                         int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
+                                                         int HPgained = player.skill.use();
+                                                         System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                         player.stats[0] += HPgained;
+                                                         System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                         player.stats[0] -= EdmgDealt;
+                                                         if (player.stats[0]<0) {
+                                                             System.out.println("YOU DIED");
+                                                             System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                             area2_cleared = true;
+                                                             area3_cleared = true;
+                                                             area4_cleared = true;
+                                                             running = false;
+                                                             break OUTER;
+                                                         }
+                                                     }
+                                                     if (player.stats[2]<Giant_Angry_Thing.enemyStats[3]) {
+                                                         int HPgained = player.skill.use();
+                                                         int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
+                                                         System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                         player.stats[0] -= EdmgDealt;
+                                                         if (player.stats[0]<0) {
+                                                             System.out.println("YOU DIED");
+                                                             System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                             area2_cleared = true;
+                                                             area3_cleared = true;
+                                                             area4_cleared = true;
+                                                             running = false;
+                                                             break OUTER;
+                                                         }
+                                                         System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                         player.stats[0] += HPgained;
+                                                     }
+                                                 }
+                                                 else{
+                                                     if (player.stats[2]>=Giant_Angry_Thing.enemyStats[3]) {
+                                                         int dmgDealt = player.skill.use();
+                                                         int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
+                                                         System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
+                                                         Giant_Angry_Thing.enemyStats[1] -= dmgDealt;
+                                                         if (Giant_Angry_Thing.enemyStats[1]<0) {
+                                                             System.out.println("ENEMY DEFEATED!!!");
+                                                             System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                             System.out.println("\n\n\tUpon killing the Giant angry looking thing, you've looted its claw as a weapon!");
+                                                             Items Giant_Claw = new Items("Giant Claw",0,6,-2,0,0,0,0,0,0,0,0,0,0,0,1); //gives +6 str, -2 dex
+                                                             player.inventory = Giant_Claw.ADDinventory(player.inventory);
+                                                             player.stats[0] = MAX_HEALTH;
+                                                             player.skill.recharge();
+                                                             break OUTER;
+                                                         }
+                                                         System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                         player.stats[0] -= EdmgDealt;
+                                                         if (player.stats[0]<0) {
+                                                             System.out.println("YOU DIED");
+                                                             System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                             area2_cleared = true;
+                                                             area3_cleared = true;
+                                                             area4_cleared = true;
+                                                             running = false;
+                                                             break OUTER;
+                                                         }
+                                                     }
+                                                     if (player.stats[2]<Giant_Angry_Thing.enemyStats[3]) {
+                                                         int dmgDealt = player.skill.use();
+                                                         int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
+                                                         System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                         player.stats[0] -= EdmgDealt;
+                                                         if (player.stats[0]<0) {
+                                                             System.out.println("YOU DIED");
+                                                             System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                             area2_cleared = true;
+                                                             area3_cleared = true;
+                                                             area4_cleared = true;
+                                                             running = false;
+                                                             break OUTER;
+                                                         }
+                                                         System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
+                                                         Giant_Angry_Thing.enemyStats[1] -= dmgDealt;
+                                                         if (Giant_Angry_Thing.enemyStats[1]<0) {
+                                                             System.out.println("ENEMY DEFEATED!!!");
+                                                             System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                             System.out.println("\n\n\tUpon killing the Giant angry looking thing, you've looted its claw as a weapon!");
+                                                             Items Giant_Claw = new Items("Giant Claw",0,6,-2,0,0,0,0,0,0,0,0,0,0,0,1); //gives +6 str, -2 dex
+                                                             player.inventory = Giant_Claw.ADDinventory(player.inventory);
+                                                             player.stats[0] = MAX_HEALTH;
+                                                             player.skill.recharge();
+                                                             break OUTER;
+                                                         }
+                                                     }
+                                                 }
+                                             }
+                                             else
+                                                 System.out.println("You cannot use that skill again this battle!");
+                                             break;
+                                         case "skill info":
+                                             System.out.println("\t"+player.skill.getSkillInfo());
+                                             break;
+                                         case "equipment":
+                                             System.out.println(Arrays.toString(player.equipment));
+                                             break;
+                                         case "bag":
+                                             System.out.println(Arrays.toString(player.inventory));
+                                             break;
+                                         case "use":
+                                             System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                                             System.out.println("\t" + Arrays.toString(player.inventory));
+                                             try{
+                                                 int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                 if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
+                                                     System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                     player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                     player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                 }
+                                                 else
+                                                     System.out.println("That is not a usable item or you do not have an item in that slot.");
+                                             }
+                                             catch(NumberFormatException e){
+                                                 System.out.println("Please enter a number.");
+                                                 break;
+                                             }
+                                             break;
+                                         case "item stats":
+                                             System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                             try {
+                                                 int temp = Integer.parseInt(scan.nextLine());
+                                                 switch (temp) {
+                                                     case 1:
+                                                         System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                         System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                         try {
+                                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                             if(player.inventory[tempa] != null){
+                                                                 System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                                 player.inventory[tempa].getStats();
+                                                             }
+                                                             else{
+                                                                 System.out.println("You do not have an item in that slot. Please try again.");
+                                                             }   } catch (NumberFormatException e) {
+                                                                 System.out.println("Please try again and enter a number.");
+                                                                 break OUTER_6;
+                                                             }
+                                                         break OUTER_6;
+                                                     case 2:
+                                                         System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                         System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                         try {
+                                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                             if(player.equipment[tempa] != null){
+                                                                 System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                                 player.equipment[tempa].getStats();
+                                                             }
+                                                             else{
+                                                                 System.out.println("You do not have an item in that slot. Please try again.");
+                                                             }   } catch (NumberFormatException e) {
+                                                                 System.out.println("Please try again and enter a number.");
+                                                                 break OUTER_6;
+                                                             }
+                                                         break OUTER_6;
+                                                     default:
+                                                         System.out.println("Please try again and enter a valid answer.");
+                                                         break;
+                                                 }
+                                             }catch(NumberFormatException e){
+                                                 System.out.println("Please try again and enter a number.");
+                                                 break;
+                                             }   break;
+                                         case "stats":
+                                             player.showStats();
+                                             break;
+                                         case "combat help":
+                                             player.combatHelp();
+                                             break;
+                                         default:
+                                             System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
+                                             break;
+                                     }
+                                 }//NORMAL COMBAT END
+                             }
+                             else if(area2_encounter == 2225)
+                             {
+                                 player.stats[0] = player.stats[0] - 10;
+                                 player.stats[1] = player.stats[1] - 3;
+                             }
+                             break;
+                         case 1:
+                             a2_enemy.getEnemy2();
+                             System.out.println("\n\n----------------------------F I G H T !!!----------------------------");
+                             System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
+                             OUTER:
+                             while (true) {
+                                 System.out.println("\nWhat will you do " + player.name + "?");
+                                 input = scan.nextLine();
+                                 OUTER_7:
+                                 switch (input) {
+                                     case "attack":
+                                         if (player.stats[2]>=a2_enemy.enemyStats[3]) {
+                                             int dmgDealt = rand.nextInt(player.stats[1]);
+                                             int EdmgDealt = rand.nextInt(a2_enemy.enemyStats[2]);
+                                             System.out.println("The enemy has taken " + dmgDealt + " damage!");
+                                             a2_enemy.enemyStats[1] -= dmgDealt;
+                                             if (a2_enemy.enemyStats[1]<0) {
                                                  System.out.println("ENEMY DEFEATED!!!");
                                                  System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                 System.out.println("\n\n\tUpon killing the Giant angry looking thing, you've looted its claw as a weapon!");
-                                                 Items Giant_Claw = new Items("Giant Claw",0,6,-2,0,0,0,0,0,0,0,0,0,0,0,1); //gives +6 str, -2 dex
-                                                 player.inventory = Giant_Claw.ADDinventory(player.inventory);
+                                                 a2_enemy.newEnemy2();
                                                  player.stats[0] = MAX_HEALTH;
-                                                 player.skill.recharge();
                                                  break OUTER;
-                                                                                }
-                                                  System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                             }
+                                             System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                             player.stats[0] -= EdmgDealt;
+                                             if (player.stats[0]<0) {
+                                                 System.out.println("YOU DIED");
+                                                 System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                 area2_cleared = true;
+                                                 area3_cleared = true;
+                                                 area4_cleared = true;
+                                                 running = false;
+                                                 break OUTER;
+                                             }
+                                         }
+                                         if (player.stats[2]<a2_enemy.enemyStats[3]) {
+                                             int dmgDealt = rand.nextInt(player.stats[1]);
+                                             int EdmgDealt = rand.nextInt(a2_enemy.enemyStats[2]);
+                                             System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                             player.stats[0] -= EdmgDealt;
+                                             if (player.stats[0]<0) {
+                                                 System.out.println("YOU DIED");
+                                                 System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                 area2_cleared = true;
+                                                 area3_cleared = true;
+                                                 area4_cleared = true;
+                                                 running = false;
+                                                 break OUTER;
+                                             }
+                                             System.out.println("The enemy has taken " + dmgDealt + " damage!");
+                                             a2_enemy.enemyStats[1] -= dmgDealt;
+                                             if (a2_enemy.enemyStats[1]<0) {
+                                                 System.out.println("ENEMY DEFEATED!!!");
+                                                 System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                 a2_enemy.newEnemy2();
+                                                 player.stats[0] = MAX_HEALTH;
+                                                 break OUTER;
+                                             }
+                                         }
+                                         break;
+                                     case "identify":
+                                         if(player.stats[5]>=7)
+                                         {
+                                             System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
+                                             a2_enemy.showEnemyStats();
+                                         }
+                                         else
+                                         {
+                                             System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
+                                         }
+                                         break;
+                                     case "use skill":
+                                         if(player.skill.uses){
+                                             if(player.skill.getName().equalsIgnoreCase("Blessing")){
+                                                 if (player.stats[2]>=a2_enemy.enemyStats[3]) {
+                                                     int EdmgDealt = rand.nextInt(a2_enemy.enemyStats[2]);
+                                                     int HPgained = player.skill.use();
+                                                     System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                     player.stats[0] += HPgained;
+                                                     System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
                                                      player.stats[0] -= EdmgDealt;
                                                      if (player.stats[0]<0) {
-                                                     System.out.println("YOU DIED");
-                                                        System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
                                                          area2_cleared = true;
                                                          area3_cleared = true;
                                                          area4_cleared = true;
                                                          running = false;
                                                          break OUTER;
-                                                                            }
-                                                                                            }
-                                    if (player.stats[2]<Giant_Angry_Thing.enemyStats[3]) {
-                                        int dmgDealt = rand.nextInt(player.stats[1]);
-                                        int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
-                                        System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area2_cleared = true;
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                        System.out.println("The enemy has taken " + dmgDealt + " damage!");
-                                        Giant_Angry_Thing.enemyStats[1] -= dmgDealt;
-                                        if (Giant_Angry_Thing.enemyStats[1]<0) {
-                                            System.out.println("ENEMY DEFEATED!!!");
-                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                            System.out.println("\n\n\tUpon killing the Giant angry looking thing, you've looted its claw as a weapon!");
-                                            Items Giant_Claw = new Items("Giant Claw",0,6,-2,0,0,0,0,0,0,0,0,0,0,0,1); //gives +6 str, -2 dex
-                                            player.inventory = Giant_Claw.ADDinventory(player.inventory);
-                                            player.stats[0] = MAX_HEALTH;
-                                            player.skill.recharge();
-                                            break OUTER;
-                                        }
-                                    }
-                                    break;
-                                case "identify":
-                                    if(player.stats[5]>=7)
-                                    {
-                                        System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
-                                        Giant_Angry_Thing.showEnemyStats();
-                                    }
-                                    else
-                                    {
-                                        System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
-                                    }
-                                    break;
-                                case "use skill":
-                                    if(player.skill.uses){
-                                        if(player.skill.getName().equalsIgnoreCase("Blessing")){
-                                            if (player.stats[2]>=Giant_Angry_Thing.enemyStats[3]) {
-                                                int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
-                                                int HPgained = player.skill.use();
-                                                System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                                player.stats[0] += HPgained;
-                                                System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area2_cleared = true;
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                            }
-                                            if (player.stats[2]<Giant_Angry_Thing.enemyStats[3]) {
-                                                int HPgained = player.skill.use();
-                                                int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
-                                                System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area2_cleared = true;
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                                System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                                player.stats[0] += HPgained;
-                                            }
-                                        }
-                                        else{
-                                            if (player.stats[2]>=Giant_Angry_Thing.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
-                                                int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
-                                                System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
-                                                Giant_Angry_Thing.enemyStats[1] -= dmgDealt;
-                                                if (Giant_Angry_Thing.enemyStats[1]<0) {
-                                                    System.out.println("ENEMY DEFEATED!!!");
-                                                    System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                    System.out.println("\n\n\tUpon killing the Giant angry looking thing, you've looted its claw as a weapon!");
-                                                    Items Giant_Claw = new Items("Giant Claw",0,6,-2,0,0,0,0,0,0,0,0,0,0,0,1); //gives +6 str, -2 dex
-                                                    player.inventory = Giant_Claw.ADDinventory(player.inventory);
-                                                    player.stats[0] = MAX_HEALTH;
-                                                    player.skill.recharge();
-                                                    break OUTER;
-                                                }
-                                                System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area2_cleared = true;
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                            }
-                                            if (player.stats[2]<Giant_Angry_Thing.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
-                                                int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
-                                                System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area2_cleared = true;
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                                System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
-                                                Giant_Angry_Thing.enemyStats[1] -= dmgDealt;
-                                                if (Giant_Angry_Thing.enemyStats[1]<0) {
-                                                    System.out.println("ENEMY DEFEATED!!!");
-                                                    System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                    System.out.println("\n\n\tUpon killing the Giant angry looking thing, you've looted its claw as a weapon!");
-                                                    Items Giant_Claw = new Items("Giant Claw",0,6,-2,0,0,0,0,0,0,0,0,0,0,0,1); //gives +6 str, -2 dex
-                                                    player.inventory = Giant_Claw.ADDinventory(player.inventory);
-                                                    player.stats[0] = MAX_HEALTH;
-                                                    player.skill.recharge();
-                                                    break OUTER;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    else
-                                        System.out.println("You cannot use that skill again this battle!");
-                                break;
-                                case "skill info":
-                                    System.out.println("\t"+player.skill.getSkillInfo());
-                                    break;
-                                case "equipment":
-                                    System.out.println(Arrays.toString(player.equipment));
-                                    break;
-                                case "bag":
-                                    System.out.println(Arrays.toString(player.inventory));
-                                    break;
-                                case "stats":
-                                    player.showStats();
-                                    break;
-                                case "combat help":
-                                    player.combatHelp();
-                                    break;
-                                default:
-                                    System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
-                                    break;
-                            }//SWITCH INPUT - NORMAL COMBAT END
-                        }//NORMAL COMBAT END
-                        }
-                        else if(area2_encounter == 2225)
-                        {
-                            player.stats[0] = player.stats[0] - 10;
-                            player.stats[1] = player.stats[1] - 3;
-                        }
-                        break;
-                    case 1:
-                        a2_enemy.getEnemy2();
-                        System.out.println("\n\n----------------------------F I G H T !!!----------------------------");
-                        System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
-                        OUTER:
-                        while (true) {
-                            System.out.println("\nWhat will you do " + player.name + "?");
-                            input = scan.nextLine();
-                            switch (input) {
-                                //if(input.equals("ranged attack"))
-                                //{
-                                //
-                                //}
-                                case "attack":
-                                    if (player.stats[2]>=a2_enemy.enemyStats[3]) {
-                                        int dmgDealt = rand.nextInt(player.stats[1]);
-                                        int EdmgDealt = rand.nextInt(a2_enemy.enemyStats[2]);
-                                        System.out.println("The enemy has taken " + dmgDealt + " damage!");
-                                        a2_enemy.enemyStats[1] -= dmgDealt;
-                                        if (a2_enemy.enemyStats[1]<0) {
-                                            System.out.println("ENEMY DEFEATED!!!");
-                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                            a2_enemy.newEnemy2();
-                                            player.stats[0] = MAX_HEALTH;
-                                            break OUTER;
-                                        }
-                                        System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area2_cleared = true;
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                    }
-                                    if (player.stats[2]<a2_enemy.enemyStats[3]) {
-                                        int dmgDealt = rand.nextInt(player.stats[1]);
-                                        int EdmgDealt = rand.nextInt(a2_enemy.enemyStats[2]);
-                                        System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area2_cleared = true;
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                        System.out.println("The enemy has taken " + dmgDealt + " damage!");
-                                        a2_enemy.enemyStats[1] -= dmgDealt;
-                                        if (a2_enemy.enemyStats[1]<0) {
-                                            System.out.println("ENEMY DEFEATED!!!");
-                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                            a2_enemy.newEnemy2();
-                                            player.stats[0] = MAX_HEALTH;
-                                            break OUTER;
-                                        }
-                                    }
-                                    break;
-                                case "identify":
-                                    if(player.stats[5]>=7)
-                                    {
-                                        System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
-                                        a2_enemy.showEnemyStats();
-                                    }
-                                    else
-                                    {
-                                        System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
-                                    }
-                                    break;
-                                case "use skill":
-                                    if(player.skill.uses){
-                                        if(player.skill.getName().equalsIgnoreCase("Blessing")){
-                                            if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                                int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                                int HPgained = player.skill.use();
-                                                System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                                player.stats[0] += HPgained;
-                                                System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area2_cleared = true;
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                            }
-                                            if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                                int HPgained = player.skill.use();
-                                                int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                                System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area2_cleared = true;
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                                System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                                player.stats[0] += HPgained;
-                                            }
-                                        }
-                                        else{
-                                            if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
-                                                int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                                System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
-                                                a1_enemy.enemyStats[1] -= dmgDealt;
-                                                if (a1_enemy.enemyStats[1]<0) {
-                                                    System.out.println("ENEMY DEFEATED!!!");
-                                                    System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                    a1_enemy.newEnemy();
-                                                    player.stats[0] = MAX_HEALTH;
-                                                    player.skill.recharge();
-                                                    break OUTER;
-                                                }
-                                                System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area2_cleared = true;
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                            }
-                                            if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
-                                                int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                                System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area2_cleared = true;
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                                System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
-                                                a1_enemy.enemyStats[1] -= dmgDealt;
-                                                if (a1_enemy.enemyStats[1]<0) {
-                                                    System.out.println("ENEMY DEFEATED!!!");
-                                                    System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                    a1_enemy.newEnemy();
-                                                    player.stats[0] = MAX_HEALTH;
-                                                    player.skill.recharge();
-                                                    break OUTER;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    else
-                                        System.out.println("You cannot use that skill again this battle!");
-                                break;
-                                case "skill info":
-                                    System.out.println("\t"+player.skill.getSkillInfo());
-                                    break;
-                                case "equipment":
-                                    System.out.println(Arrays.toString(player.equipment));
-                                    break;
-                                case "bag":
-                                    System.out.println(Arrays.toString(player.inventory));
-                                    break;
-                                case "stats":
-                                    player.showStats();
-                                    break;
-                                case "combat help":
-                                    player.combatHelp();
-                                    break;
-                                case "help":
-                                    player.help();
-                                    break;
-                                default:
-                                    System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
-                                    break;
-                            }//SWITCH INPUT - NORMAL COMBAT END
-                        }//NORMAL COMBAT END
-                        break;
-                    case 2:
-                        System.out.println("You found a chest! It contained: " + area1_chest.open());
-                OUTER:
-                while (true) {
-                    System.out.println("\n\tWould you like to keep the item?");
-                    System.out.println("\t\t 1. Yes");
-                    System.out.println("\t\t 2. No");
-                    input = scan.nextLine();
-                    switch (input) {
-                        case "1":
-                            System.out.println("You yank the item from the chest!\nYou gained: " + area1_chest.open());
-                            player.inventory = area1_chest.open().ADDinventory(player.inventory);
-                            System.out.println(Arrays.toString(player.inventory));
-                            area1_chest.newItem();
-                            break OUTER;
-                        case "2":
-                            System.out.println("You decided to leave the item behind.");
-                            area1_chest.newItem();
-                            break OUTER;
-                        default:
-                            System.out.println("Please enter a valid option.");
-                            break;
-                    }
-                } //CHEST END
-                        break;
-                    case 3:
-                        Enemy bigBoi = new Enemy(100, 100, 100, 1, 1, 1, 1, 1);
-                        System.out.println("\n\n----------------------------I T ' S   B O S S   T I M E   B O i S----------------------------");
-                        System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
-                OUTER:
-                while (true) {
-                    System.out.println("\nWhat will you do " + player.name + "?");
-                    input = scan.nextLine();
-                    switch (input) {
-                        case "attack":
-                            if (player.stats[2]>=bigBoi.enemyStats[3]) {
-                                int dmgDealt = rand.nextInt(player.stats[1]);
-                                int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
-                                System.out.println("The enemy has taken " + dmgDealt + " damage!");
-                                bigBoi.enemyStats[1] -= dmgDealt;
-                                if (bigBoi.enemyStats[1]<0) {
-                                    System.out.println("ENEMY DEFEATED!!!");
-                                    System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
-                                    bigBoi.enemyStats[1] = 100;
-                                    player.stats[0] = MAX_HEALTH;
-                                    break OUTER;
-                                }
-                                System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                player.stats[0] -= EdmgDealt;
-                                if (player.stats[0]<0) {
-                                    System.out.println("YOU DIED");
-                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                    area2_cleared = true;
-                                    area3_cleared = true;
-                                    area4_cleared = true;
-                                    running = false;
-                                    break OUTER;
-                                }
-                            }
-                            if (player.stats[2]<bigBoi.enemyStats[3]) {
-                                int dmgDealt = rand.nextInt(player.stats[1]);
-                                int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
-                                System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                player.stats[0] -= EdmgDealt;
-                                if (player.stats[0]<0) {
-                                    System.out.println("YOU DIED");
-                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                    area2_cleared = true;
-                                    area3_cleared = true;
-                                    area4_cleared = true;
-                                    running = false;
-                                    break OUTER;
-                                }
-                                System.out.println("The enemy has taken " + dmgDealt + " damage!");
-                                bigBoi.enemyStats[1] -= dmgDealt;
-                                if (bigBoi.enemyStats[1]<0) {
-                                    System.out.println("ENEMY DEFEATED!!!");
-                                    System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
-                                    bigBoi.enemyStats[1] = 100;
-                                    player.stats[0] = MAX_HEALTH;
-                                    break OUTER;
-                                }
-                            }
-                            break;
-                        case "identify":
-                            if(player.stats[5]>=7)
-                            {
-                                System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
-                                bigBoi.showEnemyStats();
-                            }
-                            else
-                            {
-                                System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
-                            }
-                            break;
-                        case "use skill":
-                            if(player.skill.uses){
-                                if(player.skill.getName().equalsIgnoreCase("Blessing")){
-                                    if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        int HPgained = player.skill.use();
-                                        System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                        player.stats[0] += HPgained;
-                                        System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area2_cleared = true;
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                    }
-                                    if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                        int HPgained = player.skill.use();
-                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area2_cleared = true;
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                        System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                        player.stats[0] += HPgained;
-                                    }
-                                }
-                                else{
-                                    if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                        int dmgDealt = player.skill.use();
-                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
-                                        a1_enemy.enemyStats[1] -= dmgDealt;
-                                        if (a1_enemy.enemyStats[1]<0) {
-                                            System.out.println("ENEMY DEFEATED!!!");
-                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                            a1_enemy.newEnemy();
-                                            player.stats[0] = MAX_HEALTH;
-                                            player.skill.recharge();
-                                            break OUTER;
-                                        }
-                                        System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area2_cleared = true;
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                    }
-                                    if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                        int dmgDealt = player.skill.use();
-                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area2_cleared = true;
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                        System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
-                                        a1_enemy.enemyStats[1] -= dmgDealt;
-                                        if (a1_enemy.enemyStats[1]<0) {
-                                            System.out.println("ENEMY DEFEATED!!!");
-                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                            a1_enemy.newEnemy();
-                                            player.stats[0] = MAX_HEALTH;
-                                            player.skill.recharge();
-                                            break OUTER;
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                                System.out.println("You cannot use that skill again this battle!");
-                        break;
-                        case "skill info":
-                            System.out.println("\t"+player.skill.getSkillInfo());
-                            break;
-                        case "equipment":
-                            System.out.println(Arrays.toString(player.equipment));
-                            break;
-                        case "bag":
-                            System.out.println(Arrays.toString(player.inventory));
-                            break;
-                        case "stats":
-                            player.showStats();
-                            break;
-                        case "combat help":
-                            player.combatHelp();
-                            break;
-                        case "help":
-                            player.help();
-                            break;
-                        default:
-                            System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
-                            break;
-                    } //SWITCH INPUT - BOSS FIGHT END
-                } // BOSS FIGHT END
-                        break;
-                    case 4:
-                        System.out.println("You have found the exit to the area! But alas... you only get deeper into this hell hole instead of having freedom");
-                        area2_cleared = true;
-                        break;
-                    default:
-                        break;
-                } // AREA GET DATA END
-                        break;
-                    case "equipment":
-                        System.out.println(Arrays.toString(player.equipment));
-                        break;
-                    case "bag":
-                        System.out.println(Arrays.toString(player.inventory));
-                        break;
-                    case "stats":
-                        player.showStats();
-                        break;
-                    case "skill info":
-                        System.out.println("\t"+player.skill.getSkillInfo());
-                        break;
-                    default:
-                        System.out.println("enter a valid command (use \"help\" for a list of basic commands)");
-                        break;
-                } //SWITCH INPUT - AREA TRAVERSAL END
+                                                     }
+                                                 }
+                                                 if (player.stats[2]<a2_enemy.enemyStats[3]) {
+                                                     int HPgained = player.skill.use();
+                                                     int EdmgDealt = rand.nextInt(a2_enemy.enemyStats[2]);
+                                                     System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area2_cleared = true;
+                                                         area3_cleared = true;
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                     System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                     player.stats[0] += HPgained;
+                                                 }
+                                             }
+                                             else{
+                                                 if (player.stats[2]>=a2_enemy.enemyStats[3]) {
+                                                     int dmgDealt = player.skill.use();
+                                                     int EdmgDealt = rand.nextInt(a2_enemy.enemyStats[2]);
+                                                     System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
+                                                     a2_enemy.enemyStats[1] -= dmgDealt;
+                                                     if (a2_enemy.enemyStats[1]<0) {
+                                                         System.out.println("ENEMY DEFEATED!!!");
+                                                         System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                         a2_enemy.newEnemy();
+                                                         player.stats[0] = MAX_HEALTH;
+                                                         player.skill.recharge();
+                                                         break OUTER;
+                                                     }
+                                                     System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area2_cleared = true;
+                                                         area3_cleared = true;
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                 }
+                                                 if (player.stats[2]<a2_enemy.enemyStats[3]) {
+                                                     int dmgDealt = player.skill.use();
+                                                     int EdmgDealt = rand.nextInt(a2_enemy.enemyStats[2]);
+                                                     System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area2_cleared = true;
+                                                         area3_cleared = true;
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                     System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
+                                                     a2_enemy.enemyStats[1] -= dmgDealt;
+                                                     if (a2_enemy.enemyStats[1]<0) {
+                                                         System.out.println("ENEMY DEFEATED!!!");
+                                                         System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                         a2_enemy.newEnemy();
+                                                         player.stats[0] = MAX_HEALTH;
+                                                         player.skill.recharge();
+                                                         break OUTER;
+                                                     }
+                                                 }
+                                             }
+                                         }
+                                         else
+                                             System.out.println("You cannot use that skill again this battle!");
+                                         break;
+                                     case "skill info":
+                                         System.out.println("\t"+player.skill.getSkillInfo());
+                                         break;
+                                     case "equipment":
+                                         System.out.println(Arrays.toString(player.equipment));
+                                         break;
+                                     case "bag":
+                                         System.out.println(Arrays.toString(player.inventory));
+                                         break;
+                                     case "use":
+                                         System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                                         System.out.println("\t" + Arrays.toString(player.inventory));
+                                         try{
+                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                             if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
+                                                 System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                 player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                 player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                             }
+                                             else
+                                                 System.out.println("That is not a usable item or you do not have an item in that slot.");
+                                         }
+                                         catch(NumberFormatException e){
+                                             System.out.println("Please enter a number.");
+                                             break;
+                                         }
+                                         break;
+                                     case "item stats":
+                                         System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                         try {
+                                             int temp = Integer.parseInt(scan.nextLine());
+                                             switch (temp) {
+                                                 case 1:
+                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                     System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                     try {
+                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                         if(player.inventory[tempa] != null){
+                                                             System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                             player.inventory[tempa].getStats();
+                                                         }
+                                                         else{
+                                                             System.out.println("You do not have an item in that slot. Please try again.");
+                                                         }
+                                                     } catch (NumberFormatException e) {
+                                                         System.out.println("Please try again and enter a number.");
+                                                         break OUTER_7;
+                                                     }
+                                                     break OUTER_7;
+                                                 case 2:
+                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                     System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                     try {
+                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                         if(player.equipment[tempa] != null){
+                                                             System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                             player.equipment[tempa].getStats();
+                                                         }
+                                                         else{
+                                                             System.out.println("You do not have an item in that slot. Please try again.");
+                                                         }
+                                                     } catch (NumberFormatException e) {
+                                                         System.out.println("Please try again and enter a number.");
+                                                         break OUTER_7;
+                                                     }
+                                                     break OUTER_7;
+                                                 default:
+                                                     System.out.println("Please try again and enter a valid answer.");
+                                                     break;
+                                             }
+                                         }catch(NumberFormatException e){
+                                             System.out.println("Please try again and enter a number.");
+                                             break;
+                                         }
+                                         break;
+                                     case "stats":
+                                         player.showStats();
+                                         break;
+                                     case "combat help":
+                                         player.combatHelp();
+                                         break;
+                                     case "help":
+                                         player.help();
+                                         break;
+                                     default:
+                                         System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
+                                         break;
+                                 }
+                             }//NORMAL COMBAT END
+                             break;
+                         case 2:
+                             System.out.println("You found a chest! It contained: " + area1_chest.open());
+                             OUTER:
+                             while (true) {
+                                 System.out.println("\n\tWould you like to keep the item?");
+                                 System.out.println("\t\t 1. Yes");
+                                 System.out.println("\t\t 2. No");
+                                 input = scan.nextLine();
+                                 switch (input) {
+                                     case "1":
+                                         System.out.println("You yank the item from the chest!\nYou gained: " + area1_chest.open());
+                                         player.inventory = area1_chest.open().ADDinventory(player.inventory);
+                                         System.out.println(Arrays.toString(player.inventory));
+                                         area1_chest.newItem();
+                                         break OUTER;
+                                     case "2":
+                                         System.out.println("You decided to leave the item behind.");
+                                         area1_chest.newItem();
+                                         break OUTER;
+                                     default:
+                                         System.out.println("Please enter a valid option.");
+                                         break;
+                                 }
+                             } //CHEST END
+                             break;
+                         case 3:
+                             Enemy bigBoi = new Enemy(100, 1, 100, 1, 1, 1, 1, 1);
+                             System.out.println("\n\n----------------------------I T ' S   B O S S   T I M E   B O i S----------------------------");
+                             System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
+                             OUTER:
+                             while (true) {
+                                 System.out.println("\nWhat will you do " + player.name + "?");
+                                 input = scan.nextLine();
+                                 OUTER_8:
+                                 switch (input) {
+                                     case "attack":
+                                         if (player.stats[2]>=bigBoi.enemyStats[3]) {
+                                             int dmgDealt = rand.nextInt(player.stats[1]);
+                                             int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                             System.out.println("The enemy has taken " + dmgDealt + " damage!");
+                                             bigBoi.enemyStats[1] -= dmgDealt;
+                                             if (bigBoi.enemyStats[1]<0) {
+                                                 System.out.println("ENEMY DEFEATED!!!");
+                                                 System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
+                                                 bigBoi.enemyStats[1] = 100;
+                                                 player.stats[0] = MAX_HEALTH;
+                                                 break OUTER;
+                                             }
+                                             System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                             player.stats[0] -= EdmgDealt;
+                                             if (player.stats[0]<0) {
+                                                 System.out.println("YOU DIED");
+                                                 System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                 area2_cleared = true;
+                                                 area3_cleared = true;
+                                                 area4_cleared = true;
+                                                 running = false;
+                                                 break OUTER;
+                                             }
+                                         }
+                                         if (player.stats[2]<bigBoi.enemyStats[3]) {
+                                             int dmgDealt = rand.nextInt(player.stats[1]);
+                                             int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                             System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                             player.stats[0] -= EdmgDealt;
+                                             if (player.stats[0]<0) {
+                                                 System.out.println("YOU DIED");
+                                                 System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                 area2_cleared = true;
+                                                 area3_cleared = true;
+                                                 area4_cleared = true;
+                                                 running = false;
+                                                 break OUTER;
+                                             }
+                                             System.out.println("The enemy has taken " + dmgDealt + " damage!");
+                                             bigBoi.enemyStats[1] -= dmgDealt;
+                                             if (bigBoi.enemyStats[1]<0) {
+                                                 System.out.println("ENEMY DEFEATED!!!");
+                                                 System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
+                                                 bigBoi.enemyStats[1] = 100;
+                                                 player.stats[0] = MAX_HEALTH;
+                                                 break OUTER;
+                                             }
+                                         }
+                                         break;
+                                     case "identify":
+                                         if(player.stats[5]>=7)
+                                         {
+                                             System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
+                                             bigBoi.showEnemyStats();
+                                         }
+                                         else
+                                         {
+                                             System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
+                                         }
+                                         break;
+                                     case "use skill":
+                                         if(player.skill.uses){
+                                             if(player.skill.getName().equalsIgnoreCase("Blessing")){
+                                                 if (player.stats[2]>=bigBoi.enemyStats[3]) {
+                                                     int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                     int HPgained = player.skill.use();
+                                                     System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                     player.stats[0] += HPgained;
+                                                     System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area2_cleared = true;
+                                                         area3_cleared = true;
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                 }
+                                                 if (player.stats[2]<bigBoi.enemyStats[3]) {
+                                                     int HPgained = player.skill.use();
+                                                     int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                     System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area2_cleared = true;
+                                                         area3_cleared = true;
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                     System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                     player.stats[0] += HPgained;
+                                                 }
+                                             }
+                                             else{
+                                                 if (player.stats[2]>=bigBoi.enemyStats[3]) {
+                                                     int dmgDealt = player.skill.use();
+                                                     int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                     System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
+                                                     bigBoi.enemyStats[1] -= dmgDealt;
+                                                     if (bigBoi.enemyStats[1]<0) {
+                                                         System.out.println("ENEMY DEFEATED!!!");
+                                                         System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
+                                                         bigBoi.newEnemy();
+                                                         player.stats[0] = MAX_HEALTH;
+                                                         player.skill.recharge();
+                                                         break OUTER;
+                                                     }
+                                                     System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area2_cleared = true;
+                                                         area3_cleared = true;
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                 }
+                                                 if (player.stats[2]<bigBoi.enemyStats[3]) {
+                                                     int dmgDealt = player.skill.use();
+                                                     int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                     System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area2_cleared = true;
+                                                         area3_cleared = true;
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                     System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
+                                                     bigBoi.enemyStats[1] -= dmgDealt;
+                                                     if (bigBoi.enemyStats[1]<0) {
+                                                         System.out.println("ENEMY DEFEATED!!!");
+                                                         System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
+                                                         bigBoi.newEnemy();
+                                                         player.stats[0] = MAX_HEALTH;
+                                                         player.skill.recharge();
+                                                         break OUTER;
+                                                     }
+                                                 }
+                                             }
+                                         }
+                                         else
+                                             System.out.println("You cannot use that skill again this battle!");
+                                         break;
+                                     case "skill info":
+                                         System.out.println("\t"+player.skill.getSkillInfo());
+                                         break;
+                                     case "equipment":
+                                         System.out.println(Arrays.toString(player.equipment));
+                                         break;
+                                     case "bag":
+                                         System.out.println(Arrays.toString(player.inventory));
+                                         break;
+                                     case "use":
+                                         System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                                         System.out.println("\t" + Arrays.toString(player.inventory));
+                                         try{
+                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                             if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
+                                                 System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                 player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                 player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                             }
+                                             else
+                                                 System.out.println("That is not a usable item or you do not have an item in that slot.");
+                                         }
+                                         catch(NumberFormatException e){
+                                             System.out.println("Please enter a number.");
+                                             break;
+                                         }
+                                         break;
+                                     case "item stats":
+                                         System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                         try {
+                                             int temp = Integer.parseInt(scan.nextLine());
+                                             switch (temp) {
+                                                 case 1:
+                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                     System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                     try {
+                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                         if(player.inventory[tempa] != null){
+                                                             System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                             player.inventory[tempa].getStats();
+                                                         }
+                                                         else{
+                                                             System.out.println("You do not have an item in that slot. Please try again.");
+                                                         }
+                                                     } catch (NumberFormatException e) {
+                                                         System.out.println("Please try again and enter a number.");
+                                                         break OUTER_8;
+                                                     }
+                                                     break OUTER_8;
+                                                 case 2:
+                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                     System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                     try {
+                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                         if(player.equipment[tempa] != null){
+                                                             System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                             player.equipment[tempa].getStats();
+                                                         }
+                                                         else{
+                                                             System.out.println("You do not have an item in that slot. Please try again.");
+                                                         }
+                                                     } catch (NumberFormatException e) {
+                                                         System.out.println("Please try again and enter a number.");
+                                                         break OUTER_8;
+                                                     }
+                                                     break OUTER_8;
+                                                 default:
+                                                     System.out.println("Please try again and enter a valid answer.");
+                                                     break;
+                                             }
+                                         }catch(NumberFormatException e){
+                                             System.out.println("Please try again and enter a number.");
+                                             break;
+                                         }
+                                         break;
+                                     case "stats":
+                                         player.showStats();
+                                         break;
+                                     case "combat help":
+                                         player.combatHelp();
+                                         break;
+                                     case "help":
+                                         player.help();
+                                         break;
+                                     default:
+                                         System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
+                                         break;
+                                 }
+                             } // BOSS FIGHT END
+                             break;
+                         case 4:
+                             System.out.println("You have found the exit to the area! But alas... you only get deeper into this hell hole instead of having freedom");
+                             area2_cleared = true;
+                             break;
+                         default:
+                             break;
+                     } // AREA GET DATA END
+                     break;
+                 case "equipment":
+                     System.out.println(Arrays.toString(player.equipment));
+                     break;
+                 case "bag":
+                     System.out.println(Arrays.toString(player.inventory));
+                     break;
+                 case "drop":
+                     System.out.println("From where would you like to drop something?\n\t1. Bag\n\t2. Equipment");
+                     try {
+                         int temp = Integer.parseInt(scan.nextLine());
+                         switch (temp) {
+                             case 1:
+                                 System.out.println("Which item did you want to drop from your bag? Type 1 for first item, 2 for second, and so on.");
+                                 System.out.println("\t" + Arrays.toString(player.inventory));
+                                 try {
+                                     int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                     if (player.inventory[tempa] != null) {
+                                         System.out.println("You dropped your " + player.inventory[tempa].name + ".");
+                                         player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                         break OUTER_9;
+                                     } else {
+                                         System.out.println("You do not have an item in that slot. Please try again.");
+                                     }
+                                 } catch (NumberFormatException e) {
+                                     System.out.println("Please try again and enter a number.");
+                                     break OUTER_9;
+                                 }
+                                 break OUTER_9;
+                             case 2:
+                                 System.out.println("Which item did you want to drop from your equipment? Type 1 for first item, 2 for second, and so on.");
+                                 System.out.println("\t" + Arrays.toString(player.equipment));
+                                 try {
+                                     int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                     if (player.equipment[tempa] != null) {
+                                         System.out.println("You dropped your " + player.equipment[tempa].name + ".");
+                                         player.stats = player.equipment[tempa].SUBstats(player.stats);
+                                         player.equipment = player.equipment[tempa].dropEquipment(player.equipment);
+                                         break OUTER_9;
+                                     } else {
+                                         System.out.println("You do not have an item in that slot. Please try again.");
+                                     }
+                                 } catch (NumberFormatException e) {
+                                     System.out.println("Please try again and enter a number.");
+                                     break OUTER_9;
+                                 }
+                                 break;
+                             default:
+                                 System.out.println("Please try again and enter a valid answer.");
+                                 break;
+                         }
+                     }catch(NumberFormatException e){
+                         System.out.println("Please try again and enter a number.");
+                         break;
+                     }
+                     break;
+                 case "equip":
+                     System.out.println("What item did you want to equip from your bag? Type 1 for first item, 2 for second, and so on.");
+                     System.out.println("\t" + Arrays.toString(player.inventory));
+                     try{
+                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                         if(player.inventory[tempa] != null){
+                             System.out.println("You equipped your " + player.inventory[tempa].name + ".");
+                             player.stats = player.inventory[tempa].ADDstats(player.stats);
+                             Items[][] temp = player.inventory[tempa].equip(player.inventory, player.equipment);
+                             player.inventory = temp[0];
+                             player.equipment = temp[1];
+                             break;
+                         }
+                         else
+                             System.out.println("You do not have an equipped item in that slot.");
+                     }
+                     catch(NumberFormatException e){
+                         System.out.println("Please enter a number.");
+                         break;
+                     }
+                     break;
+                 case "unequip":
+                     System.out.println("What item did you want to unequip from your equipment? Type 1 for first item, 2 for second, and so on.");
+                     System.out.println("\t" + Arrays.toString(player.equipment));
+                     try{
+                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                         if(player.equipment[tempa] != null){
+                             System.out.println("You unequipped your " + player.equipment[tempa].name + ".");
+                             player.stats = player.equipment[tempa].SUBstats(player.stats);
+                             Items[][] temp = player.equipment[tempa].unequip(player.inventory, player.equipment);
+                             player.inventory = temp[0];
+                             player.equipment = temp[1];
+                             break;
+                         }
+                         else
+                             System.out.println("You do not have an equipped item in that slot.");
+                     }
+                     catch(NumberFormatException e){
+                         System.out.println("Please enter a number.");
+                         break;
+                     }
+                     break;
+                 case "use":
+                     System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                     System.out.println("\t" + Arrays.toString(player.inventory));
+                     try{
+                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                         if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
+                             System.out.println("You use " + player.inventory[tempa].name + ".");
+                             player.stats = player.inventory[tempa].ADDstats(player.stats);
+                             player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                         }
+                         else
+                             System.out.println("That is not a usable item or you do not have an item in that slot.");
+                     }
+                     catch(NumberFormatException e){
+                         System.out.println("Please enter a number.");
+                         break;
+                     }
+                     break;
+                 case "item stats":
+                     System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                     try {
+                         int temp = Integer.parseInt(scan.nextLine());
+                         switch (temp) {
+                             case 1:
+                                 System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                 System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                 try {
+                                     int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                     if(player.inventory[tempa] != null){
+                                         System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                         player.inventory[tempa].getStats();
+                                     }
+                                     else{
+                                         System.out.println("You do not have an item in that slot. Please try again.");
+                                     }
+                                 } catch (NumberFormatException e) {
+                                     System.out.println("Please try again and enter a number.");
+                                     break OUTER_10;
+                                 }
+                                 break OUTER_10;
+                             case 2:
+                                 System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                 System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                 try {
+                                     int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                     if(player.equipment[tempa] != null){
+                                         System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                         player.equipment[tempa].getStats();
+                                     }
+                                     else{
+                                         System.out.println("You do not have an item in that slot. Please try again.");
+                                     }
+                                 } catch (NumberFormatException e) {
+                                     System.out.println("Please try again and enter a number.");
+                                     break OUTER_10;
+                                 }
+                                 break OUTER_10;
+                             default:
+                                 System.out.println("Please try again and enter a valid answer.");
+                                 break;
+                         }
+                     }catch(NumberFormatException e){
+                         System.out.println("Please try again and enter a number.");
+                         break;
+                     }
+                     break;
+                 case "stats":
+                     player.showStats();
+                     break;
+                 case "skill info":
+                     System.out.println("\t"+player.skill.getSkillInfo());
+                     break;
+                 default:
+                     System.out.println("enter a valid command (use \"help\" for a list of basic commands)");
+                     break;
+             }
           }//WHILE AREA_2 CLEARED END
           ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
@@ -1470,665 +2168,1017 @@ public class HOD_GAME {
                for(int i = 0; i<area3_L-1; i++)
                {
                    area3.addNode(rand.nextInt(3));
+                   //area3.addNode(0);
                }
                Area.listLength(area3);
-               Area area13_pp = area3;
+               Area area3_pp = area3;
                Chest area3_chest = new Chest();
                Enemy a3_enemy = new Enemy(1, 1, 1, 1, 1, 1, 1, 1);
                a3_enemy.newEnemy3();
           /////////////////////////////AREA 3 CREATION////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-          
+          if(area3_cleared == false)
+          {
+              System.out.println("\n\n\tIt's very dark in these catacombs, and very sp00ky. This place smells worse than the first. Nonetheless, you continue"
+                     + "\n\tto press forward, driven by what could possibly be at the end of all this devistation");
+          }
           while(area3_cleared == false)
           {
-             System.out.println("\n\n\tIt's very dark in these catacombs, and very sp00ky. This place smells worse than the first. Nonetheless, you continue"
-                     + "\n\tto press forward, driven by what could possibly be at the end of all this devistation");
              System.out.println("\n\t\tWhat would you like to do?");
                 input = scan.nextLine();
-                switch (input) {
-                    case "help":
-                        player.help();
-                        break;
-                    case "forward":
-                        area1_pp = area1_pp.getForeLink();
-                        System.out.println(area1_pp.getData());
-                switch (area1_pp.getData()) {
-                    case 0:
-                        int area3_encounter;
-                        area3_encounter = area1.area_3_Encounter(rand.nextInt(4), player.stats[2], player.name);
-                        if(area3_encounter<2000)
-                        {
-                            player.stats[0] = player.stats[0] - area3_encounter;
-                            if(player.stats[0]<=0)
-                            {
-                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                area3_cleared = true;
-                                area4_cleared = true;
-                                running = false;
-                                break;
-                            }
-                        }
-                        else if(area3_encounter == 3331)
-                        {
-                            TrueNameRevealed = true;
-                        }
-                        else if(area3_encounter == 3332)
-                        {
-                            Enemy Hellish_Abomination = new Enemy(100, 200, 25, 25, 25, 25, 25, 0);
-                             System.out.println("\n\n----------------------------F I G H T !!!----------------------------");
-                                    System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
-                                    OUTER:
-                                     while (true) {
-                                    System.out.println("\nWhat will you do " + player.name + "?");
+              OUTER_14:
+             OUTER_16:
+             switch (input) {
+                 case "help":
+                     player.help();
+                     break;
+                 case "forward":
+                     area3_pp = area3_pp.getForeLink();
+                     System.out.println(area3_pp.getData());
+                     switch (area3_pp.getData()) {
+                         case 0:
+                             int area3_encounter;
+                             area3_encounter = area3.area_3_Encounter(rand.nextInt(4), player.stats[2], player.name);
+                             if(area3_encounter<2000)
+                             {
+                                 player.stats[0] = player.stats[0] - area3_encounter;
+                                 if(player.stats[0]<=0)
+                                 {
+                                     System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                     area3_cleared = true;
+                                     area4_cleared = true;
+                                     running = false;
+                                     break;
+                                 }
+                             }
+                             else if(area3_encounter == 3331)
+                             {
+                                 TrueNameRevealed = true;
+                             }
+                             else if(area3_encounter == 3332)
+                             {
+                                 Enemy Hellish_Abomination = new Enemy(100, 200, 25, 25, 25, 25, 25, 0);
+                                 System.out.println("\n\n----------------------------F I G H T !!!----------------------------");
+                                 System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
+                                 OUTER:
+                                 while (true) {
+                                     System.out.println("\nWhat will you do " + player.name + "?");
                                      input = scan.nextLine();
+                                     OUTER_11:
                                      switch (input) {
-                                        //if(input.equals("ranged attack"))
-                                        //{
-                                        //
-                                        //}
                                          case "attack":
-                                                 if (player.stats[2]>=Hellish_Abomination.enemyStats[3]) {
-                                                int dmgDealt = rand.nextInt(player.stats[1]);
-                                                int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
+                                             if (player.stats[2]>=Hellish_Abomination.enemyStats[3]) {
+                                                 int dmgDealt = rand.nextInt(player.stats[1]);
+                                                 int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
                                                  System.out.println("The enemy has taken " + dmgDealt + " damage!");
                                                  Hellish_Abomination.enemyStats[1] -= dmgDealt;
                                                  if (Hellish_Abomination.enemyStats[1]<0) {
+                                                     System.out.println("ENEMY DEFEATED!!!");
+                                                     System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                     System.out.println("\n\n\t\"I can't believe you actually lived... like wow...\n\tWell, for a performance like that, you deserve "
+                                                             + "a great reward!\n\tYou've gained Scepter of the Void!");
+                                                     Items SOTV = new Items("Scepter of the Void",50,15,15,10,10,10,10,10,0,0,0,0,0,0,2); //+50 HP, +15 STR & DEX, +10 everything else
+                                                     player.inventory = SOTV.ADDinventory(player.inventory);
+                                                     player.stats[0] = MAX_HEALTH;
+                                                     player.skill.recharge();
+                                                     break OUTER;
+                                                 }
+                                                 System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                 player.stats[0] -= EdmgDealt;
+                                                 if (player.stats[0]<0) {
+                                                     System.out.println("YOU DIED");
+                                                     System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                     area3_cleared = true;
+                                                     area4_cleared = true;
+                                                     running = false;
+                                                     break OUTER;
+                                                 }
+                                             }
+                                             if (player.stats[2]<Hellish_Abomination.enemyStats[3]) {
+                                                 int dmgDealt = rand.nextInt(player.stats[1]);
+                                                 int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
+                                                 System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                 player.stats[0] -= EdmgDealt;
+                                                 if (player.stats[0]<0) {
+                                                     System.out.println("YOU DIED");
+                                                     System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                     area3_cleared = true;
+                                                     area4_cleared = true;
+                                                     running = false;
+                                                     break OUTER;
+                                                 }
+                                                 System.out.println("The enemy has taken " + dmgDealt + " damage!");
+                                                 Hellish_Abomination.enemyStats[1] -= dmgDealt;
+                                                 if (Hellish_Abomination.enemyStats[1]<0) {
+                                                     System.out.println("ENEMY DEFEATED!!!");
+                                                     System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                     System.out.println("\n\n\t\"I can't believe you actually lived... like wow...\n\tWell, for a performance like that, you deserve "
+                                                             + "a great reward!\n\tYou've gained Scepter of the Void!");
+                                                     Items SOTV = new Items("Scepter of the Void",50,15,15,10,10,10,10,10,0,0,0,0,0,0,2); //+50 HP, +15 STR & DEX, +10 everything else
+                                                     player.inventory = SOTV.ADDinventory(player.inventory);
+                                                     player.stats[0] = MAX_HEALTH;
+                                                     player.skill.recharge();
+                                                     break OUTER;
+                                                 }
+                                             }
+                                             break;
+                                         case "identify":
+                                             if(player.stats[5]>=7)
+                                             {
+                                                 System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
+                                                 Hellish_Abomination.showEnemyStats();
+                                             }
+                                             else
+                                             {
+                                                 System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
+                                             }
+                                             break;
+                                         case "use skill":
+                                             if(player.skill.uses){
+                                                 if(player.skill.getName().equalsIgnoreCase("Blessing")){
+                                                     if (player.stats[2]>=Hellish_Abomination.enemyStats[3]) {
+                                                         int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
+                                                         int HPgained = player.skill.use();
+                                                         System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                         player.stats[0] += HPgained;
+                                                         System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                         player.stats[0] -= EdmgDealt;
+                                                         if (player.stats[0]<0) {
+                                                             System.out.println("YOU DIED");
+                                                             System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                             area3_cleared = true;
+                                                             area4_cleared = true;
+                                                             running = false;
+                                                             break OUTER;
+                                                         }
+                                                     }
+                                                     if (player.stats[2]<Hellish_Abomination.enemyStats[3]) {
+                                                         int HPgained = player.skill.use();
+                                                         int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
+                                                         System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                         player.stats[0] -= EdmgDealt;
+                                                         if (player.stats[0]<0) {
+                                                             System.out.println("YOU DIED");
+                                                             System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                             area3_cleared = true;
+                                                             area4_cleared = true;
+                                                             running = false;
+                                                             break OUTER;
+                                                         }
+                                                         System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                         player.stats[0] += HPgained;
+                                                     }
+                                                 }
+                                                 else{
+                                                     if (player.stats[2]>=Hellish_Abomination.enemyStats[3]) {
+                                                         int dmgDealt = player.skill.use();
+                                                         int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
+                                                         System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
+                                                         Hellish_Abomination.enemyStats[1] -= dmgDealt;
+                                                         if (Hellish_Abomination.enemyStats[1]<0) {
+                                                             System.out.println("ENEMY DEFEATED!!!");
+                                                             System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                             System.out.println("\n\n\t\"I can't believe you actually lived... like wow...\n\tWell, for a performance like that, you deserve "
+                                                                     + "a great reward!\n\tYou've gained Scepter of the Void!");
+                                                             Items SOTV = new Items("Scepter of the Void",50,15,15,10,10,10,10,10,0,0,0,0,0,0,2); //+50 HP, +15 STR & DEX, +10 everything else
+                                                             player.inventory = SOTV.ADDinventory(player.inventory);
+                                                             player.stats[0] = MAX_HEALTH;
+                                                             player.skill.recharge();
+                                                             break OUTER;
+                                                         }
+                                                         System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                         player.stats[0] -= EdmgDealt;
+                                                         if (player.stats[0]<0) {
+                                                             System.out.println("YOU DIED");
+                                                             System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                             area3_cleared = true;
+                                                             area4_cleared = true;
+                                                             running = false;
+                                                             break OUTER;
+                                                         }
+                                                     }
+                                                     if (player.stats[2]<Hellish_Abomination.enemyStats[3]) {
+                                                         int dmgDealt = player.skill.use();
+                                                         int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
+                                                         System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                         player.stats[0] -= EdmgDealt;
+                                                         if (player.stats[0]<0) {
+                                                             System.out.println("YOU DIED");
+                                                             System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                             area3_cleared = true;
+                                                             area4_cleared = true;
+                                                             running = false;
+                                                             break OUTER;
+                                                         }
+                                                         System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
+                                                         Hellish_Abomination.enemyStats[1] -= dmgDealt;
+                                                         if (Hellish_Abomination.enemyStats[1]<0) {
+                                                             System.out.println("ENEMY DEFEATED!!!");
+                                                             System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                             System.out.println("\n\n\t\"I can't believe you actually lived... like wow...\n\tWell, for a performance like that, you deserve "
+                                                                     + "a great reward!\n\tYou've gained Scepter of the Void!");
+                                                             Items SOTV = new Items("Scepter of the Void",50,15,15,10,10,10,10,10,0,0,0,0,0,0,2); //+50 HP, +15 STR & DEX, +10 everything else
+                                                             player.inventory = SOTV.ADDinventory(player.inventory);
+                                                             player.stats[0] = MAX_HEALTH;
+                                                             player.skill.recharge();
+                                                             break OUTER;
+                                                         }
+                                                     }
+                                                 }
+                                             }
+                                             else
+                                                 System.out.println("You cannot use that skill again this battle!");
+                                             break;
+                                         case "skill info":
+                                             System.out.println("\t"+player.skill.getSkillInfo());
+                                             break;
+                                         case "equipment":
+                                             System.out.println(Arrays.toString(player.equipment));
+                                             break;
+                                         case "bag":
+                                             System.out.println(Arrays.toString(player.inventory));
+                                             break;
+                                         case "use":
+                                             System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                                             System.out.println("\t" + Arrays.toString(player.inventory));
+                                             try{
+                                                 int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                 if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
+                                                     System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                     player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                     player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                 }
+                                                 else
+                                                     System.out.println("That is not a usable item or you do not have an item in that slot.");
+                                             }
+                                             catch(NumberFormatException e){
+                                                 System.out.println("Please enter a number.");
+                                                 break;
+                                             }
+                                             break;
+                                         case "item stats":
+                                             System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                             try {
+                                                 int temp = Integer.parseInt(scan.nextLine());
+                                                 switch (temp) {
+                                                     case 1:
+                                                         System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                         System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                         try {
+                                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                             if(player.inventory[tempa] != null){
+                                                                 System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                                 player.inventory[tempa].getStats();
+                                                             }
+                                                             else{
+                                                                 System.out.println("You do not have an item in that slot. Please try again.");
+                                                             }   } catch (NumberFormatException e) {
+                                                                 System.out.println("Please try again and enter a number.");
+                                                                 break OUTER_11;
+                                                             }
+                                                         break OUTER_11;
+                                                     case 2:
+                                                         System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                         System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                         try {
+                                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                             if(player.equipment[tempa] != null){
+                                                                 System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                                 player.equipment[tempa].getStats();
+                                                             }
+                                                             else{
+                                                                 System.out.println("You do not have an item in that slot. Please try again.");
+                                                             }   } catch (NumberFormatException e) {
+                                                                 System.out.println("Please try again and enter a number.");
+                                                                 break OUTER_11;
+                                                             }
+                                                         break OUTER_11;
+                                                     default:
+                                                         System.out.println("Please try again and enter a valid answer.");
+                                                         break;
+                                                 }
+                                             }catch(NumberFormatException e){
+                                                 System.out.println("Please try again and enter a number.");
+                                                 break;
+                                             }   break;
+                                         case "stats":
+                                             player.showStats();
+                                             break;
+                                         case "combat help":
+                                             player.combatHelp();
+                                             break;
+                                         default:
+                                             System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
+                                             break;
+                                     }
+                                 }//NORMAL COMBAT END
+                             }
+                             break;
+                         case 1:
+                             a3_enemy.getEnemy3();
+                             System.out.println("\n\n----------------------------F I G H T !!!----------------------------");
+                             System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
+                             OUTER:
+                             while (true) {
+                                 System.out.println("\nWhat will you do " + player.name + "?");
+                                 input = scan.nextLine();
+                                 OUTER_12:
+                                 switch (input) {
+                                     case "attack":
+                                         if (player.stats[2]>=a3_enemy.enemyStats[3]) {
+                                             int dmgDealt = rand.nextInt(player.stats[1]);
+                                             int EdmgDealt = rand.nextInt(a3_enemy.enemyStats[2]);
+                                             System.out.println("The enemy has taken " + dmgDealt + " damage!");
+                                             a3_enemy.enemyStats[1] -= dmgDealt;
+                                             if (a3_enemy.enemyStats[1]<0) {
                                                  System.out.println("ENEMY DEFEATED!!!");
                                                  System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                 System.out.println("\n\n\t\"I can't believe you actually lived... like wow...\n\tWell, for a performance like that, you deserve "
-                                                         + "a great reward!\n\tYou've gained Scepter of the Void!");
-                                                 Items SOTV = new Items("Scepter of the Void",50,15,15,10,10,10,10,10,0,0,0,0,0,0,2); //+50 HP, +15 STR & DEX, +10 everything else
-                                                 player.inventory = SOTV.ADDinventory(player.inventory);
+                                                 a3_enemy.newEnemy3();
                                                  player.stats[0] = MAX_HEALTH;
-                                                 player.skill.recharge();
                                                  break OUTER;
-                                                                                }
-                                                  System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                             }
+                                             System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                             player.stats[0] -= EdmgDealt;
+                                             if (player.stats[0]<0) {
+                                                 System.out.println("YOU DIED");
+                                                 System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                 area3_cleared = true;
+                                                 area4_cleared = true;
+                                                 running = false;
+                                                 break OUTER;
+                                             }
+                                         }
+                                         if (player.stats[2]<a3_enemy.enemyStats[3]) {
+                                             int dmgDealt = rand.nextInt(player.stats[1]);
+                                             int EdmgDealt = rand.nextInt(a3_enemy.enemyStats[2]);
+                                             System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                             player.stats[0] -= EdmgDealt;
+                                             if (player.stats[0]<0) {
+                                                 System.out.println("YOU DIED");
+                                                 System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                 area3_cleared = true;
+                                                 area4_cleared = true;
+                                                 running = false;
+                                                 break OUTER;
+                                             }
+                                             System.out.println("The enemy has taken " + dmgDealt + " damage!");
+                                             a3_enemy.enemyStats[1] -= dmgDealt;
+                                             if (a3_enemy.enemyStats[1]<0) {
+                                                 System.out.println("ENEMY DEFEATED!!!");
+                                                 System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                 a3_enemy.newEnemy3();
+                                                 player.stats[0] = MAX_HEALTH;
+                                                 break OUTER;
+                                             }
+                                         }
+                                         break;
+                                     case "identify":
+                                         if(player.stats[5]>=7)
+                                         {
+                                             System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
+                                             a3_enemy.showEnemyStats();
+                                         }
+                                         else
+                                         {
+                                             System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
+                                         }
+                                         break;
+                                     case "use skill":
+                                         if(player.skill.uses){
+                                             if(player.skill.getName().equalsIgnoreCase("Blessing")){
+                                                 if (player.stats[2]>=a3_enemy.enemyStats[3]) {
+                                                     int EdmgDealt = rand.nextInt(a3_enemy.enemyStats[2]);
+                                                     int HPgained = player.skill.use();
+                                                     System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                     player.stats[0] += HPgained;
+                                                     System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
                                                      player.stats[0] -= EdmgDealt;
                                                      if (player.stats[0]<0) {
-                                                     System.out.println("YOU DIED");
-                                                        System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
                                                          area3_cleared = true;
                                                          area4_cleared = true;
                                                          running = false;
                                                          break OUTER;
-                                                                            }
-                                                                                            }
-                                    if (player.stats[2]<Hellish_Abomination.enemyStats[3]) {
-                                        int dmgDealt = rand.nextInt(player.stats[1]);
-                                        int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
-                                        System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                        System.out.println("The enemy has taken " + dmgDealt + " damage!");
-                                        Hellish_Abomination.enemyStats[1] -= dmgDealt;
-                                        if (Hellish_Abomination.enemyStats[1]<0) {
-                                            System.out.println("ENEMY DEFEATED!!!");
-                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                            System.out.println("\n\n\t\"I can't believe you actually lived... like wow...\n\tWell, for a performance like that, you deserve "
-                                                         + "a great reward!\n\tYou've gained Scepter of the Void!");
-                                            Items SOTV = new Items("Scepter of the Void",50,15,15,10,10,10,10,10,0,0,0,0,0,0,2); //+50 HP, +15 STR & DEX, +10 everything else
-                                            player.inventory = SOTV.ADDinventory(player.inventory);
-                                            player.stats[0] = MAX_HEALTH;
-                                            player.skill.recharge();
-                                            break OUTER;
-                                        }
-                                    }
-                                    break;
-                                case "identify":
-                                    if(player.stats[5]>=7)
-                                    {
-                                        System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
-                                        Hellish_Abomination.showEnemyStats();
-                                    }
-                                    else
-                                    {
-                                        System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
-                                    }
-                                    break;
-                                case "use skill":
-                                    if(player.skill.uses){
-                                        if(player.skill.getName().equalsIgnoreCase("Blessing")){
-                                            if (player.stats[2]>=Hellish_Abomination.enemyStats[3]) {
-                                                int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
-                                                int HPgained = player.skill.use();
-                                                System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                                player.stats[0] += HPgained;
-                                                System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                            }
-                                            if (player.stats[2]<Hellish_Abomination.enemyStats[3]) {
-                                                int HPgained = player.skill.use();
-                                                int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
-                                                System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                                System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                                player.stats[0] += HPgained;
-                                            }
-                                        }
-                                        else{
-                                            if (player.stats[2]>=Hellish_Abomination.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
-                                                int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
-                                                System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
-                                                Hellish_Abomination.enemyStats[1] -= dmgDealt;
-                                                if (Hellish_Abomination.enemyStats[1]<0) {
-                                                    System.out.println("ENEMY DEFEATED!!!");
-                                                    System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                    System.out.println("\n\n\t\"I can't believe you actually lived... like wow...\n\tWell, for a performance like that, you deserve "
-                                                         + "a great reward!\n\tYou've gained Scepter of the Void!");
-                                                    Items SOTV = new Items("Scepter of the Void",50,15,15,10,10,10,10,10,0,0,0,0,0,0,2); //+50 HP, +15 STR & DEX, +10 everything else
-                                                    player.inventory = SOTV.ADDinventory(player.inventory);
-                                                    player.stats[0] = MAX_HEALTH;
-                                                    player.skill.recharge();
-                                                    break OUTER;
-                                                }
-                                                System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                            }
-                                            if (player.stats[2]<Hellish_Abomination.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
-                                                int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
-                                                System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                                System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
-                                                Hellish_Abomination.enemyStats[1] -= dmgDealt;
-                                                if (Hellish_Abomination.enemyStats[1]<0) {
-                                                    System.out.println("ENEMY DEFEATED!!!");
-                                                    System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                    System.out.println("\n\n\t\"I can't believe you actually lived... like wow...\n\tWell, for a performance like that, you deserve "
-                                                         + "a great reward!\n\tYou've gained Scepter of the Void!");
-                                                    Items SOTV = new Items("Scepter of the Void",50,15,15,10,10,10,10,10,0,0,0,0,0,0,2); //+50 HP, +15 STR & DEX, +10 everything else
-                                                    player.inventory = SOTV.ADDinventory(player.inventory);
-                                                    player.stats[0] = MAX_HEALTH;
-                                                    player.skill.recharge();
-                                                    break OUTER;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    else
-                                        System.out.println("You cannot use that skill again this battle!");
-                                break;
-                                case "skill info":
-                                    System.out.println("\t"+player.skill.getSkillInfo());
-                                    break;
-                                case "equipment":
-                                    System.out.println(Arrays.toString(player.equipment));
-                                    break;
-                                case "bag":
-                                    System.out.println(Arrays.toString(player.inventory));
-                                    break;
-                                case "stats":
-                                    player.showStats();
-                                    break;
-                                case "combat help":
-                                    player.combatHelp();
-                                    break;
-                                default:
-                                    System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
-                                    break;
-                            }//SWITCH INPUT - NORMAL COMBAT END
-                        }//NORMAL COMBAT END
-                        }
-                        break;
-                    case 1:
-                        a3_enemy.getEnemy3();
-                        System.out.println("\n\n----------------------------F I G H T !!!----------------------------");
-                        System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
-                        OUTER:
-                        while (true) {
-                            System.out.println("\nWhat will you do " + player.name + "?");
-                            input = scan.nextLine();
-                            switch (input) {
-                                //if(input.equals("ranged attack"))
-                                //{
-                                //
-                                //}
-                                case "attack":
-                                    if (player.stats[2]>=a3_enemy.enemyStats[3]) {
-                                        int dmgDealt = rand.nextInt(player.stats[1]);
-                                        int EdmgDealt = rand.nextInt(a3_enemy.enemyStats[2]);
-                                        System.out.println("The enemy has taken " + dmgDealt + " damage!");
-                                        a3_enemy.enemyStats[1] -= dmgDealt;
-                                        if (a3_enemy.enemyStats[1]<0) {
-                                            System.out.println("ENEMY DEFEATED!!!");
-                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                            a3_enemy.newEnemy3();
-                                            player.stats[0] = MAX_HEALTH;
-                                            break OUTER;
-                                        }
-                                        System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                    }
-                                    if (player.stats[2]<a3_enemy.enemyStats[3]) {
-                                        int dmgDealt = rand.nextInt(player.stats[1]);
-                                        int EdmgDealt = rand.nextInt(a3_enemy.enemyStats[2]);
-                                        System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                        System.out.println("The enemy has taken " + dmgDealt + " damage!");
-                                        a3_enemy.enemyStats[1] -= dmgDealt;
-                                        if (a3_enemy.enemyStats[1]<0) {
-                                            System.out.println("ENEMY DEFEATED!!!");
-                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                            a3_enemy.newEnemy3();
-                                            player.stats[0] = MAX_HEALTH;
-                                            break OUTER;
-                                        }
-                                    }
-                                    break;
-                                case "identify":
-                                    if(player.stats[5]>=7)
-                                    {
-                                        System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
-                                        a3_enemy.showEnemyStats();
-                                    }
-                                    else
-                                    {
-                                        System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
-                                    }
-                                    break;
-                                case "use skill":
-                                    if(player.skill.uses){
-                                        if(player.skill.getName().equalsIgnoreCase("Blessing")){
-                                            if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                                int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                                int HPgained = player.skill.use();
-                                                System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                                player.stats[0] += HPgained;
-                                                System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                            }
-                                            if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                                int HPgained = player.skill.use();
-                                                int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                                System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                                System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                                player.stats[0] += HPgained;
-                                            }
-                                        }
-                                        else{
-                                            if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
-                                                int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                                System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
-                                                a1_enemy.enemyStats[1] -= dmgDealt;
-                                                if (a1_enemy.enemyStats[1]<0) {
-                                                    System.out.println("ENEMY DEFEATED!!!");
-                                                    System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                    a1_enemy.newEnemy();
-                                                    player.stats[0] = MAX_HEALTH;
-                                                    player.skill.recharge();
-                                                    break OUTER;
-                                                }
-                                                System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                            }
-                                            if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
-                                                int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                                System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area3_cleared = true;
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                                System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
-                                                a1_enemy.enemyStats[1] -= dmgDealt;
-                                                if (a1_enemy.enemyStats[1]<0) {
-                                                    System.out.println("ENEMY DEFEATED!!!");
-                                                    System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                    a1_enemy.newEnemy();
-                                                    player.stats[0] = MAX_HEALTH;
-                                                    player.skill.recharge();
-                                                    break OUTER;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    else
-                                        System.out.println("You cannot use that skill again this battle!");
-                                break;
-                                case "skill info":
-                                    System.out.println("\t"+player.skill.getSkillInfo());
-                                    break;
-                                case "equipment":
-                                    System.out.println(Arrays.toString(player.equipment));
-                                    break;
-                                case "bag":
-                                    System.out.println(Arrays.toString(player.inventory));
-                                    break;
-                                case "stats":
-                                    player.showStats();
-                                    break;
-                                case "combat help":
-                                    player.combatHelp();
-                                    break;
-                                case "help":
-                                    player.help();
-                                    break;
-                                default:
-                                    System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
-                                    break;
-                            }//SWITCH INPUT - NORMAL COMBAT END
-                        }//NORMAL COMBAT END
-                        break;
-                    case 2:
-                        System.out.println("You found a chest! It contained: " + area1_chest.open());
-                OUTER:
-                while (true) {
-                    System.out.println("\n\tWould you like to keep the item?");
-                    System.out.println("\t\t 1. Yes");
-                    System.out.println("\t\t 2. No");
-                    input = scan.nextLine();
-                    switch (input) {
-                        case "1":
-                            System.out.println("You yank the item from the chest!\nYou gained: " + area1_chest.open());
-                            player.inventory = area1_chest.open().ADDinventory(player.inventory);
-                            System.out.println(Arrays.toString(player.inventory));
-                            area1_chest.newItem();
-                            break OUTER;
-                        case "2":
-                            System.out.println("You decided to leave the item behind.");
-                            area1_chest.newItem();
-                            break OUTER;
-                        default:
-                            System.out.println("Please enter a valid option.");
-                            break;
-                    }
-                } //CHEST END
-                        break;
-                    case 3:
-                        Enemy bigBoi = new Enemy(100, 100, 100, 1, 1, 1, 1, 1);
-                        System.out.println("\n\n----------------------------I T ' S   B O S S   T I M E   B O i S----------------------------");
-                        System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
-                OUTER:
-                while (true) {
-                    System.out.println("\nWhat will you do " + player.name + "?");
-                    input = scan.nextLine();
-                    switch (input) {
-                        case "attack":
-                            if (player.stats[2]>=bigBoi.enemyStats[3]) {
-                                int dmgDealt = rand.nextInt(player.stats[1]);
-                                int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
-                                System.out.println("The enemy has taken " + dmgDealt + " damage!");
-                                bigBoi.enemyStats[1] -= dmgDealt;
-                                if (bigBoi.enemyStats[1]<0) {
-                                    System.out.println("ENEMY DEFEATED!!!");
-                                    System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
-                                    bigBoi.enemyStats[1] = 100;
-                                    player.stats[0] = MAX_HEALTH;
-                                    break OUTER;
-                                }
-                                System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                player.stats[0] -= EdmgDealt;
-                                if (player.stats[0]<0) {
-                                    System.out.println("YOU DIED");
-                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                    area3_cleared = true;
-                                    area4_cleared = true;
-                                    running = false;
-                                    break OUTER;
-                                }
-                            }
-                            if (player.stats[2]<bigBoi.enemyStats[3]) {
-                                int dmgDealt = rand.nextInt(player.stats[1]);
-                                int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
-                                System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                player.stats[0] -= EdmgDealt;
-                                if (player.stats[0]<0) {
-                                    System.out.println("YOU DIED");
-                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                    area3_cleared = true;
-                                    area4_cleared = true;
-                                    running = false;
-                                    break OUTER;
-                                }
-                                System.out.println("The enemy has taken " + dmgDealt + " damage!");
-                                bigBoi.enemyStats[1] -= dmgDealt;
-                                if (bigBoi.enemyStats[1]<0) {
-                                    System.out.println("ENEMY DEFEATED!!!");
-                                    System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
-                                    bigBoi.enemyStats[1] = 100;
-                                    player.stats[0] = MAX_HEALTH;
-                                    break OUTER;
-                                }
-                            }
-                            break;
-                        case "identify":
-                            if(player.stats[5]>=7)
-                            {
-                                System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
-                                bigBoi.showEnemyStats();
-                            }
-                            else
-                            {
-                                System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
-                            }
-                            break;
-                        case "use skill":
-                            if(player.skill.uses){
-                                if(player.skill.getName().equalsIgnoreCase("Blessing")){
-                                    if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        int HPgained = player.skill.use();
-                                        System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                        player.stats[0] += HPgained;
-                                        System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                    }
-                                    if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                        int HPgained = player.skill.use();
-                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                        System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                        player.stats[0] += HPgained;
-                                    }
-                                }
-                                else{
-                                    if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                        int dmgDealt = player.skill.use();
-                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
-                                        a1_enemy.enemyStats[1] -= dmgDealt;
-                                        if (a1_enemy.enemyStats[1]<0) {
-                                            System.out.println("ENEMY DEFEATED!!!");
-                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                            a1_enemy.newEnemy();
-                                            player.stats[0] = MAX_HEALTH;
-                                            player.skill.recharge();
-                                            break OUTER;
-                                        }
-                                        System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                    }
-                                    if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                        int dmgDealt = player.skill.use();
-                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area3_cleared = true;
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                        System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
-                                        a1_enemy.enemyStats[1] -= dmgDealt;
-                                        if (a1_enemy.enemyStats[1]<0) {
-                                            System.out.println("ENEMY DEFEATED!!!");
-                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                            a1_enemy.newEnemy();
-                                            player.stats[0] = MAX_HEALTH;
-                                            player.skill.recharge();
-                                            break OUTER;
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                                System.out.println("You cannot use that skill again this battle!");
-                        break;
-                        case "skill info":
-                            System.out.println("\t"+player.skill.getSkillInfo());
-                            break;
-                        case "equipment":
-                            System.out.println(Arrays.toString(player.equipment));
-                            break;
-                        case "bag":
-                            System.out.println(Arrays.toString(player.inventory));
-                            break;
-                        case "stats":
-                            player.showStats();
-                            break;
-                        case "combat help":
-                            player.combatHelp();
-                            break;
-                        case "help":
-                            player.help();
-                            break;
-                        default:
-                            System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
-                            break;
-                    } //SWITCH INPUT - BOSS FIGHT END
-                } // BOSS FIGHT END
-                        break;
-                    case 4:
-                        System.out.println("You have found the exit to the area! But alas... you only get deeper into this hell hole instead of having freedom");
-                        area3_cleared = true;
-                        break;
-                    default:
-                        break;
-                } // AREA GET DATA END
-                        break;
-                    case "equipment":
-                        System.out.println(Arrays.toString(player.equipment));
-                        break;
-                    case "bag":
-                        System.out.println(Arrays.toString(player.inventory));
-                        break;
-                    case "stats":
-                        player.showStats();
-                        break;
-                    case "skill info":
-                        System.out.println("\t"+player.skill.getSkillInfo());
-                        break;
-                    default:
-                        System.out.println("enter a valid command (use \"help\" for a list of basic commands)");
-                        break;
-                } //SWITCH INPUT - AREA TRAVERSAL END
+                                                     }
+                                                 }
+                                                 if (player.stats[2]<a3_enemy.enemyStats[3]) {
+                                                     int HPgained = player.skill.use();
+                                                     int EdmgDealt = rand.nextInt(a3_enemy.enemyStats[2]);
+                                                     System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area3_cleared = true;
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                     System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                     player.stats[0] += HPgained;
+                                                 }
+                                             }
+                                             else{
+                                                 if (player.stats[2]>=a3_enemy.enemyStats[3]) {
+                                                     int dmgDealt = player.skill.use();
+                                                     int EdmgDealt = rand.nextInt(a3_enemy.enemyStats[2]);
+                                                     System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
+                                                     a3_enemy.enemyStats[1] -= dmgDealt;
+                                                     if (a3_enemy.enemyStats[1]<0) {
+                                                         System.out.println("ENEMY DEFEATED!!!");
+                                                         System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                         a3_enemy.newEnemy();
+                                                         player.stats[0] = MAX_HEALTH;
+                                                         player.skill.recharge();
+                                                         break OUTER;
+                                                     }
+                                                     System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area3_cleared = true;
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                 }
+                                                 if (player.stats[2]<a3_enemy.enemyStats[3]) {
+                                                     int dmgDealt = player.skill.use();
+                                                     int EdmgDealt = rand.nextInt(a3_enemy.enemyStats[2]);
+                                                     System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area3_cleared = true;
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                     System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
+                                                     a3_enemy.enemyStats[1] -= dmgDealt;
+                                                     if (a3_enemy.enemyStats[1]<0) {
+                                                         System.out.println("ENEMY DEFEATED!!!");
+                                                         System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                         a3_enemy.newEnemy();
+                                                         player.stats[0] = MAX_HEALTH;
+                                                         player.skill.recharge();
+                                                         break OUTER;
+                                                     }
+                                                 }
+                                             }
+                                         }
+                                         else
+                                             System.out.println("You cannot use that skill again this battle!");
+                                         break;
+                                     case "skill info":
+                                         System.out.println("\t"+player.skill.getSkillInfo());
+                                         break;
+                                     case "equipment":
+                                         System.out.println(Arrays.toString(player.equipment));
+                                         break;
+                                     case "bag":
+                                         System.out.println(Arrays.toString(player.inventory));
+                                         break;
+                                     case "use":
+                                         System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                                         System.out.println("\t" + Arrays.toString(player.inventory));
+                                         try{
+                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                             if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
+                                                 System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                 player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                 player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                             }
+                                             else
+                                                 System.out.println("That is not a usable item or you do not have an item in that slot.");
+                                         }
+                                         catch(NumberFormatException e){
+                                             System.out.println("Please enter a number.");
+                                             break;
+                                         }
+                                         break;
+                                     case "item stats":
+                                         System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                         try {
+                                             int temp = Integer.parseInt(scan.nextLine());
+                                             switch (temp) {
+                                                 case 1:
+                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                     System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                     try {
+                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                         if(player.inventory[tempa] != null){
+                                                             System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                             player.inventory[tempa].getStats();
+                                                         }
+                                                         else{
+                                                             System.out.println("You do not have an item in that slot. Please try again.");
+                                                         }
+                                                     } catch (NumberFormatException e) {
+                                                         System.out.println("Please try again and enter a number.");
+                                                         break OUTER_12;
+                                                     }
+                                                     break OUTER_12;
+                                                 case 2:
+                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                     System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                     try {
+                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                         if(player.equipment[tempa] != null){
+                                                             System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                             player.equipment[tempa].getStats();
+                                                         }
+                                                         else{
+                                                             System.out.println("You do not have an item in that slot. Please try again.");
+                                                         }
+                                                     } catch (NumberFormatException e) {
+                                                         System.out.println("Please try again and enter a number.");
+                                                         break OUTER_12;
+                                                     }
+                                                     break OUTER_12;
+                                                 default:
+                                                     System.out.println("Please try again and enter a valid answer.");
+                                                     break;
+                                             }
+                                         }catch(NumberFormatException e){
+                                             System.out.println("Please try again and enter a number.");
+                                             break;
+                                         }
+                                         break;
+                                     case "stats":
+                                         player.showStats();
+                                         break;
+                                     case "combat help":
+                                         player.combatHelp();
+                                         break;
+                                     case "help":
+                                         player.help();
+                                         break;
+                                     default:
+                                         System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
+                                         break;
+                                 }
+                             }//NORMAL COMBAT END
+                             break;
+                         case 2:
+                             System.out.println("You found a chest! It contained: " + area1_chest.open());
+                             OUTER:
+                             while (true) {
+                                 System.out.println("\n\tWould you like to keep the item?");
+                                 System.out.println("\t\t 1. Yes");
+                                 System.out.println("\t\t 2. No");
+                                 input = scan.nextLine();
+                                 switch (input) {
+                                     case "1":
+                                         System.out.println("You yank the item from the chest!\nYou gained: " + area1_chest.open());
+                                         player.inventory = area1_chest.open().ADDinventory(player.inventory);
+                                         System.out.println(Arrays.toString(player.inventory));
+                                         area1_chest.newItem();
+                                         break OUTER;
+                                     case "2":
+                                         System.out.println("You decided to leave the item behind.");
+                                         area1_chest.newItem();
+                                         break OUTER;
+                                     default:
+                                         System.out.println("Please enter a valid option.");
+                                         break;
+                                 }
+                             } //CHEST END
+                             break;
+                         case 3:
+                             Enemy bigBoi = new Enemy(100, 1, 100, 1, 1, 1, 1, 1);
+                             System.out.println("\n\n----------------------------I T ' S   B O S S   T I M E   B O i S----------------------------");
+                             System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
+                             OUTER:
+                             while (true) {
+                                 System.out.println("\nWhat will you do " + player.name + "?");
+                                 input = scan.nextLine();
+                                 OUTER_13:
+                                 switch (input) {
+                                     case "attack":
+                                         if (player.stats[2]>=bigBoi.enemyStats[3]) {
+                                             int dmgDealt = rand.nextInt(player.stats[1]);
+                                             int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                             System.out.println("The enemy has taken " + dmgDealt + " damage!");
+                                             bigBoi.enemyStats[1] -= dmgDealt;
+                                             if (bigBoi.enemyStats[1]<0) {
+                                                 System.out.println("ENEMY DEFEATED!!!");
+                                                 System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
+                                                 bigBoi.enemyStats[1] = 100;
+                                                 player.stats[0] = MAX_HEALTH;
+                                                 break OUTER;
+                                             }
+                                             System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                             player.stats[0] -= EdmgDealt;
+                                             if (player.stats[0]<0) {
+                                                 System.out.println("YOU DIED");
+                                                 System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                 area3_cleared = true;
+                                                 area4_cleared = true;
+                                                 running = false;
+                                                 break OUTER;
+                                             }
+                                         }
+                                         if (player.stats[2]<bigBoi.enemyStats[3]) {
+                                             int dmgDealt = rand.nextInt(player.stats[1]);
+                                             int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                             System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                             player.stats[0] -= EdmgDealt;
+                                             if (player.stats[0]<0) {
+                                                 System.out.println("YOU DIED");
+                                                 System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                 area3_cleared = true;
+                                                 area4_cleared = true;
+                                                 running = false;
+                                                 break OUTER;
+                                             }
+                                             System.out.println("The enemy has taken " + dmgDealt + " damage!");
+                                             bigBoi.enemyStats[1] -= dmgDealt;
+                                             if (bigBoi.enemyStats[1]<0) {
+                                                 System.out.println("ENEMY DEFEATED!!!");
+                                                 System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
+                                                 bigBoi.enemyStats[1] = 100;
+                                                 player.stats[0] = MAX_HEALTH;
+                                                 break OUTER;
+                                             }
+                                         }
+                                         break;
+                                     case "identify":
+                                         if(player.stats[5]>=7)
+                                         {
+                                             System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
+                                             bigBoi.showEnemyStats();
+                                         }
+                                         else
+                                         {
+                                             System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
+                                         }
+                                         break;
+                                     case "use skill":
+                                         if(player.skill.uses){
+                                             if(player.skill.getName().equalsIgnoreCase("Blessing")){
+                                                 if (player.stats[2]>=bigBoi.enemyStats[3]) {
+                                                     int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                     int HPgained = player.skill.use();
+                                                     System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                     player.stats[0] += HPgained;
+                                                     System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area3_cleared = true;
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                 }
+                                                 if (player.stats[2]<bigBoi.enemyStats[3]) {
+                                                     int HPgained = player.skill.use();
+                                                     int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                     System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area3_cleared = true;
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                     System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                     player.stats[0] += HPgained;
+                                                 }
+                                             }
+                                             else{
+                                                 if (player.stats[2]>=bigBoi.enemyStats[3]) {
+                                                     int dmgDealt = player.skill.use();
+                                                     int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                     System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
+                                                     bigBoi.enemyStats[1] -= dmgDealt;
+                                                     if (bigBoi.enemyStats[1]<0) {
+                                                         System.out.println("ENEMY DEFEATED!!!");
+                                                         System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                         bigBoi.newEnemy();
+                                                         player.stats[0] = MAX_HEALTH;
+                                                         player.skill.recharge();
+                                                         break OUTER;
+                                                     }
+                                                     System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area3_cleared = true;
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                 }
+                                                 if (player.stats[2]<bigBoi.enemyStats[3]) {
+                                                     int dmgDealt = player.skill.use();
+                                                     int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                     System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area3_cleared = true;
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                     System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
+                                                     bigBoi.enemyStats[1] -= dmgDealt;
+                                                     if (bigBoi.enemyStats[1]<0) {
+                                                         System.out.println("ENEMY DEFEATED!!!");
+                                                         System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                         bigBoi.newEnemy();
+                                                         player.stats[0] = MAX_HEALTH;
+                                                         player.skill.recharge();
+                                                         break OUTER;
+                                                     }
+                                                 }
+                                             }
+                                         }
+                                         else
+                                             System.out.println("You cannot use that skill again this battle!");
+                                         break;
+                                     case "skill info":
+                                         System.out.println("\t"+player.skill.getSkillInfo());
+                                         break;
+                                     case "equipment":
+                                         System.out.println(Arrays.toString(player.equipment));
+                                         break;
+                                     case "bag":
+                                         System.out.println(Arrays.toString(player.inventory));
+                                         break;
+                                     case "use":
+                                         System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                                         System.out.println("\t" + Arrays.toString(player.inventory));
+                                         try{
+                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                             if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
+                                                 System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                 player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                 player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                             }
+                                             else
+                                                 System.out.println("That is not a usable item or you do not have an item in that slot.");
+                                         }
+                                         catch(NumberFormatException e){
+                                             System.out.println("Please enter a number.");
+                                             break;
+                                         }
+                                         break;
+                                     case "item stats":
+                                         System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                         try {
+                                             int temp = Integer.parseInt(scan.nextLine());
+                                             switch (temp) {
+                                                 case 1:
+                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                     System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                     try {
+                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                         if(player.inventory[tempa] != null){
+                                                             System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                             player.inventory[tempa].getStats();
+                                                         }
+                                                         else{
+                                                             System.out.println("You do not have an item in that slot. Please try again.");
+                                                         }
+                                                     } catch (NumberFormatException e) {
+                                                         System.out.println("Please try again and enter a number.");
+                                                         break OUTER_13;
+                                                     }
+                                                     break OUTER_13;
+                                                 case 2:
+                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                     System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                     try {
+                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                         if(player.equipment[tempa] != null){
+                                                             System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                             player.equipment[tempa].getStats();
+                                                         }
+                                                         else{
+                                                             System.out.println("You do not have an item in that slot. Please try again.");
+                                                         }
+                                                     } catch (NumberFormatException e) {
+                                                         System.out.println("Please try again and enter a number.");
+                                                         break OUTER_13;
+                                                     }
+                                                     break OUTER_13;
+                                                 default:
+                                                     System.out.println("Please try again and enter a valid answer.");
+                                                     break;
+                                             }
+                                         }catch(NumberFormatException e){
+                                             System.out.println("Please try again and enter a number.");
+                                             break;
+                                         }
+                                         break;
+                                     case "stats":
+                                         player.showStats();
+                                         break;
+                                     case "combat help":
+                                         player.combatHelp();
+                                         break;
+                                     case "help":
+                                         player.help();
+                                         break;
+                                     default:
+                                         System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
+                                         break;
+                                 }
+                             } // BOSS FIGHT END
+                             break;
+                         case 4:
+                             System.out.println("You have found the exit to the area! But alas... you only get deeper into this hell hole instead of having freedom");
+                             area3_cleared = true;
+                             break;
+                         default:
+                             break;
+                     } // AREA GET DATA END
+                     break;
+                 case "equipment":
+                     System.out.println(Arrays.toString(player.equipment));
+                     break;
+                 case "bag":
+                     System.out.println(Arrays.toString(player.inventory));
+                     break;
+                 case "drop":
+                     System.out.println("From where would you like to drop something?\n\t1. Bag\n\t2. Equipment");
+                     try {
+                         int temp = Integer.parseInt(scan.nextLine());
+                         switch (temp) {
+                             case 1:
+                                 System.out.println("Which item did you want to drop from your bag? Type 1 for first item, 2 for second, and so on.");
+                                 System.out.println("\t" + Arrays.toString(player.inventory));
+                                 try {
+                                     int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                     if (player.inventory[tempa] != null) {
+                                         System.out.println("You dropped your " + player.inventory[tempa].name + ".");
+                                         player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                         break OUTER_14;
+                                     } else {
+                                         System.out.println("You do not have an item in that slot. Please try again.");
+                                     }
+                                 } catch (NumberFormatException e) {
+                                     System.out.println("Please try again and enter a number.");
+                                     break OUTER_14;
+                                 }
+                                 break OUTER_14;
+                             case 2:
+                                 System.out.println("Which item did you want to drop from your equipment? Type 1 for first item, 2 for second, and so on.");
+                                 System.out.println("\t" + Arrays.toString(player.equipment));
+                                 try {
+                                     int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                     if (player.equipment[tempa] != null) {
+                                         System.out.println("You dropped your " + player.equipment[tempa].name + ".");
+                                         player.stats = player.equipment[tempa].SUBstats(player.stats);
+                                         player.equipment = player.equipment[tempa].dropEquipment(player.equipment);
+                                         break OUTER_14;
+                                     } else {
+                                         System.out.println("You do not have an item in that slot. Please try again.");
+                                     }
+                                 } catch (NumberFormatException e) {
+                                     System.out.println("Please try again and enter a number.");
+                                     break OUTER_14;
+                                 }
+                                 break;
+                             default:
+                                 System.out.println("Please try again and enter a valid answer.");
+                                 break;
+                         }
+                     }catch(NumberFormatException e){
+                         System.out.println("Please try again and enter a number.");
+                         break;
+                     }
+                     break;
+                 case "equip":
+                     System.out.println("What item did you want to equip from your bag? Type 1 for first item, 2 for second, and so on.");
+                     System.out.println("\t" + Arrays.toString(player.inventory));
+                     try{
+                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                         if(player.inventory[tempa] != null){
+                             System.out.println("You equipped your " + player.inventory[tempa].name + ".");
+                             player.stats = player.inventory[tempa].ADDstats(player.stats);
+                             Items[][] temp = player.inventory[tempa].equip(player.inventory, player.equipment);
+                             player.inventory = temp[0];
+                             player.equipment = temp[1];
+                             break;
+                         }
+                         else
+                             System.out.println("You do not have an equipped item in that slot.");
+                     }
+                     catch(NumberFormatException e){
+                         System.out.println("Please enter a number.");
+                         break;
+                     }
+                     break;
+                 case "unequip":
+                     System.out.println("What item did you want to unequip from your equipment? Type 1 for first item, 2 for second, and so on.");
+                     System.out.println("\t" + Arrays.toString(player.equipment));
+                     try{
+                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                         if(player.equipment[tempa] != null){
+                             System.out.println("You unequipped your " + player.equipment[tempa].name + ".");
+                             player.stats = player.equipment[tempa].SUBstats(player.stats);
+                             Items[][] temp = player.equipment[tempa].unequip(player.inventory, player.equipment);
+                             player.inventory = temp[0];
+                             player.equipment = temp[1];
+                             break;
+                         }
+                         else
+                             System.out.println("You do not have an equipped item in that slot.");
+                     }
+                     catch(NumberFormatException e){
+                         System.out.println("Please enter a number.");
+                         break;
+                     }
+                     break;
+                 case "use":
+                     System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                     System.out.println("\t" + Arrays.toString(player.inventory));
+                     try{
+                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                         if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
+                             System.out.println("You use " + player.inventory[tempa].name + ".");
+                             player.stats = player.inventory[tempa].ADDstats(player.stats);
+                             player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                         }
+                         else
+                             System.out.println("That is not a usable item or you do not have an item in that slot.");
+                     }
+                     catch(NumberFormatException e){
+                         System.out.println("Please enter a number.");
+                         break;
+                     }
+                     break;
+                 case "item stats":
+                     System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                     try {
+                         int temp = Integer.parseInt(scan.nextLine());
+                         switch (temp) {
+                             case 1:
+                                 System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                 System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                 try {
+                                     int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                     if(player.inventory[tempa] != null){
+                                         System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                         player.inventory[tempa].getStats();
+                                     }
+                                     else{
+                                         System.out.println("You do not have an item in that slot. Please try again.");
+                                     }
+                                 } catch (NumberFormatException e) {
+                                     System.out.println("Please try again and enter a number.");
+                                     break OUTER_16;
+                                 }
+                                 break OUTER_16;
+                             case 2:
+                                 System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                 System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                 try {
+                                     int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                     if(player.equipment[tempa] != null){
+                                         System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                         player.equipment[tempa].getStats();
+                                     }
+                                     else{
+                                         System.out.println("You do not have an item in that slot. Please try again.");
+                                     }
+                                 } catch (NumberFormatException e) {
+                                     System.out.println("Please try again and enter a number.");
+                                     break OUTER_16;
+                                 }
+                                 break OUTER_16;
+                             default:
+                                 System.out.println("Please try again and enter a valid answer.");
+                                 break;
+                         }
+                     }catch(NumberFormatException e){
+                         System.out.println("Please try again and enter a number.");
+                         break;
+                     }
+                     break;
+                 case "stats":
+                     player.showStats();
+                     break;
+                 case "skill info":
+                     System.out.println("\t"+player.skill.getSkillInfo());
+                     break;
+                 default:
+                     System.out.println("enter a valid command (use \"help\" for a list of basic commands)");
+                     break;
+             }
           }//WHILE AREA_3 CLEARED END
           ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
@@ -2142,449 +3192,741 @@ public class HOD_GAME {
                for(int i = 0; i<area4_L-1; i++)
                {
                    area4.addNode(rand.nextInt(3));
+                   //area4.addNode(0);
                }
                Area.listLength(area4);
-               Area area14_pp = area4;
+               Area area4_pp = area4;
                Chest area4_chest = new Chest();
                Enemy a4_enemy = new Enemy(1, 1, 1, 1, 1, 1, 1, 1);
                a4_enemy.newEnemy4();
           /////////////////////////////AREA 4 CREATION////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-          
-          while(area4_cleared == false)
+          if(area4_cleared == false)
           {
-             System.out.println("\n\n\tYou've never seen anything like this place before. Massive floating landscapes amongst what seems like a never ending horizon"
+              System.out.println("\n\n\tYou've never seen anything like this place before. Massive floating landscapes amongst what seems like a never ending horizon"
                      + "\n\tVery dangerous looking enemies appear to roam these parts, each establishing its territory on the more bigger floating landscapes"
                      + "\n\tYou notice at the end of this floating trail there is a ginormous... very rediculos looking figure that appears to be... "
                      + "\n\twaiting for you(?) you'll just have to find out! You've made it this far (surprisingly), no giving up now!");
+          }
+          while(area4_cleared == false)
+          {
              System.out.println("\n\t\tWhat would you like to do?");
                 input = scan.nextLine();
-                switch (input) {
-                    case "help":
-                        player.help();
-                        break;
-                    case "forward":
-                        area1_pp = area1_pp.getForeLink();
-                        System.out.println(area1_pp.getData());
-                switch (area1_pp.getData()) {
-                    case 0:
-                        int area4_encounter;
-                        area4_encounter = area1.area_4_Encounter(rand.nextInt(2), player.stats[1], player.stats[2], player.stats[3]);
-                        player.stats[0] = player.stats[0] - area4_encounter;
-                        if(player.stats[0]<=0)
-                        {
-                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area4_cleared = true;
-                                            running = false;
-                                            break;
-                        }
-                        break;
-                    case 1:
-                        a4_enemy.getEnemy4();
-                        System.out.println("\n\n----------------------------F I G H T !!!----------------------------");
-                        System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
-                        OUTER:
-                        while (true) {
-                            System.out.println("\nWhat will you do " + player.name + "?");
-                            input = scan.nextLine();
-                            switch (input) {
-                                //if(input.equals("ranged attack"))
-                                //{
-                                //
-                                //}
-                                case "attack":
-                                    if (player.stats[2]>=a4_enemy.enemyStats[3]) {
-                                        int dmgDealt = rand.nextInt(player.stats[1]);
-                                        int EdmgDealt = rand.nextInt(a4_enemy.enemyStats[2]);
-                                        System.out.println("The enemy has taken " + dmgDealt + " damage!");
-                                        a4_enemy.enemyStats[1] -= dmgDealt;
-                                        if (a4_enemy.enemyStats[1]<0) {
-                                            System.out.println("ENEMY DEFEATED!!!");
-                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                            a4_enemy.newEnemy4();
-                                            player.stats[0] = MAX_HEALTH;
-                                            break OUTER;
-                                        }
-                                        System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                    }
-                                    if (player.stats[2]<a4_enemy.enemyStats[3]) {
-                                        int dmgDealt = rand.nextInt(player.stats[1]);
-                                        int EdmgDealt = rand.nextInt(a4_enemy.enemyStats[2]);
-                                        System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                        System.out.println("The enemy has taken " + dmgDealt + " damage!");
-                                        a4_enemy.enemyStats[1] -= dmgDealt;
-                                        if (a4_enemy.enemyStats[1]<0) {
-                                            System.out.println("ENEMY DEFEATED!!!");
-                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                            a4_enemy.newEnemy4();
-                                            player.stats[0] = MAX_HEALTH;
-                                            break OUTER;
-                                        }
-                                    }
-                                    break;
-                                case "identify":
-                                    if(player.stats[5]>=7)
-                                    {
-                                        System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
-                                        a4_enemy.showEnemyStats();
-                                    }
-                                    else
-                                    {
-                                        System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
-                                    }
-                                    break;
-                                case "use skill":
-                                    if(player.skill.uses){
-                                        if(player.skill.getName().equalsIgnoreCase("Blessing")){
-                                            if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                                int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                                int HPgained = player.skill.use();
-                                                System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                                player.stats[0] += HPgained;
-                                                System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                            }
-                                            if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                                int HPgained = player.skill.use();
-                                                int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                                System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                                System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                                player.stats[0] += HPgained;
-                                            }
-                                        }
-                                        else{
-                                            if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
-                                                int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                                System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
-                                                a1_enemy.enemyStats[1] -= dmgDealt;
-                                                if (a1_enemy.enemyStats[1]<0) {
-                                                    System.out.println("ENEMY DEFEATED!!!");
-                                                    System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                    a1_enemy.newEnemy();
-                                                    player.stats[0] = MAX_HEALTH;
-                                                    player.skill.recharge();
-                                                    break OUTER;
-                                                }
-                                                System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                            }
-                                            if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                                int dmgDealt = player.skill.use();
-                                                int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                                System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                                player.stats[0] -= EdmgDealt;
-                                                if (player.stats[0]<0) {
-                                                    System.out.println("YOU DIED");
-                                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                                    area4_cleared = true;
-                                                    running = false;
-                                                    break OUTER;
-                                                }
-                                                System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
-                                                a1_enemy.enemyStats[1] -= dmgDealt;
-                                                if (a1_enemy.enemyStats[1]<0) {
-                                                    System.out.println("ENEMY DEFEATED!!!");
-                                                    System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                    a1_enemy.newEnemy();
-                                                    player.stats[0] = MAX_HEALTH;
-                                                    player.skill.recharge();
-                                                    break OUTER;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    else
-                                        System.out.println("You cannot use that skill again this battle!");
-                                break;
-                                case "skill info":
-                                    System.out.println("\t"+player.skill.getSkillInfo());
-                                    break;
-                                case "equipment":
-                                    System.out.println(Arrays.toString(player.equipment));
-                                    break;
-                                case "bag":
-                                    System.out.println(Arrays.toString(player.inventory));
-                                    break;
-                                case "stats":
-                                    player.showStats();
-                                    break;
-                                case "combat help":
-                                    player.combatHelp();
-                                    break;
-                                case "help":
-                                    player.help();
-                                    break;
-                                default:
-                                    System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
-                                    break;
-                            }//SWITCH INPUT - NORMAL COMBAT END
-                        }//NORMAL COMBAT END
-                        break;
-                    case 2:
-                        System.out.println("You found a chest! It contained: " + area1_chest.open());
-                OUTER:
-                while (true) {
-                    System.out.println("\n\tWould you like to keep the item?");
-                    System.out.println("\t\t 1. Yes");
-                    System.out.println("\t\t 2. No");
-                    input = scan.nextLine();
-                    switch (input) {
-                        case "1":
-                            System.out.println("You yank the item from the chest!\nYou gained: " + area1_chest.open());
-                            player.inventory = area1_chest.open().ADDinventory(player.inventory);
-                            System.out.println(Arrays.toString(player.inventory));
-                            area1_chest.newItem();
-                            break OUTER;
-                        case "2":
-                            System.out.println("You decided to leave the item behind.");
-                            area1_chest.newItem();
-                            break OUTER;
-                        default:
-                            System.out.println("Please enter a valid option.");
-                            break;
-                    }
-                } //CHEST END
-                        break;
-                    case 3:
-                        Enemy bigBoi = new Enemy(100, 100, 100, 1, 1, 1, 1, 1);
-                        System.out.println("\n\n----------------------------I T ' S   B O S S   T I M E   B O i S----------------------------");
-                        System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
-                OUTER:
-                while (true) {
-                    System.out.println("\nWhat will you do " + player.name + "?");
-                    input = scan.nextLine();
-                    switch (input) {
-                        case "attack":
-                            if (player.stats[2]>=bigBoi.enemyStats[3]) {
-                                int dmgDealt = rand.nextInt(player.stats[1]);
-                                int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
-                                System.out.println("The enemy has taken " + dmgDealt + " damage!");
-                                bigBoi.enemyStats[1] -= dmgDealt;
-                                if (bigBoi.enemyStats[1]<0) {
-                                    System.out.println("ENEMY DEFEATED!!!");
-                                    System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
-                                    bigBoi.enemyStats[1] = 100;
-                                    player.stats[0] = MAX_HEALTH;
-                                    break OUTER;
-                                }
-                                System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                player.stats[0] -= EdmgDealt;
-                                if (player.stats[0]<0) {
-                                    System.out.println("YOU DIED");
-                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                    area4_cleared = true;
-                                    running = false;
-                                    break OUTER;
-                                }
-                            }
-                            if (player.stats[2]<bigBoi.enemyStats[3]) {
-                                int dmgDealt = rand.nextInt(player.stats[1]);
-                                int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
-                                System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                player.stats[0] -= EdmgDealt;
-                                if (player.stats[0]<0) {
-                                    System.out.println("YOU DIED");
-                                    System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                    area4_cleared = true;
-                                    running = false;
-                                    break OUTER;
-                                }
-                                System.out.println("The enemy has taken " + dmgDealt + " damage!");
-                                bigBoi.enemyStats[1] -= dmgDealt;
-                                if (bigBoi.enemyStats[1]<0) {
-                                    System.out.println("ENEMY DEFEATED!!!");
-                                    System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
-                                    bigBoi.enemyStats[1] = 100;
-                                    player.stats[0] = MAX_HEALTH;
-                                    break OUTER;
-                                }
-                            }
-                            break;
-                        case "identify":
-                            if(player.stats[5]>=7)
-                            {
-                                System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
-                                bigBoi.showEnemyStats();
-                            }
-                            else
-                            {
-                                System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
-                            }
-                            break;
-                        case "use skill":
-                            if(player.skill.uses){
-                                if(player.skill.getName().equalsIgnoreCase("Blessing")){
-                                    if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        int HPgained = player.skill.use();
-                                        System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                        player.stats[0] += HPgained;
-                                        System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                    }
-                                    if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                        int HPgained = player.skill.use();
-                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                        System.out.println("You were healed for " + HPgained + " health points by your skill!");
-                                        player.stats[0] += HPgained;
-                                    }
-                                }
-                                else{
-                                    if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                        int dmgDealt = player.skill.use();
-                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
-                                        a1_enemy.enemyStats[1] -= dmgDealt;
-                                        if (a1_enemy.enemyStats[1]<0) {
-                                            System.out.println("ENEMY DEFEATED!!!");
-                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                            a1_enemy.newEnemy();
-                                            player.stats[0] = MAX_HEALTH;
-                                            player.skill.recharge();
-                                            break OUTER;
-                                        }
-                                        System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                    }
-                                    if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                        int dmgDealt = player.skill.use();
-                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                        System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
-                                        player.stats[0] -= EdmgDealt;
-                                        if (player.stats[0]<0) {
-                                            System.out.println("YOU DIED");
-                                            System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
-                                            area4_cleared = true;
-                                            running = false;
-                                            break OUTER;
-                                        }
-                                        System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
-                                        a1_enemy.enemyStats[1] -= dmgDealt;
-                                        if (a1_enemy.enemyStats[1]<0) {
-                                            System.out.println("ENEMY DEFEATED!!!");
-                                            System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                            a1_enemy.newEnemy();
-                                            player.stats[0] = MAX_HEALTH;
-                                            player.skill.recharge();
-                                            break OUTER;
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                                System.out.println("You cannot use that skill again this battle!");
-                        break;
-                        case "skill info":
-                            System.out.println("\t"+player.skill.getSkillInfo());
-                            break;
-                        case "equipment":
-                            System.out.println(Arrays.toString(player.equipment));
-                            break;
-                        case "bag":
-                            System.out.println(Arrays.toString(player.inventory));
-                            break;
-                        case "stats":
-                            player.showStats();
-                            break;
-                        case "combat help":
-                            player.combatHelp();
-                            break;
-                        case "help":
-                            player.help();
-                            break;
-                        default:
-                            System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
-                            break;
-                    } //SWITCH INPUT - BOSS FIGHT END
-                } // BOSS FIGHT END
-                        break;
-                    case 4:
-                        System.out.println("You have found the exit to the area! But alas... you only get deeper into this hell hole instead of having freedom");
-                        area4_cleared = true;
-                        break;
-                    default:
-                        break;
-                } // AREA GET DATA END
-                        break;
-                    case "equipment":
-                        System.out.println(Arrays.toString(player.equipment));
-                        break;
-                    case "bag":
-                        System.out.println(Arrays.toString(player.inventory));
-                        break;
-                    case "stats":
-                        player.showStats();
-                        break;
-                    case "skill info":
-                        System.out.println("\t"+player.skill.getSkillInfo());
-                        break;
-                    default:
-                        System.out.println("enter a valid command (use \"help\" for a list of basic commands)");
-                        break;
-                } //SWITCH INPUT - AREA TRAVERSAL END
+              OUTER_18:
+             OUTER_19:
+             switch (input) {
+                 case "help":
+                     player.help();
+                     break;
+                 case "forward":
+                     area4_pp = area4_pp.getForeLink();
+                     System.out.println(area4_pp.getData());
+                     switch (area4_pp.getData()) {
+                         case 0:
+                             int area4_encounter;
+                             area4_encounter = area4.area_4_Encounter(rand.nextInt(2), player.stats[1], player.stats[2], player.stats[3]);
+                             player.stats[0] = player.stats[0] - area4_encounter;
+                             if(player.stats[0]<=0)
+                             {
+                                 System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                 area4_cleared = true;
+                                 running = false;
+                                 break;
+                             }
+                             break;
+                         case 1:
+                             a4_enemy.getEnemy4();
+                             System.out.println("\n\n----------------------------F I G H T !!!----------------------------");
+                             System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
+                             OUTER:
+                             while (true) {
+                                 System.out.println("\nWhat will you do " + player.name + "?");
+                                 input = scan.nextLine();
+                                 OUTER_15:
+                                 switch (input) {
+                                     case "attack":
+                                         if (player.stats[2]>=a4_enemy.enemyStats[3]) {
+                                             int dmgDealt = rand.nextInt(player.stats[1]);
+                                             int EdmgDealt = rand.nextInt(a4_enemy.enemyStats[2]);
+                                             System.out.println("The enemy has taken " + dmgDealt + " damage!");
+                                             a4_enemy.enemyStats[1] -= dmgDealt;
+                                             if (a4_enemy.enemyStats[1]<0) {
+                                                 System.out.println("ENEMY DEFEATED!!!");
+                                                 System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                 a4_enemy.newEnemy4();
+                                                 player.stats[0] = MAX_HEALTH;
+                                                 break OUTER;
+                                             }
+                                             System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                             player.stats[0] -= EdmgDealt;
+                                             if (player.stats[0]<0) {
+                                                 System.out.println("YOU DIED");
+                                                 System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                 area4_cleared = true;
+                                                 running = false;
+                                                 break OUTER;
+                                             }
+                                         }
+                                         if (player.stats[2]<a4_enemy.enemyStats[3]) {
+                                             int dmgDealt = rand.nextInt(player.stats[1]);
+                                             int EdmgDealt = rand.nextInt(a4_enemy.enemyStats[2]);
+                                             System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                             player.stats[0] -= EdmgDealt;
+                                             if (player.stats[0]<0) {
+                                                 System.out.println("YOU DIED");
+                                                 System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                 area4_cleared = true;
+                                                 running = false;
+                                                 break OUTER;
+                                             }
+                                             System.out.println("The enemy has taken " + dmgDealt + " damage!");
+                                             a4_enemy.enemyStats[1] -= dmgDealt;
+                                             if (a4_enemy.enemyStats[1]<0) {
+                                                 System.out.println("ENEMY DEFEATED!!!");
+                                                 System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                 a4_enemy.newEnemy4();
+                                                 player.stats[0] = MAX_HEALTH;
+                                                 break OUTER;
+                                             }
+                                         }
+                                         break;
+                                     case "identify":
+                                         if(player.stats[5]>=7)
+                                         {
+                                             System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
+                                             a4_enemy.showEnemyStats();
+                                         }
+                                         else
+                                         {
+                                             System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
+                                         }
+                                         break;
+                                     case "use skill":
+                                         if(player.skill.uses){
+                                             if(player.skill.getName().equalsIgnoreCase("Blessing")){
+                                                 if (player.stats[2]>=a4_enemy.enemyStats[3]) {
+                                                     int EdmgDealt = rand.nextInt(a4_enemy.enemyStats[2]);
+                                                     int HPgained = player.skill.use();
+                                                     System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                     player.stats[0] += HPgained;
+                                                     System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                 }
+                                                 if (player.stats[2]<a4_enemy.enemyStats[3]) {
+                                                     int HPgained = player.skill.use();
+                                                     int EdmgDealt = rand.nextInt(a4_enemy.enemyStats[2]);
+                                                     System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                     System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                     player.stats[0] += HPgained;
+                                                 }
+                                             }
+                                             else{
+                                                 if (player.stats[2]>=a4_enemy.enemyStats[3]) {
+                                                     int dmgDealt = player.skill.use();
+                                                     int EdmgDealt = rand.nextInt(a4_enemy.enemyStats[2]);
+                                                     System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
+                                                     a4_enemy.enemyStats[1] -= dmgDealt;
+                                                     if (a4_enemy.enemyStats[1]<0) {
+                                                         System.out.println("ENEMY DEFEATED!!!");
+                                                         System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                         a4_enemy.newEnemy();
+                                                         player.stats[0] = MAX_HEALTH;
+                                                         player.skill.recharge();
+                                                         break OUTER;
+                                                     }
+                                                     System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                 }
+                                                 if (player.stats[2]<a4_enemy.enemyStats[3]) {
+                                                     int dmgDealt = player.skill.use();
+                                                     int EdmgDealt = rand.nextInt(a4_enemy.enemyStats[2]);
+                                                     System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                     System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
+                                                     a4_enemy.enemyStats[1] -= dmgDealt;
+                                                     if (a4_enemy.enemyStats[1]<0) {
+                                                         System.out.println("ENEMY DEFEATED!!!");
+                                                         System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                         a4_enemy.newEnemy();
+                                                         player.stats[0] = MAX_HEALTH;
+                                                         player.skill.recharge();
+                                                         break OUTER;
+                                                     }
+                                                 }
+                                             }
+                                         }
+                                         else
+                                             System.out.println("You cannot use that skill again this battle!");
+                                         break;
+                                     case "skill info":
+                                         System.out.println("\t"+player.skill.getSkillInfo());
+                                         break;
+                                     case "equipment":
+                                         System.out.println(Arrays.toString(player.equipment));
+                                         break;
+                                     case "bag":
+                                         System.out.println(Arrays.toString(player.inventory));
+                                         break;
+                                     case "use":
+                                         System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                                         System.out.println("\t" + Arrays.toString(player.inventory));
+                                         try{
+                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                             if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
+                                                 System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                 player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                 player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                             }
+                                             else
+                                                 System.out.println("That is not a usable item or you do not have an item in that slot.");
+                                         }
+                                         catch(NumberFormatException e){
+                                             System.out.println("Please enter a number.");
+                                             break;
+                                         }
+                                         break;
+                                     case "item stats":
+                                         System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                         try {
+                                             int temp = Integer.parseInt(scan.nextLine());
+                                             switch (temp) {
+                                                 case 1:
+                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                     System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                     try {
+                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                         if(player.inventory[tempa] != null){
+                                                             System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                             player.inventory[tempa].getStats();
+                                                         }
+                                                         else{
+                                                             System.out.println("You do not have an item in that slot. Please try again.");
+                                                         }
+                                                     } catch (NumberFormatException e) {
+                                                         System.out.println("Please try again and enter a number.");
+                                                         break OUTER_15;
+                                                     }
+                                                     break OUTER_15;
+                                                 case 2:
+                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                     System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                     try {
+                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                         if(player.equipment[tempa] != null){
+                                                             System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                             player.equipment[tempa].getStats();
+                                                         }
+                                                         else{
+                                                             System.out.println("You do not have an item in that slot. Please try again.");
+                                                         }
+                                                     } catch (NumberFormatException e) {
+                                                         System.out.println("Please try again and enter a number.");
+                                                         break OUTER_15;
+                                                     }
+                                                     break OUTER_15;
+                                                 default:
+                                                     System.out.println("Please try again and enter a valid answer.");
+                                                     break;
+                                             }
+                                         }catch(NumberFormatException e){
+                                             System.out.println("Please try again and enter a number.");
+                                             break;
+                                         }
+                                         break;
+                                     case "stats":
+                                         player.showStats();
+                                         break;
+                                     case "combat help":
+                                         player.combatHelp();
+                                         break;
+                                     case "help":
+                                         player.help();
+                                         break;
+                                     default:
+                                         System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
+                                         break;
+                                 }
+                             }//NORMAL COMBAT END
+                             break;
+                         case 2:
+                             System.out.println("You found a chest! It contained: " + area1_chest.open());
+                             OUTER:
+                             while (true) {
+                                 System.out.println("\n\tWould you like to keep the item?");
+                                 System.out.println("\t\t 1. Yes");
+                                 System.out.println("\t\t 2. No");
+                                 input = scan.nextLine();
+                                 switch (input) {
+                                     case "1":
+                                         System.out.println("You yank the item from the chest!\nYou gained: " + area1_chest.open());
+                                         player.inventory = area1_chest.open().ADDinventory(player.inventory);
+                                         System.out.println(Arrays.toString(player.inventory));
+                                         area1_chest.newItem();
+                                         break OUTER;
+                                     case "2":
+                                         System.out.println("You decided to leave the item behind.");
+                                         area1_chest.newItem();
+                                         break OUTER;
+                                     default:
+                                         System.out.println("Please enter a valid option.");
+                                         break;
+                                 }
+                             } //CHEST END
+                             break;
+                         case 3:
+                             Enemy bigBoi = new Enemy(100, 1, 100, 1, 1, 1, 1, 1);
+                             System.out.println("\n\n----------------------------I T ' S   B O S S   T I M E   B O i S----------------------------");
+                             System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
+                             OUTER:
+                             while (true) {
+                                 System.out.println("\nWhat will you do " + player.name + "?");
+                                 input = scan.nextLine();
+                                 OUTER_17:
+                                 switch (input) {
+                                     case "attack":
+                                         if (player.stats[2]>=bigBoi.enemyStats[3]) {
+                                             int dmgDealt = rand.nextInt(player.stats[1]);
+                                             int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                             System.out.println("The enemy has taken " + dmgDealt + " damage!");
+                                             bigBoi.enemyStats[1] -= dmgDealt;
+                                             if (bigBoi.enemyStats[1]<0) {
+                                                 System.out.println("ENEMY DEFEATED!!!");
+                                                 System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
+                                                 bigBoi.enemyStats[1] = 100;
+                                                 player.stats[0] = MAX_HEALTH;
+                                                 break OUTER;
+                                             }
+                                             System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                             player.stats[0] -= EdmgDealt;
+                                             if (player.stats[0]<0) {
+                                                 System.out.println("YOU DIED");
+                                                 System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                 area4_cleared = true;
+                                                 running = false;
+                                                 break OUTER;
+                                             }
+                                         }
+                                         if (player.stats[2]<bigBoi.enemyStats[3]) {
+                                             int dmgDealt = rand.nextInt(player.stats[1]);
+                                             int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                             System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                             player.stats[0] -= EdmgDealt;
+                                             if (player.stats[0]<0) {
+                                                 System.out.println("YOU DIED");
+                                                 System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                 area4_cleared = true;
+                                                 running = false;
+                                                 break OUTER;
+                                             }
+                                             System.out.println("The enemy has taken " + dmgDealt + " damage!");
+                                             bigBoi.enemyStats[1] -= dmgDealt;
+                                             if (bigBoi.enemyStats[1]<0) {
+                                                 System.out.println("ENEMY DEFEATED!!!");
+                                                 System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
+                                                 bigBoi.enemyStats[1] = 100;
+                                                 player.stats[0] = MAX_HEALTH;
+                                                 break OUTER;
+                                             }
+                                         }
+                                         break;
+                                     case "identify":
+                                         if(player.stats[5]>=7)
+                                         {
+                                             System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
+                                             bigBoi.showEnemyStats();
+                                         }
+                                         else
+                                         {
+                                             System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
+                                         }
+                                         break;
+                                     case "use skill":
+                                         if(player.skill.uses){
+                                             if(player.skill.getName().equalsIgnoreCase("Blessing")){
+                                                 if (player.stats[2]>=bigBoi.enemyStats[3]) {
+                                                     int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                     int HPgained = player.skill.use();
+                                                     System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                     player.stats[0] += HPgained;
+                                                     System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                 }
+                                                 if (player.stats[2]<bigBoi.enemyStats[3]) {
+                                                     int HPgained = player.skill.use();
+                                                     int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                     System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                     System.out.println("You were healed for " + HPgained + " health points by your skill!");
+                                                     player.stats[0] += HPgained;
+                                                 }
+                                             }
+                                             else{
+                                                 if (player.stats[2]>=bigBoi.enemyStats[3]) {
+                                                     int dmgDealt = player.skill.use();
+                                                     int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                     System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
+                                                     bigBoi.enemyStats[1] -= dmgDealt;
+                                                     if (bigBoi.enemyStats[1]<0) {
+                                                         System.out.println("ENEMY DEFEATED!!!");
+                                                         System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                         bigBoi.newEnemy();
+                                                         player.stats[0] = MAX_HEALTH;
+                                                         player.skill.recharge();
+                                                         break OUTER;
+                                                     }
+                                                     System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                 }
+                                                 if (player.stats[2]<bigBoi.enemyStats[3]) {
+                                                     int dmgDealt = player.skill.use();
+                                                     int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                     System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                     player.stats[0] -= EdmgDealt;
+                                                     if (player.stats[0]<0) {
+                                                         System.out.println("YOU DIED");
+                                                         System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                         area4_cleared = true;
+                                                         running = false;
+                                                         break OUTER;
+                                                     }
+                                                     System.out.println("The enemy has taken " + dmgDealt + " damage because of your skill!");
+                                                     bigBoi.enemyStats[1] -= dmgDealt;
+                                                     if (bigBoi.enemyStats[1]<0) {
+                                                         System.out.println("ENEMY DEFEATED!!!");
+                                                         System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                         bigBoi.newEnemy();
+                                                         player.stats[0] = MAX_HEALTH;
+                                                         player.skill.recharge();
+                                                         break OUTER;
+                                                     }
+                                                 }
+                                             }
+                                         }
+                                         else
+                                             System.out.println("You cannot use that skill again this battle!");
+                                         break;
+                                     case "skill info":
+                                         System.out.println("\t"+player.skill.getSkillInfo());
+                                         break;
+                                     case "equipment":
+                                         System.out.println(Arrays.toString(player.equipment));
+                                         break;
+                                     case "bag":
+                                         System.out.println(Arrays.toString(player.inventory));
+                                         break;
+                                     case "use":
+                                         System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                                         System.out.println("\t" + Arrays.toString(player.inventory));
+                                         try{
+                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                             if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
+                                                 System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                 player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                 player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                             }
+                                             else
+                                                 System.out.println("That is not a usable item or you do not have an item in that slot.");
+                                         }
+                                         catch(NumberFormatException e){
+                                             System.out.println("Please enter a number.");
+                                             break;
+                                         }
+                                         break;
+                                     case "item stats":
+                                         System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                         try {
+                                             int temp = Integer.parseInt(scan.nextLine());
+                                             switch (temp) {
+                                                 case 1:
+                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                     System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                     try {
+                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                         if(player.inventory[tempa] != null){
+                                                             System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                             player.inventory[tempa].getStats();
+                                                         }
+                                                         else{
+                                                             System.out.println("You do not have an item in that slot. Please try again.");
+                                                         }
+                                                     } catch (NumberFormatException e) {
+                                                         System.out.println("Please try again and enter a number.");
+                                                         break OUTER_17;
+                                                     }
+                                                     break OUTER_17;
+                                                 case 2:
+                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                     System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                     try {
+                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                         if(player.equipment[tempa] != null){
+                                                             System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                             player.equipment[tempa].getStats();
+                                                         }
+                                                         else{
+                                                             System.out.println("You do not have an item in that slot. Please try again.");
+                                                         }
+                                                     } catch (NumberFormatException e) {
+                                                         System.out.println("Please try again and enter a number.");
+                                                         break OUTER_17;
+                                                     }
+                                                     break OUTER_17;
+                                                 default:
+                                                     System.out.println("Please try again and enter a valid answer.");
+                                                     break;
+                                             }
+                                         }catch(NumberFormatException e){
+                                             System.out.println("Please try again and enter a number.");
+                                             break;
+                                         }
+                                         break;
+                                     case "stats":
+                                         player.showStats();
+                                         break;
+                                     case "combat help":
+                                         player.combatHelp();
+                                         break;
+                                     case "help":
+                                         player.help();
+                                         break;
+                                     default:
+                                         System.out.println("enter a valid command (use \"combat help\" for a list of basic combat commands");
+                                         break;
+                                 }
+                             } // BOSS FIGHT END
+                             break;
+                         case 4:
+                             System.out.println("You have found the exit to the area! But alas... you only get deeper into this hell hole instead of having freedom");
+                             area4_cleared = true;
+                             break;
+                         default:
+                             break;
+                     } // AREA GET DATA END
+                     break;
+                 case "equipment":
+                     System.out.println(Arrays.toString(player.equipment));
+                     break;
+                 case "bag":
+                     System.out.println(Arrays.toString(player.inventory));
+                     break;
+                 case "drop":
+                     System.out.println("From where would you like to drop something?\n\t1. Bag\n\t2. Equipment");
+                     try {
+                         int temp = Integer.parseInt(scan.nextLine());
+                         switch (temp) {
+                             case 1:
+                                 System.out.println("Which item did you want to drop from your bag? Type 1 for first item, 2 for second, and so on.");
+                                 System.out.println("\t" + Arrays.toString(player.inventory));
+                                 try {
+                                     int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                     if (player.inventory[tempa] != null) {
+                                         System.out.println("You dropped your " + player.inventory[tempa].name + ".");
+                                         player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                         break OUTER_18;
+                                     } else {
+                                         System.out.println("You do not have an item in that slot. Please try again.");
+                                     }
+                                 } catch (NumberFormatException e) {
+                                     System.out.println("Please try again and enter a number.");
+                                     break OUTER_18;
+                                 }
+                                 break OUTER_18;
+                             case 2:
+                                 System.out.println("Which item did you want to drop from your equipment? Type 1 for first item, 2 for second, and so on.");
+                                 System.out.println("\t" + Arrays.toString(player.equipment));
+                                 try {
+                                     int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                     if (player.equipment[tempa] != null) {
+                                         System.out.println("You dropped your " + player.equipment[tempa].name + ".");
+                                         player.stats = player.equipment[tempa].SUBstats(player.stats);
+                                         player.equipment = player.equipment[tempa].dropEquipment(player.equipment);
+                                         break OUTER_18;
+                                     } else {
+                                         System.out.println("You do not have an item in that slot. Please try again.");
+                                     }
+                                 } catch (NumberFormatException e) {
+                                     System.out.println("Please try again and enter a number.");
+                                     break OUTER_18;
+                                 }
+                                 break;
+                             default:
+                                 System.out.println("Please try again and enter a valid answer.");
+                                 break;
+                         }
+                     }catch(NumberFormatException e){
+                         System.out.println("Please try again and enter a number.");
+                         break;
+                     }
+                     break;
+                 case "equip":
+                     System.out.println("What item did you want to equip from your bag? Type 1 for first item, 2 for second, and so on.");
+                     System.out.println("\t" + Arrays.toString(player.inventory));
+                     try{
+                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                         if(player.inventory[tempa] != null){
+                             System.out.println("You equipped your " + player.inventory[tempa].name + ".");
+                             player.stats = player.inventory[tempa].ADDstats(player.stats);
+                             Items[][] temp = player.inventory[tempa].equip(player.inventory, player.equipment);
+                             player.inventory = temp[0];
+                             player.equipment = temp[1];
+                             break;
+                         }
+                         else
+                             System.out.println("You do not have an equipped item in that slot.");
+                     }
+                     catch(NumberFormatException e){
+                         System.out.println("Please enter a number.");
+                         break;
+                     }
+                     break;
+                 case "unequip":
+                     System.out.println("What item did you want to unequip from your equipment? Type 1 for first item, 2 for second, and so on.");
+                     System.out.println("\t" + Arrays.toString(player.equipment));
+                     try{
+                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                         if(player.equipment[tempa] != null){
+                             System.out.println("You unequipped your " + player.equipment[tempa].name + ".");
+                             player.stats = player.equipment[tempa].SUBstats(player.stats);
+                             Items[][] temp = player.equipment[tempa].unequip(player.inventory, player.equipment);
+                             player.inventory = temp[0];
+                             player.equipment = temp[1];
+                             break;
+                         }
+                         else
+                             System.out.println("You do not have an equipped item in that slot.");
+                     }
+                     catch(NumberFormatException e){
+                         System.out.println("Please enter a number.");
+                         break;
+                     }
+                     break;
+                 case "use":
+                     System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                     System.out.println("\t" + Arrays.toString(player.inventory));
+                     try{
+                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                         if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
+                             System.out.println("You use " + player.inventory[tempa].name + ".");
+                             player.stats = player.inventory[tempa].ADDstats(player.stats);
+                             player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                         }
+                         else
+                             System.out.println("That is not a usable item or you do not have an item in that slot.");
+                     }
+                     catch(NumberFormatException e){
+                         System.out.println("Please enter a number.");
+                         break;
+                     }
+                     break;
+                 case "item stats":
+                     System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                     try {
+                         int temp = Integer.parseInt(scan.nextLine());
+                         switch (temp) {
+                             case 1:
+                                 System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                 System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                 try {
+                                     int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                     if(player.inventory[tempa] != null){
+                                         System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                         player.inventory[tempa].getStats();
+                                     }
+                                     else{
+                                         System.out.println("You do not have an item in that slot. Please try again.");
+                                     }
+                                 } catch (NumberFormatException e) {
+                                     System.out.println("Please try again and enter a number.");
+                                     break OUTER_19;
+                                 }
+                                 break OUTER_19;
+                             case 2:
+                                 System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                 System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                 try {
+                                     int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                     if(player.equipment[tempa] != null){
+                                         System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                         player.equipment[tempa].getStats();
+                                     }
+                                     else{
+                                         System.out.println("You do not have an item in that slot. Please try again.");
+                                     }
+                                 } catch (NumberFormatException e) {
+                                     System.out.println("Please try again and enter a number.");
+                                     break OUTER_19;
+                                 }
+                                 break OUTER_19;
+                             default:
+                                 System.out.println("Please try again and enter a valid answer.");
+                                 break;
+                         }
+                     }catch(NumberFormatException e){
+                         System.out.println("Please try again and enter a number.");
+                         break;
+                     }
+                     break;
+                 case "stats":
+                     player.showStats();
+                     break;
+                 case "skill info":
+                     System.out.println("\t"+player.skill.getSkillInfo());
+                     break;
+                 default:
+                     System.out.println("enter a valid command (use \"help\" for a list of basic commands)");
+                     break;
+             }
           }//WHILE AREA_4 CLEARED END 
           
       }//WHILE RUNNING LOOP END       
