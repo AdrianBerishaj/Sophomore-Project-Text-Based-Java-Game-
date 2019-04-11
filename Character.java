@@ -6,14 +6,17 @@ public class Character<E> {
     int lvl, health, exp, inv;
     String name, gameClass;
     int[] stats;
-    E[] inventory, equipment;
+    Items[] inventory, equipment;
+    Skills skill;
+    int difficultyNum = 0; //Used for determining stats of enemies
+    
     public Character(){
         this.lvl = 0;
         this.health = 100;
         this.exp = 0;
         this.inv = 8;
-        inventory = (E[]) new Object[10];
-        equipment = (E[]) new Object[5];
+        inventory = (Items[]) new Items[10];
+        equipment = (Items[]) new Items[5];
         name = "";
         gameClass = "";
     }
@@ -53,26 +56,45 @@ public class Character<E> {
         if (inv <= 0)
             System.out.println("Inventory is full.");
     }
-    public void getDifficulty(){
+    public int getDifficulty(){
         Scanner sc = new Scanner(System.in);
         //Choosing difficulty
+        
         System.out.println("What difficulty would you like to play?");
         System.out.println("  Easy, Normal, Hard, or Very Hard?");
         System.out.println("  (This just changes your character's starting level)");
         System.out.println("Type Below:");
         while (lvl == 0){   //Ensuring that a correct choice is entered
             String dif = sc.nextLine();
-            if (dif.equalsIgnoreCase("Easy"))
+            if (dif.equalsIgnoreCase("Easy")){
                 lvl = 15;
-            else if (dif.equalsIgnoreCase("Normal"))
+                difficultyNum = 1;
+            }
+            
+            else if (dif.equalsIgnoreCase("Normal")){
                 lvl = 10;
-            else if (dif.equalsIgnoreCase("Hard"))
+                difficultyNum = 2;
+            }
+            
+            else if (dif.equalsIgnoreCase("Hard")){
                 lvl = 5;
-            else if (dif.equalsIgnoreCase("Very Hard"))
+                difficultyNum = 3;
+            }
+            
+            else if (dif.equalsIgnoreCase("Very Hard")){
                 lvl = 1;
+                difficultyNum = 4;
+            }
+            
             else
                 System.out.println("Please enter a valid difficulty:");
+                
         }
+        return difficultyNum;
+    }
+    
+    public int getDiffNum(){
+        return difficultyNum;
     }
     public void getName(){
         Scanner sc = new Scanner(System.in);
@@ -87,23 +109,31 @@ public class Character<E> {
         c = sc.nextLine();
         while(true){
             if (c.equalsIgnoreCase("Knight")){
+                skill = new Skills("Dash Attack", 15, 0, true);
                 System.out.println();
                 System.out.println("You chose to be a Knight!");
+                System.out.println("You gained the Dash Attack skill!\n");
                 break;
             }
             if (c.equalsIgnoreCase("Cleric")){
+                skill = new Skills("Blessing", 0, 25, true);
                 System.out.println();
                 System.out.println("You chose to be a Cleric!");
+                System.out.println("You gained the Blessing skill!\n");
                 break;
             }
             if (c.equalsIgnoreCase("Ranger")){
+                skill = new Skills("Rapid Fire", 10, 0, true);
                 System.out.println();
                 System.out.println("You chose to be a Ranger!");
+                System.out.println("You gained the Rapid Fire skill!\n");
                 break;
             }
             if (c.equalsIgnoreCase("Sorcerer")){
+                skill = new Skills("Firebolt", 20, 0, true);
                 System.out.println();
                 System.out.println("You chose to be a Sorcerer!");
+                System.out.println("You gained the Firebolt skill!\n");
                 break;
             }
             else{
@@ -147,191 +177,211 @@ public class Character<E> {
         System.out.println(one + ", " + two + ", " + three + ", " + four + ", " + five + ", " + six);
         System.out.println();
         System.out.println("Choose the number you want your Strength stat to be:");
-        str = sc.nextInt();
         while(true){
-            if(str == one){
-                System.out.println("Strength: " + one);
-                break;
+            try{
+                str = Integer.parseInt(sc.nextLine());
+                if(str == one){
+                    System.out.println("Strength: " + one);
+                    break;
+                }
+                if(str == two){
+                    System.out.println("Strength: " + two);
+                    break;
+                }
+                if(str == three){
+                    System.out.println("Strength: " + three);
+                    break;
+                }
+                if(str == four){
+                    System.out.println("Strength: " + four);
+                    break;
+                }
+                if(str == five){
+                    System.out.println("Strength: " + five);
+                    break;
+                }
+                if(str == six){
+                    System.out.println("Strength: " + six);
+                    break;
+                }
+                else{
+                    System.out.println("Please choose a valid number: ");
+                }
             }
-            if(str == two){
-                System.out.println("Strength: " + two);
-                break;
-            }
-            if(str == three){
-                System.out.println("Strength: " + three);
-                break;
-            }
-            if(str == four){
-                System.out.println("Strength: " + four);
-                break;
-            }
-            if(str == five){
-                System.out.println("Strength: " + five);
-                break;
-            }
-            if(str == six){
-                System.out.println("Strength: " + six);
-                break;
-            }
-            else{
-                System.out.println("Please choose a valid number: ");
-                str = sc.nextInt();
+            catch(NumberFormatException e){
+                System.out.println("Please enter a number.");
             }
         }
         System.out.println("Choose the number you want your Dexterity stat to be:");
-        dex = sc.nextInt();
-        if(dex == str){
-            System.out.println("You already chose that number.");
-            while(dex == str){
-                System.out.println("Please choose another number: ");
-                dex = sc.nextInt();
-            }
-        }
         while(true){
-            if(dex == one){
-                System.out.println("Dexterity: " + one);
-                break;
+            try{
+                dex = Integer.parseInt(sc.nextLine());
+                if(dex == str){
+                    System.out.println("You already chose that number.");
+                    while(dex == str){
+                        System.out.println("Please choose another number: ");
+                        dex = Integer.parseInt(sc.nextLine());
+                    }
+                }
+                if(dex == one){
+                    System.out.println("Dexterity: " + one);
+                    break;
+                }
+                if(dex == two){
+                    System.out.println("Dexterity: " + two);
+                    break;
+                }
+                if(dex == three){
+                    System.out.println("Dexterity: " + three);
+                    break;
+                }
+                if(dex == four){
+                    System.out.println("Dexterity: " + four);
+                    break;
+                }
+                if(dex == five){
+                    System.out.println("Dexterity: " + five);
+                    break;
+                }
+                if(dex == six){
+                    System.out.println("Dexterity: " + six);
+                    break;
+                }
+                else{
+                    System.out.println("Please choose a valid number: ");
+                }
             }
-            if(dex == two){
-                System.out.println("Dexterity: " + two);
-                break;
-            }
-            if(dex == three){
-                System.out.println("Dexterity: " + three);
-                break;
-            }
-            if(dex == four){
-                System.out.println("Dexterity: " + four);
-                break;
-            }
-            if(dex == five){
-                System.out.println("Dexterity: " + five);
-                break;
-            }
-            if(dex == six){
-                System.out.println("Dexterity: " + six);
-                break;
-            }
-            else{
-                System.out.println("Please choose a valid number: ");
-                dex = sc.nextInt();
+            catch(NumberFormatException e){
+                System.out.println("Please enter a number.");
             }
         }
         System.out.println("Choose the number you want your Constitution stat to be:");
-        con = sc.nextInt();
-        if(con == dex || con == str){
-            System.out.println("You already chose that number.");
-            while(con == dex || con == str){
-                System.out.println("Please choose another number: ");
-                con = sc.nextInt();
-            }
-        }
         while(true){
-            if(con == one){
-                System.out.println("Constitution: " + one);
-                break;
+            try{
+                con = Integer.parseInt(sc.nextLine());
+                if(con == dex || con == str){
+                    System.out.println("You already chose that number.");
+                    while(con == dex || con == str){
+                        System.out.println("Please choose another number: ");
+                        con = Integer.parseInt(sc.nextLine());
+                    }
+                }
+                if(con == one){
+                    System.out.println("Constitution: " + one);
+                    break;
+                }
+                if(con == two){
+                    System.out.println("Constitution: " + two);
+                    break;
+                }
+                if(con == three){
+                    System.out.println("Constitution: " + three);
+                    break;
+                }
+                if(con == four){
+                    System.out.println("Constitution: " + four);
+                    break;
+                }
+                if(con == five){
+                    System.out.println("Constitution: " + five);
+                    break;
+                }
+                if(con == six){
+                    System.out.println("Constitution: " + six);
+                    break;
+                }
+                else{
+                    System.out.println("Please choose a valid number: ");
+                }
             }
-            if(con == two){
-                System.out.println("Constitution: " + two);
-                break;
-            }
-            if(con == three){
-                System.out.println("Constitution: " + three);
-                break;
-            }
-            if(con == four){
-                System.out.println("Constitution: " + four);
-                break;
-            }
-            if(con == five){
-                System.out.println("Constitution: " + five);
-                break;
-            }
-            if(con == six){
-                System.out.println("Constitution: " + six);
-                break;
-            }
-            else{
-                System.out.println("Please choose a valid number: ");
-                con = sc.nextInt();
+            catch(NumberFormatException e){
+                System.out.println("Please enter a number.");
             }
         }
         System.out.println("Choose the number you want your Intelligence stat to be:");
-        intel = sc.nextInt();
-        if(intel == con || intel == dex || intel == str){
-            System.out.println("You already chose that number.");
-            while(intel == con || intel == dex || intel == str){
-                System.out.println("Please choose another number: ");
-                intel = sc.nextInt();
-            }
-        }
         while(true){
-            if(intel == one){
-                System.out.println("Intelligence: " + one);
-                break;
+            try{
+                intel = Integer.parseInt(sc.nextLine());
+                if(intel == con || intel == dex || intel == str){
+                    System.out.println("You already chose that number.");
+                    while(intel == con || intel == dex || intel == str){
+                        System.out.println("Please choose another number: ");
+                        intel = Integer.parseInt(sc.nextLine());
+                    }
+                }
+                if(intel == one){
+                    System.out.println("Intelligence: " + one);
+                    break;
+                }
+                if(intel == two){
+                    System.out.println("Intelligence: " + two);
+                    break;
+                }
+                if(intel == three){
+                    System.out.println("Intelligence: " + three);
+                    break;
+                }
+                if(intel == four){
+                    System.out.println("Intelligence: " + four);
+                    break;
+                }
+                if(intel == five){
+                    System.out.println("Intelligence: " + five);
+                    break;
+                }
+                if(intel == six){
+                    System.out.println("Intelligence: " + six);
+                    break;
+                }
+                else{
+                    System.out.println("Please choose a valid number: ");
+                }
             }
-            if(intel == two){
-                System.out.println("Intelligence: " + two);
-                break;
-            }
-            if(intel == three){
-                System.out.println("Intelligence: " + three);
-                break;
-            }
-            if(intel == four){
-                System.out.println("Intelligence: " + four);
-                break;
-            }
-            if(intel == five){
-                System.out.println("Intelligence: " + five);
-                break;
-            }
-            if(intel == six){
-                System.out.println("Intelligence: " + six);
-                break;
-            }
-            else{
-                System.out.println("Please choose a valid number: ");
-                intel = sc.nextInt();
+            catch(NumberFormatException e){
+                System.out.println("Please enter a number.");
             }
         }
         System.out.println("Choose the number you want your Wisdom stat to be:");
-        wis = sc.nextInt();
-        if(wis == intel || wis == con || wis == dex || wis == str){
-            System.out.println("You already chose that number.");
-            while(wis == intel || wis == con || wis == dex || wis == str){
-                System.out.println("Please choose another number: ");
-                wis = sc.nextInt();
-            }
-        }
         while(true){
-            if(wis == one){
-                System.out.println("Wisdom: " + one);
-                break;
+            try{
+                wis = Integer.parseInt(sc.nextLine());
+                if(wis == intel || wis == con || wis == dex || wis == str){
+                    System.out.println("You already chose that number.");
+                    while(wis == intel || wis == con || wis == dex || wis == str){
+                        System.out.println("Please choose another number: ");
+                        wis = Integer.parseInt(sc.nextLine());
+                    }
+                }
+                if(wis == one){
+                    System.out.println("Wisdom: " + one);
+                    break;
+                }
+                if(wis == two){
+                    System.out.println("Wisdom: " + two);
+                    break;
+                }
+                if(wis == three){
+                    System.out.println("Wisdom: " + three);
+                    break;
+                }
+                if(wis == four){
+                    System.out.println("Wisdom: " + four);
+                    break;
+                }
+                if(wis == five){
+                    System.out.println("Wisdom: " + five);
+                    break;
+                }
+                if(wis == six){
+                    System.out.println("Wisdom: " + six);
+                    break;
+                }
+                else{
+                    System.out.println("Please choose a valid number: ");
+                }
             }
-            if(wis == two){
-                System.out.println("Wisdom: " + two);
-                break;
-            }
-            if(wis == three){
-                System.out.println("Wisdom: " + three);
-                break;
-            }
-            if(wis == four){
-                System.out.println("Wisdom: " + four);
-                break;
-            }
-            if(wis == five){
-                System.out.println("Wisdom: " + five);
-                break;
-            }
-            if(wis == six){
-                System.out.println("Wisdom: " + six);
-                break;
-            }
-            else{
-                System.out.println("Please choose a valid number: ");
-                wis = sc.nextInt();
+            catch(NumberFormatException e){
+                System.out.println("Please enter a number.");
             }
         }
         if (str != one && dex != one && con != one && intel != one && wis != one)
@@ -352,13 +402,13 @@ public class Character<E> {
     }
      public void showInv() //command "bag"
     {
-        for (E inventory1 : inventory) {
+        for (Items inventory1 : inventory) {
             System.out.println(inventory1); 
         }
     }
      public void showEquip() //command "equipment"
     {
-        for (E equipment1 : equipment) {
+        for (Items equipment1 : equipment) {
             System.out.println(equipment1); 
         }
     }
@@ -370,22 +420,29 @@ public class Character<E> {
      public void help()
      {
          System.out.println("\n\n\tbasic commands:");
-         System.out.println("\tforward - move forward");
-         System.out.println("\tback - move back");
-         System.out.println("\tequipment - show player equipment");
-         System.out.println("\tbag - display player inventory");
-         System.out.println("\tstats - display current player stats");
-         //System.out.println("\n\tcommands for managing items:");
-        // System.out.println("\tequip (item name) ");
+         System.out.println("\tforward (or f) - move forward");
+         System.out.println("\tequipment (or \"se\") - show player equipment");
+         System.out.println("\tbag (or \"b\") - display player inventory");
+         System.out.println("\tstats (or \"s\") - display current player stats");
+         System.out.println("\tskill info (or \"si\") - display info of player's skill");
+         System.out.println("\titem stats (or \"is\") - show how a specific item will echange your character stats when equipped");
+         System.out.println("\n\tcommands for managing items:");
+         System.out.println("\tdrop (or \"d\") - drop an item from your bag or equipment");
+         System.out.println("\tuse (or \"u\") - use any usable item from your bag");
+         System.out.println("\tequip (or \"e\") - equip an item from your bag to your equipment");
+         System.out.println("\tunequip (or \"ue\") - unequip an item from your equipment and place it in your bag");
         // System.out.println("\td");
      }
      public void combatHelp()
      {
          System.out.println("\n\n\tcombat commands:");
-         System.out.println("\tattack - attack the enemy head on with a melee attack!");
-         //System.out.println("\tranged attack - attack the enemy from afar with a ranged attack! (need a ranged weapon/ throwable item)");
-         System.out.println("\tidentify - use your wisdom to possibly identify enemy stats and possibly weakpoints! (will consume a turn)");
-         System.out.println("\tany time during combat you may check your current equipment, inventory, and current stats; will not consume a turn");
-         //System.out.println("\tany time during combat you may swap out items or use consumables, but it will cost you a turn!");
+         System.out.println("\tattack (or \"a\") - attack the enemy head on with a melee attack \n\t(if used while still >0 turns from enemy, you will \"run up to\" enemy, bringing the amount to 0)");
+         System.out.println("\tuse skill (or \"us\")- uses your character's skill! It can only be used once per battle. \n\t(like \"attack\", it will set \"turns away\" to 0)");
+         System.out.println("\tskill info (or \"si\") - display info of player's skill");
+         System.out.println("\tuse (or \"u\") - use any usable item from your bag \n\t(will consume a turn, even if you try using an \"empty\" item)");
+         System.out.println("\titem stats (\"is\") - show how a specific item will echange your character stats when equipped");
+         System.out.println("\tranged attack (or \"ra\") - attack the enemy from afar with a ranged attack! (need a ranged weapon)");
+         System.out.println("\tidentify (or \"i\") - use your wisdom to possibly identify enemy stats! (will consume a turn!)");
+         System.out.println("\tany time during combat you may CHECK your current equipment, inventory, and current stats; will NOT consume a turn");
      }
 }

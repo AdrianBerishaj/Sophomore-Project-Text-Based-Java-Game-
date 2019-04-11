@@ -1,5 +1,6 @@
 package hod_game;
 
+
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -13,10 +14,11 @@ public class HOD_GAME {
         boolean running = true;
         boolean selection = true;
         String input;
+        Items dummy = new Items("Dummy Item for Method Calling",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1);
         Scanner scan = new Scanner(System.in);
         Random rand = new Random();
         Character player = new Character(); 
-        //player.getDifficulty();
+        player.getDifficulty();
         player.getName();
         player.getCharClass();
         player.getStats();      //depending on class, give starting inventory
@@ -24,7 +26,7 @@ public class HOD_GAME {
             if(player.gameClass.equalsIgnoreCase("Knight"))
             {
                 Items longsword = new Items("Longsword",0,3,0,0,0,0,0,0,0,0,0,0,0,0,1);
-                Items chainmail = new Items("Chainmail",0,0,0,3,0,0,0,0,0,0,0,0,0,0,2);
+                Items chainmail = new Items("Chainmail",0,0,0,3,0,0,0,0,0,0,0,0,0,0,3);
                 player.equipment = longsword.ADDequipment(player.equipment);
                 player.equipment = chainmail.ADDequipment(player.equipment);
                 player.stats = longsword.ADDstats(player.stats);
@@ -41,8 +43,8 @@ public class HOD_GAME {
             } 
               if(player.gameClass.equalsIgnoreCase("Ranger"))
             {
-                Items bow = new Items("Bow",0,0,3,0,0,0,0,0,0,0,0,0,0,0,1);
-                Items BLK_leather = new Items("Black Leather Armor",0,0,0,3,0,0,0,0,0,0,0,0,0,0,2);
+                Items bow = new Items("Bow",0,0,3,0,0,0,0,0,0,0,0,0,0,0,2);
+                Items BLK_leather = new Items("Black Leather Armor",0,0,0,3,0,0,0,0,0,0,0,0,0,0,3);
                 player.equipment=bow.ADDequipment(player.equipment);
                 player.equipment=BLK_leather.ADDequipment(player.equipment);
                 player.stats=bow.ADDstats(player.stats);
@@ -50,8 +52,8 @@ public class HOD_GAME {
             }
                if(player.gameClass.equalsIgnoreCase("Sorcerer"))
             {         
-                Items staff = new Items("Staff",0,0,0,0,3,0,0,0,0,0,0,0,0,0,1);
-                Items BLK_robes = new Items("Black Robes",0,0,0,3,0,0,0,0,0,0,0,0,0,0,2);
+                Items staff = new Items("Staff",0,0,0,0,3,0,0,0,0,0,0,0,0,0,2);
+                Items BLK_robes = new Items("Black Robes",0,0,0,3,0,0,0,0,0,0,0,0,0,0,3);
                 player.equipment=staff.ADDequipment(player.equipment);
                 player.equipment=BLK_robes.ADDequipment(player.equipment);
                 player.stats=staff.ADDstats(player.stats);
@@ -76,7 +78,7 @@ public class HOD_GAME {
                Area area1_pp = area1;
                Chest area1_chest = new Chest();
                Enemy a1_enemy = new Enemy(1, 1, 1, 1, 1, 1, 1, 1);
-               a1_enemy.newEnemy();
+               a1_enemy.newEnemy(player.getDiffNum());
                /////////////////////////////AREA 1 CREATION////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,6 +105,7 @@ public class HOD_GAME {
                         player.help();
                         break;
                     case "forward":
+                    case "f":
                         area1_pp = area1_pp.getForeLink();
                         System.out.println(area1_pp.getData());
                         switch (area1_pp.getData()) {
@@ -119,15 +122,53 @@ public class HOD_GAME {
                                 else if(area1_encounter == 1112)
                                 {
                                     Enemy bounty_hunter = new Enemy(5, 100, 15, 15, 8, 5, 5, 3);
+                                    int turnsAway = rand.nextInt(3);
                                     System.out.println("\n\n----------------------------F I G H T !!!----------------------------");
                                     System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
                                     OUTER:
                                     while (true) {
+                                        
+                                        if(turnsAway > 0)
+                                        {
+                                            System.out.println("\n\n\tThe enemy is currently " + turnsAway + " turn(s) away!\n\tNow's your chance for ranged attacks "
+                                                    + "(type \"ranged attack\"), or just type \"attack\" or \"a\" to charge the enemy straight on!\n\t"
+                                                    + "(all skills are considered ranged)\n\t(you can still identify enemy and/or manage items)");
+                                        }
                                         System.out.println("\nWhat will you do " + player.name + "?");
                                         input = scan.nextLine();
                                         OUTER_1:
                                         switch (input) {
+                                            case "ranged attack":
+                                            case "ra":    
+                                                if(turnsAway == 0 || turnsAway<0)
+                                                {
+                                                    System.out.println("\n\tThe enemy is within melee distance! You cannot use ranged attacks right now!");
+                                                }
+                                                else if(turnsAway > 0)
+                                                {
+                                                   int weaponChecker = 0;
+                                            for (Items equipment : player.equipment) {
+                                                if (equipment.typeCheckRanged()) {
+                                                    int dmg = rand.nextInt((player.stats[1]/2) + (player.stats[2]/2));
+                                                    turnsAway--;
+                                                    System.out.println("You deal " + dmg + " to the enemy from afar!\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                    bounty_hunter.enemyStats[1] -= dmg;
+                                                    break;
+                                                } else if (equipment.typeCheckRanged() == false) {
+                                                    weaponChecker++;
+                                                    if(weaponChecker == 5)
+                                                        System.out.println("\n\tYou don't have a ranged weapon in your equipment! You cannot do ranged attacks!");
+                                                }
+                                            }
+                                                }
+                                                    break;
                                             case "attack":
+                                            case "a":
+                                                if(turnsAway > 0)
+                                                {
+                                                    System.out.println("\n\tEven though the enemy is " + turnsAway + " turn(s) away, you decide to charge them head on!");
+                                                }
+                                                turnsAway = 0;
                                                 if (player.stats[2]>=bounty_hunter.enemyStats[3]) {
                                                     int dmgDealt = rand.nextInt(player.stats[1]);
                                                     int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
@@ -186,6 +227,7 @@ public class HOD_GAME {
                                                 }
                                                 break;
                                             case "identify":
+                                            case "i":
                                                 if(player.stats[5]>=7)
                                                 {
                                                     System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
@@ -195,13 +237,41 @@ public class HOD_GAME {
                                                 {
                                                     System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
                                                 }
+                                                if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                     }
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
+                                                     }
                                                 break;
                                             case "use skill":
+                                            case "us":
+                                                if(turnsAway > 0)
+                                                {
+                                                    System.out.println("\n\tEven though the enemy is " + turnsAway + " turn(s) away, you decide to face them right away!");
+                                                }
+                                                turnsAway = 0;
                                                 if(player.skill.uses){
                                                     if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                                         if (player.stats[2]>=bounty_hunter.enemyStats[3]) {
                                                             int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
-                                                            int HPgained = player.skill.use();
+                                                            int HPgained = player.skill.use(player.stats);
                                                             System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                                             player.stats[0] += HPgained;
                                                             System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -218,7 +288,7 @@ public class HOD_GAME {
                                                             }
                                                         }
                                                         if (player.stats[2]<bounty_hunter.enemyStats[3]) {
-                                                            int HPgained = player.skill.use();
+                                                            int HPgained = player.skill.use(player.stats);
                                                             int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
                                                             System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                             player.stats[0] -= EdmgDealt;
@@ -238,7 +308,7 @@ public class HOD_GAME {
                                                     }
                                                     else{
                                                         if (player.stats[2]>=bounty_hunter.enemyStats[3]) {
-                                                            int dmgDealt = player.skill.use();
+                                                            int dmgDealt = player.skill.use(player.stats);
                                                             int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
                                                             System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                                             bounty_hunter.enemyStats[1] -= dmgDealt;
@@ -266,7 +336,7 @@ public class HOD_GAME {
                                                             }
                                                         }
                                                         if (player.stats[2]<bounty_hunter.enemyStats[3]) {
-                                                            int dmgDealt = player.skill.use();
+                                                            int dmgDealt = player.skill.use(player.stats);
                                                             int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
                                                             System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                             player.stats[0] -= EdmgDealt;
@@ -298,33 +368,68 @@ public class HOD_GAME {
                                                 else
                                                     System.out.println("You cannot use that skill again this battle!");
                                                 break;  case "skill info":
+                                                case "si":
                                                     System.out.println("\t"+player.skill.getSkillInfo());
                                                     break;
                                                 case "equipment":
+                                                case"se":
                                                     System.out.println(Arrays.toString(player.equipment));
                                                     break;
                                                 case "bag":
+                                                case "b":
                                                     System.out.println(Arrays.toString(player.inventory));
                                                     break;
                                                 case "use":
-                                                    System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
-                                                    System.out.println("\t" + Arrays.toString(player.inventory));
-                                                    try{
-                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                        if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
-                                                            System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                            player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                            player.inventory = player.inventory[tempa].dropInventory(player.inventory);
-                                                        }
-                                                        else
-                                                            System.out.println("That is not a usable item or you do not have an item in that slot.");
-                                                    }
-                                                    catch(NumberFormatException e){
-                                                        System.out.println("Please enter a number.");
-                                                        break;
-                                                    }
-                                                    break;
+                                                case "u":
+                                                     System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                                                     System.out.println("\t" + Arrays.toString(player.inventory));
+                                                     try{
+                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                         if(tempa < player.inventory.length){
+                                                            if(player.inventory[tempa] != null){
+                                                                if(player.inventory[tempa].typeCheckConsumable()){
+                                                                    System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                                    player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                                }
+                                                                else
+                                                                    System.out.println("That is not a usable item.");
+                                                            }
+                                                            else
+                                                             System.out.println("You do not have an item in that slot.");
+                                                         }
+                                                         else
+                                                             System.out.println("You do not have an item in that slot.");
+                                                     }
+                                                     catch(NumberFormatException e){
+                                                         System.out.println("Please enter a number.");
+                                                         break;
+                                                     }
+                                                     if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                     }
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(bounty_hunter.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
+                                                     }
+                                                     break;
                                                 case "item stats":
+                                                case "is":
                                                     System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
                                                     try {
                                                         int temp = Integer.parseInt(scan.nextLine());
@@ -340,10 +445,11 @@ public class HOD_GAME {
                                                                     }
                                                                     else{
                                                                         System.out.println("You do not have an item in that slot. Please try again.");
-                                                                    }           } catch (NumberFormatException e) {
-                                                                        System.out.println("Please try again and enter a number.");
-                                                                        break OUTER_1;
                                                                     }
+                                                                } catch (NumberFormatException e) {
+                                                                    System.out.println("Please try again and enter a number.");
+                                                                    break OUTER_1;
+                                                                }
                                                                 break OUTER_1;
                                                             case 2:
                                                                 System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
@@ -356,10 +462,11 @@ public class HOD_GAME {
                                                                     }
                                                                     else{
                                                                         System.out.println("You do not have an item in that slot. Please try again.");
-                                                                    }           } catch (NumberFormatException e) {
-                                                                        System.out.println("Please try again and enter a number.");
-                                                                        break OUTER_1;
                                                                     }
+                                                                } catch (NumberFormatException e) {
+                                                                    System.out.println("Please try again and enter a number.");
+                                                                    break OUTER_1;
+                                                                }
                                                                 break OUTER_1;
                                                             default:
                                                                 System.out.println("Please try again and enter a valid answer.");
@@ -368,8 +475,10 @@ public class HOD_GAME {
                                                     }catch(NumberFormatException e){
                                                         System.out.println("Please try again and enter a number.");
                                                         break;
-                                                    }           break;
+                                                    }
+                                                    break;
                                                 case "stats":
+                                                case "s":
                                                     player.showStats();
                                                     break;
                                                 case "combat help":
@@ -383,21 +492,52 @@ public class HOD_GAME {
                                 }
                                 else if(area1_encounter == 1113)
                                 {
-                                    Items DEX_Boost_Potion = new Items("DEX_Boost Potion",0,0,25,0,0,0,0,0,0,0,0,0,0,0,4);
+                                    Items DEX_Boost_Potion = new Items("DEX_Boost Potion",0,0,10,0,0,0,0,0,0,0,0,0,0,0,4);
                                     player.inventory = DEX_Boost_Potion.ADDinventory(player.inventory);
                                 }
                                 break;
                             case 1:
                                 a1_enemy.getEnemy();
+                                int turnsAway = rand.nextInt(3);
                                 System.out.println("\n\n----------------------------F I G H T !!!----------------------------");
                                 System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
                                 OUTER:
                                 while (true) {
+                                    if(turnsAway > 0)
+                                        {
+                                            System.out.println("\n\n\tThe enemy is currently " + turnsAway + " turn(s) away!\n\tNow's your chance for ranged attacks "
+                                                    + "(type \"ranged attack\"), or just type \"attack\" or \"a\" to charge the enemy straight on!\n\t"
+                                                    + "(all skills are considered ranged)\n\t(you can still identify enemy and/or manage items)");
+                                        }
                                     System.out.println("\nWhat will you do " + player.name + "?");
                                     input = scan.nextLine();
                                     OUTER_2:
                                     switch (input) {
+                                        case "ranged attack":
+                                        case "ra": 
+                                                if(turnsAway == 0 || turnsAway<0)
+                                                {
+                                                    System.out.println("\n\tThe enemy is within melee distance! You cannot use ranged attacks right now!");
+                                                }
+                                                else if(turnsAway > 0)
+                                                {
+                                                   try{
+                                        for (Items equipment : player.equipment) 
+                                        {
+                                            if (equipment.typeCheckRanged())  
+                                            {
+                                                int dmg = rand.nextInt((player.stats[1]) + (player.stats[2]));
+                                                turnsAway--;
+                                                System.out.println("You deal " + dmg + " to the enemy from afar!\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                a1_enemy.enemyStats[1] -= dmg;
+                                                break;
+                                            } 
+                                        }
+                                                   }catch(NullPointerException e){System.out.println("\n\tYou don't have a ranged weapon in your equipment! You cannot do ranged attacks!");}
+                                                }
+                                                    break;
                                         case "attack":
+                                        case "a":
                                             if (player.stats[2]>=a1_enemy.enemyStats[3]) {
                                                 int dmgDealt = rand.nextInt(player.stats[1]);
                                                 int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
@@ -406,7 +546,7 @@ public class HOD_GAME {
                                                 if (a1_enemy.enemyStats[1]<0) {
                                                     System.out.println("ENEMY DEFEATED!!!");
                                                     System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                    a1_enemy.newEnemy();
+                                                    a1_enemy.newEnemy(player.getDiffNum());
                                                     player.stats[0] = MAX_HEALTH;
                                                     player.skill.recharge();
                                                     break OUTER;
@@ -444,7 +584,7 @@ public class HOD_GAME {
                                                 if (a1_enemy.enemyStats[1]<0) {
                                                     System.out.println("ENEMY DEFEATED!!!");
                                                     System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                    a1_enemy.newEnemy();
+                                                    a1_enemy.newEnemy(player.getDiffNum());
                                                     player.stats[0] = MAX_HEALTH;
                                                     player.skill.recharge();
                                                     break OUTER;
@@ -452,6 +592,7 @@ public class HOD_GAME {
                                             }
                                             break;
                                         case "identify":
+                                        case "i":
                                             if(player.stats[5]>=7)
                                             {
                                                 System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
@@ -461,15 +602,45 @@ public class HOD_GAME {
                                             {
                                                 System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
                                             }
+                                            if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                     }
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
+                                                     }
                                             break;
                                         case "use skill":
+                                        case "us":
+                                            if(turnsAway > 0)
+                                                {
+                                                    System.out.println("\n\tEven though the enemy is " + turnsAway + " turn(s) away, you decide to face them right away!");
+                                                }
+                                                turnsAway = 0;
                                             if(player.skill.uses){
                                                 if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                                     if (player.stats[2]>=a1_enemy.enemyStats[3]) {
                                                         int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
-                                                        int HPgained = player.skill.use();
+                                                        int HPgained = player.skill.use(player.stats);
                                                         System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                                         player.stats[0] += HPgained;
+                                                        if(turnsAway == 0 || turnsAway<0)
+                                                        {
                                                         System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
                                                         player.stats[0] -= EdmgDealt;
                                                         if (player.stats[0]<0) {
@@ -482,9 +653,15 @@ public class HOD_GAME {
                                                             running = false;
                                                             break OUTER;
                                                         }
+                                                        }
+                                                        else if(turnsAway>0)
+                                                        {
+                                                            turnsAway--;
+                                                            System.out.println("The enemy is now " + turnsAway + " turn(s) away!");
+                                                        }
                                                     }
                                                     if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                                        int HPgained = player.skill.use();
+                                                        int HPgained = player.skill.use(player.stats);
                                                         int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                                         System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                         player.stats[0] -= EdmgDealt;
@@ -504,14 +681,14 @@ public class HOD_GAME {
                                                 }
                                                 else{
                                                     if (player.stats[2]>=a1_enemy.enemyStats[3]) {
-                                                        int dmgDealt = player.skill.use();
+                                                        int dmgDealt = player.skill.use(player.stats);
                                                         int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                                         System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                                         a1_enemy.enemyStats[1] -= dmgDealt;
                                                         if (a1_enemy.enemyStats[1]<0) {
                                                             System.out.println("ENEMY DEFEATED!!!");
                                                             System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                            a1_enemy.newEnemy();
+                                                            a1_enemy.newEnemy(player.getDiffNum());
                                                             player.stats[0] = MAX_HEALTH;
                                                             player.skill.recharge();
                                                             break OUTER;
@@ -530,7 +707,7 @@ public class HOD_GAME {
                                                         }
                                                     }
                                                     if (player.stats[2]<a1_enemy.enemyStats[3]) {
-                                                        int dmgDealt = player.skill.use();
+                                                        int dmgDealt = player.skill.use(player.stats);
                                                         int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
                                                         System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                         player.stats[0] -= EdmgDealt;
@@ -549,7 +726,7 @@ public class HOD_GAME {
                                                         if (a1_enemy.enemyStats[1]<0) {
                                                             System.out.println("ENEMY DEFEATED!!!");
                                                             System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                            a1_enemy.newEnemy();
+                                                            a1_enemy.newEnemy(player.getDiffNum());
                                                             player.stats[0] = MAX_HEALTH;
                                                             player.skill.recharge();
                                                             break OUTER;
@@ -561,33 +738,68 @@ public class HOD_GAME {
                                                 System.out.println("You cannot use that skill again this battle!");
                                             break;
                                         case "skill info":
+                                        case "si":
                                             System.out.println("\t"+player.skill.getSkillInfo());
                                             break;
                                         case "equipment":
+                                        case"se":
                                             System.out.println(Arrays.toString(player.equipment));
                                             break;
                                         case "bag":
+                                        case "b":
                                             System.out.println(Arrays.toString(player.inventory));
                                             break;
                                         case "use":
-                                            System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
-                                            System.out.println("\t" + Arrays.toString(player.inventory));
-                                            try{
-                                                int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
-                                                    System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                    player.inventory = player.inventory[tempa].dropInventory(player.inventory);
-                                                }
-                                                else
-                                                    System.out.println("That is not a usable item or you do not have an item in that slot.");
-                                            }
-                                            catch(NumberFormatException e){
-                                                System.out.println("Please enter a number.");
-                                                break;
-                                            }
-                                            break;
+                                        case "u":
+                                             System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                                             System.out.println("\t" + Arrays.toString(player.inventory));
+                                             try{
+                                                 int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                 if(tempa < player.inventory.length){
+                                                    if(player.inventory[tempa] != null){
+                                                        if(player.inventory[tempa].typeCheckConsumable()){
+                                                            System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                            player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                            player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                        }
+                                                        else
+                                                            System.out.println("That is not a usable item.");
+                                                    }
+                                                    else
+                                                     System.out.println("You do not have an item in that slot.");
+                                                 }
+                                                 else
+                                                     System.out.println("You do not have an item in that slot.");
+                                             }
+                                             catch(NumberFormatException e){
+                                                 System.out.println("Please enter a number.");
+                                                 break;
+                                             }
+                                             if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                     }
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(a1_enemy.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
+                                                     }
+                                             break;
                                         case "item stats":
+                                        case "is":
                                             System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
                                             try {
                                                 int temp = Integer.parseInt(scan.nextLine());
@@ -636,6 +848,7 @@ public class HOD_GAME {
                                             }
                                             break;
                                         case "stats":
+                                        case "s":
                                             player.showStats();
                                             break;
                                         case "combat help":
@@ -673,16 +886,72 @@ public class HOD_GAME {
                                 } //CHEST END
                                 break;
                             case 3:
-                                Enemy bigBoi = new Enemy(100, 1, 100, 1, 1, 1, 1, 1);
+                                    int mod = 1;
+                                    switch (player.getDiffNum()) {
+                                        case 1:
+                                            {
+                                                mod = 1;
+                                                break;
+                                            }
+                                        case 2:
+                                            {
+                                                mod = 2;
+                                                break;
+                                            }
+                                        case 3:
+                                            {
+                                                mod = 3;
+                                                break;
+                                            }
+                                        case 4:
+                                            {
+                                                mod = 4;
+                                                break;
+                                            }
+                                        default:
+                                            break;
+                                    }
+                                Enemy bigBoi = new Enemy(100 * mod, 50 * mod, 15 * mod, 15, 15, 15, 15, 15);
+                                turnsAway = 2;
                                 System.out.println("\n\n----------------------------I T ' S   B O S S   T I M E   B O i S----------------------------");
                                 System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
                                 OUTER:
                                 while (true) {
+                                    if(turnsAway > 0)
+                                        {
+                                            System.out.println("\n\n\tThe enemy is currently " + turnsAway + " turn(s) away!\n\tNow's your chance for ranged attacks "
+                                                    + "(type \"ranged attack\"), or just type \"attack\" or \"a\" to charge the enemy straight on!\n\t"
+                                                    + "(all skills are considered ranged)\n\t(you can still identify enemy and/or manage items)");
+                                        }
                                     System.out.println("\nWhat will you do " + player.name + "?");
                                     input = scan.nextLine();
                                     OUTER_3:
                                     switch (input) {
+                                        case "ranged attack":
+                                        case "ra": 
+                                                if(turnsAway == 0 || turnsAway<0)
+                                                {
+                                                    System.out.println("\n\tThe enemy is within melee distance! You cannot use ranged attacks right now!");
+                                                }
+                                                else if(turnsAway > 0)
+                                                {
+                                                   try{
+                                        for (Items equipment : player.equipment) 
+                                        {
+                                            if (equipment.typeCheckRanged())  
+                                            {
+                                                int dmg = rand.nextInt((player.stats[1]) + (player.stats[2]));
+                                                turnsAway--;
+                                                System.out.println("You deal " + dmg + " to the enemy from afar!\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                a1_enemy.enemyStats[1] -= dmg;
+                                                break;
+                                            } 
+                                        }
+                                                   }catch(NullPointerException e){System.out.println("\n\tYou don't have a ranged weapon in your equipment! You cannot do ranged attacks!");}
+                                                }
+                                                    break;
                                         case "attack":
+                                        case "a":
                                             if (player.stats[2]>=bigBoi.enemyStats[3]) {
                                                 int dmgDealt = rand.nextInt(player.stats[1]);
                                                 int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
@@ -693,6 +962,7 @@ public class HOD_GAME {
                                                     System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
                                                     bigBoi.enemyStats[1] = 100;
                                                     player.stats[0] = MAX_HEALTH;
+                                                    player.skill.recharge();
                                                     break OUTER;
                                                 }
                                                 System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -730,11 +1000,13 @@ public class HOD_GAME {
                                                     System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
                                                     bigBoi.enemyStats[1] = 100;
                                                     player.stats[0] = MAX_HEALTH;
+                                                    player.skill.recharge();
                                                     break OUTER;
                                                 }
                                             }
                                             break;
                                         case "identify":
+                                        case "i":
                                             if(player.stats[5]>=7)
                                             {
                                                 System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
@@ -744,13 +1016,41 @@ public class HOD_GAME {
                                             {
                                                 System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
                                             }
+                                            if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                     }
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
+                                                     }
                                             break;
                                         case "use skill":
+                                        case "us":
+                                            if(turnsAway > 0)
+                                                {
+                                                    System.out.println("\n\tEven though the enemy is " + turnsAway + " turn(s) away, you decide to face them right away!");
+                                                }
+                                                turnsAway = 0;
                                             if(player.skill.uses){
                                                 if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                                     if (player.stats[2]>=bigBoi.enemyStats[3]) {
                                                         int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
-                                                        int HPgained = player.skill.use();
+                                                        int HPgained = player.skill.use(player.stats);
                                                         System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                                         player.stats[0] += HPgained;
                                                         System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -767,7 +1067,7 @@ public class HOD_GAME {
                                                         }
                                                     }
                                                     if (player.stats[2]<bigBoi.enemyStats[3]) {
-                                                        int HPgained = player.skill.use();
+                                                        int HPgained = player.skill.use(player.stats);
                                                         int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
                                                         System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                         player.stats[0] -= EdmgDealt;
@@ -787,14 +1087,14 @@ public class HOD_GAME {
                                                 }
                                                 else{
                                                     if (player.stats[2]>=bigBoi.enemyStats[3]) {
-                                                        int dmgDealt = player.skill.use();
+                                                        int dmgDealt = player.skill.use(player.stats);
                                                         int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
                                                         System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                                         bigBoi.enemyStats[1] -= dmgDealt;
                                                         if (bigBoi.enemyStats[1]<0) {
                                                             System.out.println("ENEMY DEFEATED!!!");
-                                                            System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
-                                                            bigBoi.newEnemy();
+                                                            System.out.println("\n\n----------------------------bigboi HAS BEEN Y E E T E D----------------------------\n\n");
+                                                            bigBoi.newEnemy(player.getDiffNum());
                                                             player.stats[0] = MAX_HEALTH;
                                                             player.skill.recharge();
                                                             break OUTER;
@@ -813,7 +1113,7 @@ public class HOD_GAME {
                                                         }
                                                     }
                                                     if (player.stats[2]<bigBoi.enemyStats[3]) {
-                                                        int dmgDealt = player.skill.use();
+                                                        int dmgDealt = player.skill.use(player.stats);
                                                         int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
                                                         System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                         player.stats[0] -= EdmgDealt;
@@ -832,7 +1132,7 @@ public class HOD_GAME {
                                                         if (bigBoi.enemyStats[1]<0) {
                                                             System.out.println("ENEMY DEFEATED!!!");
                                                             System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
-                                                            bigBoi.newEnemy();
+                                                            bigBoi.newEnemy(player.getDiffNum());
                                                             player.stats[0] = MAX_HEALTH;
                                                             player.skill.recharge();
                                                             break OUTER;
@@ -844,33 +1144,68 @@ public class HOD_GAME {
                                                 System.out.println("You cannot use that skill again this battle!");
                                             break;
                                         case "skill info":
+                                        case "si":
                                             System.out.println("\t"+player.skill.getSkillInfo());
                                             break;
                                         case "equipment":
+                                        case"se":
                                             System.out.println(Arrays.toString(player.equipment));
                                             break;
                                         case "bag":
+                                        case "b":
                                             System.out.println(Arrays.toString(player.inventory));
                                             break;
                                         case "use":
-                                            System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
-                                            System.out.println("\t" + Arrays.toString(player.inventory));
-                                            try{
-                                                int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
-                                                    System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                    player.inventory = player.inventory[tempa].dropInventory(player.inventory);
-                                                }
-                                                else
-                                                    System.out.println("That is not a usable item or you do not have an item in that slot.");
-                                            }
-                                            catch(NumberFormatException e){
-                                                System.out.println("Please enter a number.");
-                                                break;
-                                            }
-                                            break;
+                                        case "u":
+                                             System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                                             System.out.println("\t" + Arrays.toString(player.inventory));
+                                             try{
+                                                 int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                 if(tempa < player.inventory.length){
+                                                    if(player.inventory[tempa] != null){
+                                                        if(player.inventory[tempa].typeCheckConsumable()){
+                                                            System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                            player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                            player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                        }
+                                                        else
+                                                            System.out.println("That is not a usable item.");
+                                                    }
+                                                    else
+                                                     System.out.println("You do not have an item in that slot.");
+                                                 }
+                                                 else
+                                                     System.out.println("You do not have an item in that slot.");
+                                             }
+                                             catch(NumberFormatException e){
+                                                 System.out.println("Please enter a number.");
+                                                 break;
+                                             }
+                                             if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                     }
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
+                                                     }
+                                             break;
                                         case "item stats":
+                                        case "is":
                                             System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
                                             try {
                                                 int temp = Integer.parseInt(scan.nextLine());
@@ -919,6 +1254,7 @@ public class HOD_GAME {
                                             }
                                             break;
                                         case "stats":
+                                        case "s":
                                             player.showStats();
                                             break;
                                         case "combat help":
@@ -942,72 +1278,91 @@ public class HOD_GAME {
                         } // AREA GET DATA END
                         break;
                     case "equipment":
+                    case"se":
                         System.out.println(Arrays.toString(player.equipment));
                         break;
                     case "bag":
+                    case "b":
                         System.out.println(Arrays.toString(player.inventory));
                         break;
                     case "drop":
-                        System.out.println("From where would you like to drop something?\n\t1. Bag\n\t2. Equipment");
-                        try {
-                            int temp = Integer.parseInt(scan.nextLine());
-                            switch (temp) {
-                                case 1:
-                                    System.out.println("Which item did you want to drop from your bag? Type 1 for first item, 2 for second, and so on.");
-                                    System.out.println("\t" + Arrays.toString(player.inventory));
-                                    try {
-                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                    case "d":
+                     System.out.println("From where would you like to drop something?\n\t1. Bag\n\t2. Equipment");
+                     try {
+                         int temp = Integer.parseInt(scan.nextLine());
+                         switch (temp) {
+                             case 1:
+                                 System.out.println("Which item did you want to drop from your bag? Type 1 for first item, 2 for second, and so on.");
+                                 System.out.println("\t" + Arrays.toString(player.inventory));
+                                 try {
+                                     int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                     if(tempa < player.inventory.length){
                                         if (player.inventory[tempa] != null) {
                                             System.out.println("You dropped your " + player.inventory[tempa].name + ".");
                                             player.inventory = player.inventory[tempa].dropInventory(player.inventory);
                                             break OUTER_4;
-                                        } else {
-                                            System.out.println("You do not have an item in that slot. Please try again.");
                                         }
-                                    } catch (NumberFormatException e) {
-                                        System.out.println("Please try again and enter a number.");
-                                        break OUTER_4;
-                                    }
-                                    break OUTER_4;
-                                case 2:
-                                    System.out.println("Which item did you want to drop from your equipment? Type 1 for first item, 2 for second, and so on.");
-                                    System.out.println("\t" + Arrays.toString(player.equipment));
-                                    try {
-                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
+                                     }
+                                     else {
+                                         System.out.println("You do not have an item in that slot. Please try again.");
+                                     }
+                                 } catch (NumberFormatException e) {
+                                     System.out.println("Please try again and enter a number.");
+                                     break OUTER_4;
+                                 }
+                                 break OUTER_4;
+                             case 2:
+                                 System.out.println("Which item did you want to drop from your equipment? Type 1 for first item, 2 for second, and so on.");
+                                 System.out.println("\t" + Arrays.toString(player.equipment));
+                                 try {
+                                     int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                     if(tempa < player.equipment.length){
                                         if (player.equipment[tempa] != null) {
                                             System.out.println("You dropped your " + player.equipment[tempa].name + ".");
                                             player.stats = player.equipment[tempa].SUBstats(player.stats);
                                             player.equipment = player.equipment[tempa].dropEquipment(player.equipment);
                                             break OUTER_4;
-                                        } else {
-                                            System.out.println("You do not have an item in that slot. Please try again.");
                                         }
-                                    } catch (NumberFormatException e) {
-                                        System.out.println("Please try again and enter a number.");
-                                        break OUTER_4;
-                                    }
-                                    break;
-                                default:
-                                    System.out.println("Please try again and enter a valid answer.");
-                                    break;
-                            }
-                        }catch(NumberFormatException e){
-                            System.out.println("Please try again and enter a number.");
-                            break;
-                        }
-                        break;
-                    case "equip":
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
+                                     }
+                                     else {
+                                         System.out.println("You do not have an item in that slot. Please try again.");
+                                     }
+                                 } catch (NumberFormatException e) {
+                                     System.out.println("Please try again and enter a number.");
+                                     break OUTER_4;
+                                 }
+                                 break;
+                             default:
+                                 System.out.println("Please try again and enter a valid answer.");
+                                 break;
+                         }
+                     }catch(NumberFormatException e){
+                         System.out.println("Please try again and enter a number.");
+                         break;
+                     }
+                     break;
+                 case "equip":
+                 case "e":
+                    if(!dummy.isFull(player.equipment)){
                         System.out.println("What item did you want to equip from your bag? Type 1 for first item, 2 for second, and so on.");
                         System.out.println("\t" + Arrays.toString(player.inventory));
                         try{
                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                            if(player.inventory[tempa] != null){
-                                System.out.println("You equipped your " + player.inventory[tempa].name + ".");
-                                player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                Items[][] temp = player.inventory[tempa].equip(player.inventory, player.equipment);
-                                player.inventory = temp[0];
-                                player.equipment = temp[1];
-                                break;
+                            if(tempa < player.inventory.length){
+                                if(player.inventory[tempa] != null){
+                                    System.out.println("You equipped your " + player.inventory[tempa].name + ".");
+                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                    Items[][] temp = player.inventory[tempa].equip(player.inventory, player.equipment);
+                                    player.inventory = temp[0];
+                                    player.equipment = temp[1];
+                                    break;
+                                }
+                                else
+                                    System.out.println("You do not have an item in that slot.");
                             }
                             else
                                 System.out.println("You do not have an equipped item in that slot.");
@@ -1017,18 +1372,28 @@ public class HOD_GAME {
                             break;
                         }
                         break;
-                    case "unequip":
+                    }
+                    else
+                        System.out.println("Your equipment is full! You can't equip an item.");
+                    break;
+                case "unequip":
+                case "ue":
+                    if(!dummy.isFull(player.inventory)){
                         System.out.println("What item did you want to unequip from your equipment? Type 1 for first item, 2 for second, and so on.");
                         System.out.println("\t" + Arrays.toString(player.equipment));
                         try{
                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                            if(player.equipment[tempa] != null){
-                                System.out.println("You unequipped your " + player.equipment[tempa].name + ".");
-                                player.stats = player.equipment[tempa].SUBstats(player.stats);
-                                Items[][] temp = player.equipment[tempa].unequip(player.inventory, player.equipment);
-                                player.inventory = temp[0];
-                                player.equipment = temp[1];
-                                break;
+                            if(tempa < player.equipment.length){
+                                if(player.equipment[tempa] != null){
+                                    System.out.println("You unequipped your " + player.equipment[tempa].name + ".");
+                                    player.stats = player.equipment[tempa].SUBstats(player.stats);
+                                    Items[][] temp = player.equipment[tempa].unequip(player.inventory, player.equipment);
+                                    player.inventory = temp[0];
+                                    player.equipment = temp[1];
+                                    break;
+                                }
+                                else
+                                    System.out.println("You do not have an item in that slot.");
                             }
                             else
                                 System.out.println("You do not have an equipped item in that slot.");
@@ -1038,73 +1403,100 @@ public class HOD_GAME {
                             break;
                         }
                         break;
-                    case "use":
-                        System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
-                        System.out.println("\t" + Arrays.toString(player.inventory));
-                        try{
-                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                            if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
-                                System.out.println("You use " + player.inventory[tempa].name + ".");
-                                player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                    }
+                  else
+                    System.out.println("Your bag is full! You can't unequip an item.");
+                  break;
+                 case "use":
+                 case "u":
+                     System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
+                     System.out.println("\t" + Arrays.toString(player.inventory));
+                     try{
+                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                         if(tempa < player.inventory.length){
+                            if(player.inventory[tempa] != null){
+                                if(player.inventory[tempa].typeCheckConsumable()){
+                                    System.out.println("You use " + player.inventory[tempa].name + ".");
+                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                    player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                }
+                                else
+                                    System.out.println("That is not a usable item.");
                             }
                             else
-                                System.out.println("That is not a usable item or you do not have an item in that slot.");
-                        }
-                        catch(NumberFormatException e){
-                            System.out.println("Please enter a number.");
-                            break;
-                        }
-                        break;
-                    case "item stats":
-                        System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
-                        try {
-                            int temp = Integer.parseInt(scan.nextLine());
-                            switch (temp) {
-                                case 1:
-                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                    System.out.println("\tBag: " + Arrays.toString(player.inventory));
-                                    try {
-                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                             System.out.println("You do not have an item in that slot.");
+                         }
+                         else
+                             System.out.println("You do not have an item in that slot.");
+                     }
+                     catch(NumberFormatException e){
+                         System.out.println("Please enter a number.");
+                         break;
+                     }
+                     break;
+                 case "item stats":
+                 case "is":
+                     System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                     try {
+                         int temp = Integer.parseInt(scan.nextLine());
+                         switch (temp) {
+                             case 1:
+                                 System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                 System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                 try {
+                                     int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                     if(tempa < player.inventory.length){
                                         if(player.inventory[tempa] != null){
                                             System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
                                             player.inventory[tempa].getStats();
                                         }
-                                        else{
-                                            System.out.println("You do not have an item in that slot. Please try again.");
-                                        } } catch (NumberFormatException e) {
-                                            System.out.println("Please try again and enter a number.");
-                                        break OUTER_5;
-                                    }
-                                    break OUTER_5;
-                                case 2:
-                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                    System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
-                                    try {
-                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
+                                     }
+                                     else{
+                                         System.out.println("You do not have an item in that slot. Please try again.");
+                                     }
+                                 } catch (NumberFormatException e) {
+                                     System.out.println("Please try again and enter a number.");
+                                     break OUTER_5;
+                                 }
+                                 break OUTER_5;
+                             case 2:
+                                 System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                 System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                 try {
+                                     int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                     if(tempa < player.equipment.length){
                                         if(player.equipment[tempa] != null){
                                             System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
                                             player.equipment[tempa].getStats();
                                         }
-                                        else{
-                                            System.out.println("You do not have an item in that slot. Please try again.");
-                                        } } catch (NumberFormatException e) {
-                                            System.out.println("Please try again and enter a number.");
-                                        break OUTER_5;
-                                    }
-                                    break OUTER_5;
-                                default:
-                                    System.out.println("Please try again and enter a valid answer.");
-                                    break;
-                            }
-                        }catch(NumberFormatException e){
-                            System.out.println("Please try again and enter a number.");
-                            break;
-                        } break;
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
+                                     }
+                                     else{
+                                         System.out.println("You do not have an item in that slot. Please try again.");
+                                     }
+                                 } catch (NumberFormatException e) {
+                                     System.out.println("Please try again and enter a number.");
+                                     break OUTER_5;
+                                 }
+                                 break OUTER_5;
+                             default:
+                                 System.out.println("Please try again and enter a valid answer.");
+                                 break;
+                         }
+                     }catch(NumberFormatException e){
+                         System.out.println("Please try again and enter a number.");
+                         break;
+                     }
+                     break;
                     case "stats":
+                    case "s":
                         player.showStats();
                         break;
                     case "skill info":
+                    case "si":
                         System.out.println("\t"+player.skill.getSkillInfo());
                         break;
                     default:
@@ -1130,7 +1522,7 @@ public class HOD_GAME {
                Area area2_pp = area2;
                Chest area2_chest = new Chest();
                Enemy a2_enemy = new Enemy(1, 1, 1, 1, 1, 1, 1, 1);
-               a2_enemy.newEnemy2();
+               a2_enemy.newEnemy2(player.getDiffNum());
           /////////////////////////////AREA 2 CREATION////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1150,6 +1542,7 @@ public class HOD_GAME {
                      player.help();
                      break;
                  case "forward":
+                 case "f":
                      area2_pp = area2_pp.getForeLink();
                      System.out.println(area2_pp.getData());
                      switch (area2_pp.getData()) {
@@ -1176,15 +1569,46 @@ public class HOD_GAME {
                              {
                                  player.stats[4] = player.stats[4] + 5;
                                  Enemy Giant_Angry_Thing = new Enemy(10, 120, 25, 15, 10, 10, 4, 1);
+                                 int turnsAway = rand.nextInt(3);
                                  System.out.println("\n\n----------------------------F I G H T !!!----------------------------");
                                  System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
                                  OUTER:
                                  while (true) {
+                                     if(turnsAway > 0)
+                                        {
+                                            System.out.println("\n\n\tThe enemy is currently " + turnsAway + " turn(s) away!\n\tNow's your chance for ranged attacks "
+                                                    + "(type \"ranged attack\"), or just type \"attack\" or \"a\" to charge the enemy straight on!\n\t"
+                                                    + "(all skills are considered ranged)\n\t(you can still identify enemy and/or manage items)");
+                                        }
                                      System.out.println("\nWhat will you do " + player.name + "?");
                                      input = scan.nextLine();
                                      OUTER_6:
                                      switch (input) {
+                                         case "ranged attack":
+                                         case "ra": 
+                                                if(turnsAway == 0 || turnsAway<0)
+                                                {
+                                                    System.out.println("\n\tThe enemy is within melee distance! You cannot use ranged attacks right now!");
+                                                }
+                                                else if(turnsAway > 0)
+                                                {
+                                                   try{
+                                        for (Items equipment : player.equipment) 
+                                        {
+                                            if (equipment.typeCheckRanged()) 
+                                            {
+                                                int dmg = rand.nextInt((player.stats[1]) + (player.stats[2]));
+                                                turnsAway--;
+                                                System.out.println("You deal " + dmg + " to the enemy from afar!\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                a1_enemy.enemyStats[1] -= dmg;
+                                                break;
+                                            } 
+                                        }
+                                                   }catch(NullPointerException e){System.out.println("\n\tYou don't have a ranged weapon in your equipment! You cannot do ranged attacks!");}
+                                                }
+                                                    break;
                                          case "attack":
+                                         case "a":
                                              if (player.stats[2]>=Giant_Angry_Thing.enemyStats[3]) {
                                                  int dmgDealt = rand.nextInt(player.stats[1]);
                                                  int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
@@ -1241,6 +1665,7 @@ public class HOD_GAME {
                                              }
                                              break;
                                          case "identify":
+                                         case "i":
                                              if(player.stats[5]>=7)
                                              {
                                                  System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
@@ -1250,13 +1675,41 @@ public class HOD_GAME {
                                              {
                                                  System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
                                              }
+                                             if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                     }
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
+                                                     }
                                              break;
                                          case "use skill":
+                                         case "us":
+                                             if(turnsAway > 0)
+                                                {
+                                                    System.out.println("\n\tEven though the enemy is " + turnsAway + " turn(s) away, you decide to face them right away!");
+                                                }
+                                                turnsAway = 0;
                                              if(player.skill.uses){
                                                  if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                                      if (player.stats[2]>=Giant_Angry_Thing.enemyStats[3]) {
                                                          int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
-                                                         int HPgained = player.skill.use();
+                                                         int HPgained = player.skill.use(player.stats);
                                                          System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                                          player.stats[0] += HPgained;
                                                          System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -1272,7 +1725,7 @@ public class HOD_GAME {
                                                          }
                                                      }
                                                      if (player.stats[2]<Giant_Angry_Thing.enemyStats[3]) {
-                                                         int HPgained = player.skill.use();
+                                                         int HPgained = player.skill.use(player.stats);
                                                          int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
                                                          System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                          player.stats[0] -= EdmgDealt;
@@ -1291,7 +1744,7 @@ public class HOD_GAME {
                                                  }
                                                  else{
                                                      if (player.stats[2]>=Giant_Angry_Thing.enemyStats[3]) {
-                                                         int dmgDealt = player.skill.use();
+                                                         int dmgDealt = player.skill.use(player.stats);
                                                          int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
                                                          System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                                          Giant_Angry_Thing.enemyStats[1] -= dmgDealt;
@@ -1318,7 +1771,7 @@ public class HOD_GAME {
                                                          }
                                                      }
                                                      if (player.stats[2]<Giant_Angry_Thing.enemyStats[3]) {
-                                                         int dmgDealt = player.skill.use();
+                                                         int dmgDealt = player.skill.use(player.stats);
                                                          int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
                                                          System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                          player.stats[0] -= EdmgDealt;
@@ -1350,78 +1803,117 @@ public class HOD_GAME {
                                                  System.out.println("You cannot use that skill again this battle!");
                                              break;
                                          case "skill info":
+                                         case "si":
                                              System.out.println("\t"+player.skill.getSkillInfo());
                                              break;
                                          case "equipment":
+                                         case"se":
                                              System.out.println(Arrays.toString(player.equipment));
                                              break;
                                          case "bag":
+                                         case "b":
                                              System.out.println(Arrays.toString(player.inventory));
                                              break;
                                          case "use":
+                                         case "u":
                                              System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
                                              System.out.println("\t" + Arrays.toString(player.inventory));
                                              try{
                                                  int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                 if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
-                                                     System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                     player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                     player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                 if(tempa < player.inventory.length){
+                                                    if(player.inventory[tempa] != null){
+                                                        if(player.inventory[tempa].typeCheckConsumable()){
+                                                            System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                            player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                            player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                        }
+                                                        else
+                                                            System.out.println("That is not a usable item.");
+                                                    }
+                                                    else
+                                                     System.out.println("You do not have an item in that slot.");
                                                  }
                                                  else
-                                                     System.out.println("That is not a usable item or you do not have an item in that slot.");
+                                                     System.out.println("You do not have an item in that slot.");
                                              }
                                              catch(NumberFormatException e){
                                                  System.out.println("Please enter a number.");
                                                  break;
                                              }
+                                             if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                     }
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(Giant_Angry_Thing.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
+                                                     }
                                              break;
-                                         case "item stats":
-                                             System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
-                                             try {
-                                                 int temp = Integer.parseInt(scan.nextLine());
-                                                 switch (temp) {
-                                                     case 1:
-                                                         System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                         System.out.println("\tBag: " + Arrays.toString(player.inventory));
-                                                         try {
-                                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                             if(player.inventory[tempa] != null){
-                                                                 System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                                                 player.inventory[tempa].getStats();
-                                                             }
-                                                             else{
-                                                                 System.out.println("You do not have an item in that slot. Please try again.");
-                                                             }   } catch (NumberFormatException e) {
-                                                                 System.out.println("Please try again and enter a number.");
-                                                                 break OUTER_6;
-                                                             }
-                                                         break OUTER_6;
-                                                     case 2:
-                                                         System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                         System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
-                                                         try {
-                                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                             if(player.equipment[tempa] != null){
-                                                                 System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                                                 player.equipment[tempa].getStats();
-                                                             }
-                                                             else{
-                                                                 System.out.println("You do not have an item in that slot. Please try again.");
-                                                             }   } catch (NumberFormatException e) {
-                                                                 System.out.println("Please try again and enter a number.");
-                                                                 break OUTER_6;
-                                                             }
-                                                         break OUTER_6;
-                                                     default:
-                                                         System.out.println("Please try again and enter a valid answer.");
-                                                         break;
-                                                 }
-                                             }catch(NumberFormatException e){
-                                                 System.out.println("Please try again and enter a number.");
-                                                 break;
-                                             }   break;
+                                        case "item stats":
+                                        case "is":
+                                            System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                            try {
+                                                int temp = Integer.parseInt(scan.nextLine());
+                                                switch (temp) {
+                                                    case 1:
+                                                        System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                        System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                        try {
+                                                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                            if(player.inventory[tempa] != null){
+                                                                System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                                player.inventory[tempa].getStats();
+                                                            }
+                                                            else{
+                                                                System.out.println("You do not have an item in that slot. Please try again.");
+                                                            }
+                                                        } catch (NumberFormatException e) {
+                                                            System.out.println("Please try again and enter a number.");
+                                                            break OUTER_6;
+                                                        }
+                                                        break OUTER_6;
+                                                    case 2:
+                                                        System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                        System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                        try {
+                                                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                            if(player.equipment[tempa] != null){
+                                                                System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                                player.equipment[tempa].getStats();
+                                                            }
+                                                            else{
+                                                                System.out.println("You do not have an item in that slot. Please try again.");
+                                                            }
+                                                        } catch (NumberFormatException e) {
+                                                            System.out.println("Please try again and enter a number.");
+                                                            break OUTER_6;
+                                                        }
+                                                        break OUTER_6;
+                                                    default:
+                                                        System.out.println("Please try again and enter a valid answer.");
+                                                        break;
+                                                }
+                                            }catch(NumberFormatException e){
+                                                System.out.println("Please try again and enter a number.");
+                                                break;
+                                            }
+                                            break;
                                          case "stats":
+                                         case "s":
                                              player.showStats();
                                              break;
                                          case "combat help":
@@ -1441,15 +1933,46 @@ public class HOD_GAME {
                              break;
                          case 1:
                              a2_enemy.getEnemy2();
+                             int turnsAway = rand.nextInt(3);
                              System.out.println("\n\n----------------------------F I G H T !!!----------------------------");
                              System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
                              OUTER:
                              while (true) {
+                                 if(turnsAway > 0)
+                                        {
+                                            System.out.println("\n\n\tThe enemy is currently " + turnsAway + " turn(s) away!\n\tNow's your chance for ranged attacks "
+                                                    + "(type \"ranged attack\"), or just type \"attack\" or \"a\" to charge the enemy straight on!\n\t"
+                                                    + "(all skills are considered ranged)\n\t(you can still identify enemy and/or manage items)");
+                                        }
                                  System.out.println("\nWhat will you do " + player.name + "?");
                                  input = scan.nextLine();
                                  OUTER_7:
                                  switch (input) {
+                                     case "ranged attack":
+                                     case "ra": 
+                                                if(turnsAway == 0 || turnsAway<0)
+                                                {
+                                                    System.out.println("\n\tThe enemy is within melee distance! You cannot use ranged attacks right now!");
+                                                }
+                                                else if(turnsAway > 0)
+                                                {
+                                                   try{
+                                        for (Items equipment : player.equipment) 
+                                        {
+                                            if (equipment.typeCheckRanged()) 
+                                            {
+                                                int dmg = rand.nextInt((player.stats[1]) + (player.stats[2]));
+                                                turnsAway--;
+                                                System.out.println("You deal " + dmg + " to the enemy from afar!\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                a1_enemy.enemyStats[1] -= dmg;
+                                                break;
+                                            } 
+                                        }
+                                                   }catch(NullPointerException e){System.out.println("\n\tYou don't have a ranged weapon in your equipment! You cannot do ranged attacks!");}
+                                                }
+                                                    break;
                                      case "attack":
+                                     case "a":
                                          if (player.stats[2]>=a2_enemy.enemyStats[3]) {
                                              int dmgDealt = rand.nextInt(player.stats[1]);
                                              int EdmgDealt = rand.nextInt(a2_enemy.enemyStats[2]);
@@ -1458,8 +1981,9 @@ public class HOD_GAME {
                                              if (a2_enemy.enemyStats[1]<0) {
                                                  System.out.println("ENEMY DEFEATED!!!");
                                                  System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                 a2_enemy.newEnemy2();
+                                                 a2_enemy.newEnemy2(player.getDiffNum());
                                                  player.stats[0] = MAX_HEALTH;
+                                                 player.skill.recharge();
                                                  break OUTER;
                                              }
                                              System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -1493,13 +2017,15 @@ public class HOD_GAME {
                                              if (a2_enemy.enemyStats[1]<0) {
                                                  System.out.println("ENEMY DEFEATED!!!");
                                                  System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                 a2_enemy.newEnemy2();
+                                                 a2_enemy.newEnemy2(player.getDiffNum());
                                                  player.stats[0] = MAX_HEALTH;
+                                                 player.skill.recharge();
                                                  break OUTER;
                                              }
                                          }
                                          break;
                                      case "identify":
+                                     case "i":
                                          if(player.stats[5]>=7)
                                          {
                                              System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
@@ -1509,13 +2035,41 @@ public class HOD_GAME {
                                          {
                                              System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
                                          }
+                                         if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                     }
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(a2_enemy.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
+                                                     }
                                          break;
                                      case "use skill":
+                                     case "us":
+                                         if(turnsAway > 0)
+                                                {
+                                                    System.out.println("\n\tEven though the enemy is " + turnsAway + " turn(s) away, you decide to face them right away!");
+                                                }
+                                                turnsAway = 0;
                                          if(player.skill.uses){
                                              if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                                  if (player.stats[2]>=a2_enemy.enemyStats[3]) {
                                                      int EdmgDealt = rand.nextInt(a2_enemy.enemyStats[2]);
-                                                     int HPgained = player.skill.use();
+                                                     int HPgained = player.skill.use(player.stats);
                                                      System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                                      player.stats[0] += HPgained;
                                                      System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -1531,7 +2085,7 @@ public class HOD_GAME {
                                                      }
                                                  }
                                                  if (player.stats[2]<a2_enemy.enemyStats[3]) {
-                                                     int HPgained = player.skill.use();
+                                                     int HPgained = player.skill.use(player.stats);
                                                      int EdmgDealt = rand.nextInt(a2_enemy.enemyStats[2]);
                                                      System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                      player.stats[0] -= EdmgDealt;
@@ -1550,14 +2104,14 @@ public class HOD_GAME {
                                              }
                                              else{
                                                  if (player.stats[2]>=a2_enemy.enemyStats[3]) {
-                                                     int dmgDealt = player.skill.use();
+                                                     int dmgDealt = player.skill.use(player.stats);
                                                      int EdmgDealt = rand.nextInt(a2_enemy.enemyStats[2]);
                                                      System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                                      a2_enemy.enemyStats[1] -= dmgDealt;
                                                      if (a2_enemy.enemyStats[1]<0) {
                                                          System.out.println("ENEMY DEFEATED!!!");
                                                          System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                         a2_enemy.newEnemy();
+                                                         a2_enemy.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
                                                          break OUTER;
@@ -1575,7 +2129,7 @@ public class HOD_GAME {
                                                      }
                                                  }
                                                  if (player.stats[2]<a2_enemy.enemyStats[3]) {
-                                                     int dmgDealt = player.skill.use();
+                                                     int dmgDealt = player.skill.use(player.stats);
                                                      int EdmgDealt = rand.nextInt(a2_enemy.enemyStats[2]);
                                                      System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                      player.stats[0] -= EdmgDealt;
@@ -1593,7 +2147,7 @@ public class HOD_GAME {
                                                      if (a2_enemy.enemyStats[1]<0) {
                                                          System.out.println("ENEMY DEFEATED!!!");
                                                          System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                         a2_enemy.newEnemy();
+                                                         a2_enemy.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
                                                          break OUTER;
@@ -1605,81 +2159,117 @@ public class HOD_GAME {
                                              System.out.println("You cannot use that skill again this battle!");
                                          break;
                                      case "skill info":
+                                     case "si":
                                          System.out.println("\t"+player.skill.getSkillInfo());
                                          break;
                                      case "equipment":
+                                     case"se":
                                          System.out.println(Arrays.toString(player.equipment));
                                          break;
                                      case "bag":
+                                     case "b":
                                          System.out.println(Arrays.toString(player.inventory));
                                          break;
                                      case "use":
+                                     case "u":
                                          System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
                                          System.out.println("\t" + Arrays.toString(player.inventory));
                                          try{
                                              int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                             if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
-                                                 System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                 player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                 player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                             if(tempa < player.inventory.length){
+                                                if(player.inventory[tempa] != null){
+                                                    if(player.inventory[tempa].typeCheckConsumable()){
+                                                        System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                        player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                        player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                    }
+                                                    else
+                                                        System.out.println("That is not a usable item.");
+                                                }
+                                                else
+                                                 System.out.println("You do not have an item in that slot.");
                                              }
                                              else
-                                                 System.out.println("That is not a usable item or you do not have an item in that slot.");
+                                                 System.out.println("You do not have an item in that slot.");
                                          }
                                          catch(NumberFormatException e){
                                              System.out.println("Please enter a number.");
                                              break;
                                          }
-                                         break;
-                                     case "item stats":
-                                         System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
-                                         try {
-                                             int temp = Integer.parseInt(scan.nextLine());
-                                             switch (temp) {
-                                                 case 1:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tBag: " + Arrays.toString(player.inventory));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.inventory[tempa] != null){
-                                                             System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                                             player.inventory[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_7;
+                                         if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
                                                      }
-                                                     break OUTER_7;
-                                                 case 2:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.equipment[tempa] != null){
-                                                             System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                                             player.equipment[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_7;
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(a2_enemy.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
                                                      }
-                                                     break OUTER_7;
-                                                 default:
-                                                     System.out.println("Please try again and enter a valid answer.");
-                                                     break;
-                                             }
-                                         }catch(NumberFormatException e){
-                                             System.out.println("Please try again and enter a number.");
-                                             break;
-                                         }
                                          break;
+                                    case "item stats":
+                                    case "is":
+                                        System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                        try {
+                                            int temp = Integer.parseInt(scan.nextLine());
+                                            switch (temp) {
+                                                case 1:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.inventory[tempa] != null){
+                                                            System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                            player.inventory[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_7;
+                                                    }
+                                                    break OUTER_7;
+                                                case 2:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.equipment[tempa] != null){
+                                                            System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                            player.equipment[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_7;
+                                                    }
+                                                    break OUTER_7;
+                                                default:
+                                                    System.out.println("Please try again and enter a valid answer.");
+                                                    break;
+                                            }
+                                        }catch(NumberFormatException e){
+                                            System.out.println("Please try again and enter a number.");
+                                            break;
+                                        }
+                                        break;
                                      case "stats":
+                                     case "s":
                                          player.showStats();
                                          break;
                                      case "combat help":
@@ -1720,16 +2310,72 @@ public class HOD_GAME {
                              } //CHEST END
                              break;
                          case 3:
-                             Enemy bigBoi = new Enemy(100, 1, 100, 1, 1, 1, 1, 1);
+                             int mod = 1;
+                                    switch (player.getDiffNum()) {
+                                        case 1:
+                                            {
+                                                mod = 1;
+                                                break;
+                                            }
+                                        case 2:
+                                            {
+                                                mod = 2;
+                                                break;
+                                            }
+                                        case 3:
+                                            {
+                                                mod = 3;
+                                                break;
+                                            }
+                                        case 4:
+                                            {
+                                                mod = 4;
+                                                break;
+                                            }
+                                        default:
+                                            break;
+                                    }
+                             Enemy bigBoi = new Enemy(100 * mod, 50 * mod, 15 * mod, 15, 15, 15, 15, 15);
+                             turnsAway = 2;
                              System.out.println("\n\n----------------------------I T ' S   B O S S   T I M E   B O i S----------------------------");
                              System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
                              OUTER:
                              while (true) {
+                                 if(turnsAway > 0)
+                                        {
+                                            System.out.println("\n\n\tThe enemy is currently " + turnsAway + " turn(s) away!\n\tNow's your chance for ranged attacks "
+                                                    + "(type \"ranged attack\"), or just type \"attack\" or \"a\" to charge the enemy straight on!\n\t"
+                                                    + "(all skills are considered ranged)\n\t(you can still identify enemy and/or manage items)");
+                                        }
                                  System.out.println("\nWhat will you do " + player.name + "?");
                                  input = scan.nextLine();
                                  OUTER_8:
                                  switch (input) {
+                                     case "ranged attack":
+                                     case "ra": 
+                                                if(turnsAway == 0 || turnsAway<0)
+                                                {
+                                                    System.out.println("\n\tThe enemy is within melee distance! You cannot use ranged attacks right now!");
+                                                }
+                                                else if(turnsAway > 0)
+                                                {
+                                                   try{
+                                        for (Items equipment : player.equipment) 
+                                        {
+                                            if (equipment.typeCheckRanged())  
+                                            {
+                                                int dmg = rand.nextInt((player.stats[1]) + (player.stats[2]));
+                                                turnsAway--;
+                                                System.out.println("You deal " + dmg + " to the enemy from afar!\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                a1_enemy.enemyStats[1] -= dmg;
+                                                break;
+                                            } 
+                                        }
+                                                   }catch(NullPointerException e){System.out.println("\n\tYou don't have a ranged weapon in your equipment! You cannot do ranged attacks!");}
+                                                }
+                                                    break;
                                      case "attack":
+                                     case "a":
                                          if (player.stats[2]>=bigBoi.enemyStats[3]) {
                                              int dmgDealt = rand.nextInt(player.stats[1]);
                                              int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
@@ -1740,6 +2386,7 @@ public class HOD_GAME {
                                                  System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
                                                  bigBoi.enemyStats[1] = 100;
                                                  player.stats[0] = MAX_HEALTH;
+                                                 player.skill.recharge();
                                                  break OUTER;
                                              }
                                              System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -1775,11 +2422,13 @@ public class HOD_GAME {
                                                  System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
                                                  bigBoi.enemyStats[1] = 100;
                                                  player.stats[0] = MAX_HEALTH;
+                                                 player.skill.recharge();
                                                  break OUTER;
                                              }
                                          }
                                          break;
                                      case "identify":
+                                     case "i":
                                          if(player.stats[5]>=7)
                                          {
                                              System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
@@ -1789,13 +2438,41 @@ public class HOD_GAME {
                                          {
                                              System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
                                          }
+                                         if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                     }
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
+                                                     }
                                          break;
                                      case "use skill":
+                                     case "us":
+                                         if(turnsAway > 0)
+                                                {
+                                                    System.out.println("\n\tEven though the enemy is " + turnsAway + " turn(s) away, you decide to face them right away!");
+                                                }
+                                                turnsAway = 0;
                                          if(player.skill.uses){
                                              if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                                  if (player.stats[2]>=bigBoi.enemyStats[3]) {
                                                      int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
-                                                     int HPgained = player.skill.use();
+                                                     int HPgained = player.skill.use(player.stats);
                                                      System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                                      player.stats[0] += HPgained;
                                                      System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -1811,7 +2488,7 @@ public class HOD_GAME {
                                                      }
                                                  }
                                                  if (player.stats[2]<bigBoi.enemyStats[3]) {
-                                                     int HPgained = player.skill.use();
+                                                     int HPgained = player.skill.use(player.stats);
                                                      int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
                                                      System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                      player.stats[0] -= EdmgDealt;
@@ -1830,14 +2507,14 @@ public class HOD_GAME {
                                              }
                                              else{
                                                  if (player.stats[2]>=bigBoi.enemyStats[3]) {
-                                                     int dmgDealt = player.skill.use();
+                                                     int dmgDealt = player.skill.use(player.stats);
                                                      int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
                                                      System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                                      bigBoi.enemyStats[1] -= dmgDealt;
                                                      if (bigBoi.enemyStats[1]<0) {
                                                          System.out.println("ENEMY DEFEATED!!!");
                                                          System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
-                                                         bigBoi.newEnemy();
+                                                         bigBoi.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
                                                          break OUTER;
@@ -1855,7 +2532,7 @@ public class HOD_GAME {
                                                      }
                                                  }
                                                  if (player.stats[2]<bigBoi.enemyStats[3]) {
-                                                     int dmgDealt = player.skill.use();
+                                                     int dmgDealt = player.skill.use(player.stats);
                                                      int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
                                                      System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                      player.stats[0] -= EdmgDealt;
@@ -1873,7 +2550,7 @@ public class HOD_GAME {
                                                      if (bigBoi.enemyStats[1]<0) {
                                                          System.out.println("ENEMY DEFEATED!!!");
                                                          System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
-                                                         bigBoi.newEnemy();
+                                                         bigBoi.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
                                                          break OUTER;
@@ -1885,81 +2562,117 @@ public class HOD_GAME {
                                              System.out.println("You cannot use that skill again this battle!");
                                          break;
                                      case "skill info":
+                                     case "si":
                                          System.out.println("\t"+player.skill.getSkillInfo());
                                          break;
                                      case "equipment":
+                                     case"se":
                                          System.out.println(Arrays.toString(player.equipment));
                                          break;
                                      case "bag":
+                                     case "b":
                                          System.out.println(Arrays.toString(player.inventory));
                                          break;
                                      case "use":
+                                     case "u":
                                          System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
                                          System.out.println("\t" + Arrays.toString(player.inventory));
                                          try{
                                              int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                             if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
-                                                 System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                 player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                 player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                             if(tempa < player.inventory.length){
+                                                if(player.inventory[tempa] != null){
+                                                    if(player.inventory[tempa].typeCheckConsumable()){
+                                                        System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                        player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                        player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                    }
+                                                    else
+                                                        System.out.println("That is not a usable item.");
+                                                }
+                                                else
+                                                 System.out.println("You do not have an item in that slot.");
                                              }
                                              else
-                                                 System.out.println("That is not a usable item or you do not have an item in that slot.");
+                                                 System.out.println("You do not have an item in that slot.");
                                          }
                                          catch(NumberFormatException e){
                                              System.out.println("Please enter a number.");
                                              break;
                                          }
-                                         break;
-                                     case "item stats":
-                                         System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
-                                         try {
-                                             int temp = Integer.parseInt(scan.nextLine());
-                                             switch (temp) {
-                                                 case 1:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tBag: " + Arrays.toString(player.inventory));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.inventory[tempa] != null){
-                                                             System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                                             player.inventory[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_8;
+                                         if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
                                                      }
-                                                     break OUTER_8;
-                                                 case 2:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.equipment[tempa] != null){
-                                                             System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                                             player.equipment[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_8;
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
                                                      }
-                                                     break OUTER_8;
-                                                 default:
-                                                     System.out.println("Please try again and enter a valid answer.");
-                                                     break;
-                                             }
-                                         }catch(NumberFormatException e){
-                                             System.out.println("Please try again and enter a number.");
-                                             break;
-                                         }
                                          break;
+                                    case "item stats":
+                                    case "is":
+                                        System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                        try {
+                                            int temp = Integer.parseInt(scan.nextLine());
+                                            switch (temp) {
+                                                case 1:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.inventory[tempa] != null){
+                                                            System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                            player.inventory[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_8;
+                                                    }
+                                                    break OUTER_8;
+                                                case 2:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.equipment[tempa] != null){
+                                                            System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                            player.equipment[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_8;
+                                                    }
+                                                    break OUTER_8;
+                                                default:
+                                                    System.out.println("Please try again and enter a valid answer.");
+                                                    break;
+                                            }
+                                        }catch(NumberFormatException e){
+                                            System.out.println("Please try again and enter a number.");
+                                            break;
+                                        }
+                                        break;
                                      case "stats":
+                                     case "s":
                                          player.showStats();
                                          break;
                                      case "combat help":
@@ -1983,12 +2696,15 @@ public class HOD_GAME {
                      } // AREA GET DATA END
                      break;
                  case "equipment":
+                 case"se":
                      System.out.println(Arrays.toString(player.equipment));
                      break;
                  case "bag":
+                 case "b":
                      System.out.println(Arrays.toString(player.inventory));
                      break;
                  case "drop":
+                 case "d":
                      System.out.println("From where would you like to drop something?\n\t1. Bag\n\t2. Equipment");
                      try {
                          int temp = Integer.parseInt(scan.nextLine());
@@ -1998,11 +2714,16 @@ public class HOD_GAME {
                                  System.out.println("\t" + Arrays.toString(player.inventory));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if (player.inventory[tempa] != null) {
-                                         System.out.println("You dropped your " + player.inventory[tempa].name + ".");
-                                         player.inventory = player.inventory[tempa].dropInventory(player.inventory);
-                                         break OUTER_9;
-                                     } else {
+                                     if(tempa < player.inventory.length){
+                                        if (player.inventory[tempa] != null) {
+                                            System.out.println("You dropped your " + player.inventory[tempa].name + ".");
+                                            player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                            break OUTER_9;
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
+                                     }
+                                     else {
                                          System.out.println("You do not have an item in that slot. Please try again.");
                                      }
                                  } catch (NumberFormatException e) {
@@ -2015,12 +2736,17 @@ public class HOD_GAME {
                                  System.out.println("\t" + Arrays.toString(player.equipment));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if (player.equipment[tempa] != null) {
-                                         System.out.println("You dropped your " + player.equipment[tempa].name + ".");
-                                         player.stats = player.equipment[tempa].SUBstats(player.stats);
-                                         player.equipment = player.equipment[tempa].dropEquipment(player.equipment);
-                                         break OUTER_9;
-                                     } else {
+                                     if(tempa < player.equipment.length){
+                                        if (player.equipment[tempa] != null) {
+                                            System.out.println("You dropped your " + player.equipment[tempa].name + ".");
+                                            player.stats = player.equipment[tempa].SUBstats(player.stats);
+                                            player.equipment = player.equipment[tempa].dropEquipment(player.equipment);
+                                            break OUTER_9;
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
+                                     }
+                                     else {
                                          System.out.println("You do not have an item in that slot. Please try again.");
                                      }
                                  } catch (NumberFormatException e) {
@@ -2038,59 +2764,88 @@ public class HOD_GAME {
                      }
                      break;
                  case "equip":
-                     System.out.println("What item did you want to equip from your bag? Type 1 for first item, 2 for second, and so on.");
-                     System.out.println("\t" + Arrays.toString(player.inventory));
-                     try{
-                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                         if(player.inventory[tempa] != null){
-                             System.out.println("You equipped your " + player.inventory[tempa].name + ".");
-                             player.stats = player.inventory[tempa].ADDstats(player.stats);
-                             Items[][] temp = player.inventory[tempa].equip(player.inventory, player.equipment);
-                             player.inventory = temp[0];
-                             player.equipment = temp[1];
-                             break;
-                         }
-                         else
-                             System.out.println("You do not have an equipped item in that slot.");
-                     }
-                     catch(NumberFormatException e){
-                         System.out.println("Please enter a number.");
-                         break;
-                     }
-                     break;
-                 case "unequip":
-                     System.out.println("What item did you want to unequip from your equipment? Type 1 for first item, 2 for second, and so on.");
-                     System.out.println("\t" + Arrays.toString(player.equipment));
-                     try{
-                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                         if(player.equipment[tempa] != null){
-                             System.out.println("You unequipped your " + player.equipment[tempa].name + ".");
-                             player.stats = player.equipment[tempa].SUBstats(player.stats);
-                             Items[][] temp = player.equipment[tempa].unequip(player.inventory, player.equipment);
-                             player.inventory = temp[0];
-                             player.equipment = temp[1];
-                             break;
-                         }
-                         else
-                             System.out.println("You do not have an equipped item in that slot.");
-                     }
-                     catch(NumberFormatException e){
-                         System.out.println("Please enter a number.");
-                         break;
-                     }
-                     break;
+                 case "e":
+                    if(!dummy.isFull(player.equipment)){
+                        System.out.println("What item did you want to equip from your bag? Type 1 for first item, 2 for second, and so on.");
+                        System.out.println("\t" + Arrays.toString(player.inventory));
+                        try{
+                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                            if(tempa < player.inventory.length){
+                                if(player.inventory[tempa] != null){
+                                    System.out.println("You equipped your " + player.inventory[tempa].name + ".");
+                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                    Items[][] temp = player.inventory[tempa].equip(player.inventory, player.equipment);
+                                    player.inventory = temp[0];
+                                    player.equipment = temp[1];
+                                    break;
+                                }
+                                else
+                                    System.out.println("You do not have an item in that slot.");
+                            }
+                            else
+                                System.out.println("You do not have an equipped item in that slot.");
+                        }
+                        catch(NumberFormatException e){
+                            System.out.println("Please enter a number.");
+                            break;
+                        }
+                        break;
+                    }
+                    else
+                        System.out.println("Your equipment is full! You can't equip an item.");
+                    break;
+                case "unequip":
+                case "ue":
+                    if(!dummy.isFull(player.inventory)){
+                        System.out.println("What item did you want to unequip from your equipment? Type 1 for first item, 2 for second, and so on.");
+                        System.out.println("\t" + Arrays.toString(player.equipment));
+                        try{
+                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                            if(tempa < player.equipment.length){
+                                if(player.equipment[tempa] != null){
+                                    System.out.println("You unequipped your " + player.equipment[tempa].name + ".");
+                                    player.stats = player.equipment[tempa].SUBstats(player.stats);
+                                    Items[][] temp = player.equipment[tempa].unequip(player.inventory, player.equipment);
+                                    player.inventory = temp[0];
+                                    player.equipment = temp[1];
+                                    break;
+                                }
+                                else
+                                    System.out.println("You do not have an item in that slot.");
+                            }
+                            else
+                                System.out.println("You do not have an equipped item in that slot.");
+                        }
+                        catch(NumberFormatException e){
+                            System.out.println("Please enter a number.");
+                            break;
+                        }
+                        break;
+                    }
+                  else
+                    System.out.println("Your bag is full! You can't unequip an item.");
+                  break;
                  case "use":
+                 case "u":
                      System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
                      System.out.println("\t" + Arrays.toString(player.inventory));
                      try{
                          int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                         if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
-                             System.out.println("You use " + player.inventory[tempa].name + ".");
-                             player.stats = player.inventory[tempa].ADDstats(player.stats);
-                             player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                         if(tempa < player.inventory.length){
+                            if(player.inventory[tempa] != null){
+                                if(player.inventory[tempa].typeCheckConsumable()){
+                                    System.out.println("You use " + player.inventory[tempa].name + ".");
+                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                    player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                }
+                                else
+                                    System.out.println("That is not a usable item.");
+                            }
+                            else
+                                System.out.println("You do not have an item in that slot.");
                          }
                          else
-                             System.out.println("That is not a usable item or you do not have an item in that slot.");
+                             System.out.println("You do not have an item in that slot.");
                      }
                      catch(NumberFormatException e){
                          System.out.println("Please enter a number.");
@@ -2098,6 +2853,7 @@ public class HOD_GAME {
                      }
                      break;
                  case "item stats":
+                 case "is":
                      System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
                      try {
                          int temp = Integer.parseInt(scan.nextLine());
@@ -2107,9 +2863,13 @@ public class HOD_GAME {
                                  System.out.println("\tBag: " + Arrays.toString(player.inventory));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if(player.inventory[tempa] != null){
-                                         System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                         player.inventory[tempa].getStats();
+                                     if(tempa < player.inventory.length){
+                                        if(player.inventory[tempa] != null){
+                                            System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                            player.inventory[tempa].getStats();
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
                                      }
                                      else{
                                          System.out.println("You do not have an item in that slot. Please try again.");
@@ -2124,9 +2884,13 @@ public class HOD_GAME {
                                  System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if(player.equipment[tempa] != null){
-                                         System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                         player.equipment[tempa].getStats();
+                                     if(tempa < player.equipment.length){
+                                        if(player.equipment[tempa] != null){
+                                            System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                            player.equipment[tempa].getStats();
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
                                      }
                                      else{
                                          System.out.println("You do not have an item in that slot. Please try again.");
@@ -2146,9 +2910,11 @@ public class HOD_GAME {
                      }
                      break;
                  case "stats":
+                 case "s":
                      player.showStats();
                      break;
                  case "skill info":
+                 case "si":
                      System.out.println("\t"+player.skill.getSkillInfo());
                      break;
                  default:
@@ -2174,7 +2940,7 @@ public class HOD_GAME {
                Area area3_pp = area3;
                Chest area3_chest = new Chest();
                Enemy a3_enemy = new Enemy(1, 1, 1, 1, 1, 1, 1, 1);
-               a3_enemy.newEnemy3();
+               a3_enemy.newEnemy3(player.getDiffNum());
           /////////////////////////////AREA 3 CREATION////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2194,6 +2960,7 @@ public class HOD_GAME {
                      player.help();
                      break;
                  case "forward":
+                 case "f":
                      area3_pp = area3_pp.getForeLink();
                      System.out.println(area3_pp.getData());
                      switch (area3_pp.getData()) {
@@ -2219,15 +2986,46 @@ public class HOD_GAME {
                              else if(area3_encounter == 3332)
                              {
                                  Enemy Hellish_Abomination = new Enemy(100, 200, 25, 25, 25, 25, 25, 0);
+                                 int turnsAway = 2;
                                  System.out.println("\n\n----------------------------F I G H T !!!----------------------------");
                                  System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
                                  OUTER:
                                  while (true) {
+                                     if(turnsAway > 0)
+                                        {
+                                            System.out.println("\n\n\tThe enemy is currently " + turnsAway + " turn(s) away!\n\tNow's your chance for ranged attacks "
+                                                    + "(type \"ranged attack\"), or just type \"attack\" or \"a\" to charge the enemy straight on!\n\t"
+                                                    + "(all skills are considered ranged)\n\t(you can still identify enemy and/or manage items)");
+                                        }
                                      System.out.println("\nWhat will you do " + player.name + "?");
                                      input = scan.nextLine();
                                      OUTER_11:
                                      switch (input) {
+                                         case "ranged attack":
+                                         case "ra": 
+                                                if(turnsAway == 0 || turnsAway<0)
+                                                {
+                                                    System.out.println("\n\tThe enemy is within melee distance! You cannot use ranged attacks right now!");
+                                                }
+                                                else if(turnsAway > 0)
+                                                {
+                                                   try{
+                                        for (Items equipment : player.equipment) 
+                                        {
+                                            if (equipment.typeCheckRanged())  
+                                            {
+                                                int dmg = rand.nextInt((player.stats[1]) + (player.stats[2]));
+                                                turnsAway--;
+                                                System.out.println("You deal " + dmg + " to the enemy from afar!\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                a1_enemy.enemyStats[1] -= dmg;
+                                                break;
+                                            } 
+                                        }
+                                                   }catch(NullPointerException e){System.out.println("\n\tYou don't have a ranged weapon in your equipment! You cannot do ranged attacks!");}
+                                                }
+                                                    break;
                                          case "attack":
+                                         case "a":
                                              if (player.stats[2]>=Hellish_Abomination.enemyStats[3]) {
                                                  int dmgDealt = rand.nextInt(player.stats[1]);
                                                  int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
@@ -2284,6 +3082,7 @@ public class HOD_GAME {
                                              }
                                              break;
                                          case "identify":
+                                         case "i":
                                              if(player.stats[5]>=7)
                                              {
                                                  System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
@@ -2293,13 +3092,41 @@ public class HOD_GAME {
                                              {
                                                  System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
                                              }
+                                             if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                     }
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
+                                                     }
                                              break;
                                          case "use skill":
+                                         case "us":
+                                             if(turnsAway > 0)
+                                                {
+                                                    System.out.println("\n\tEven though the enemy is " + turnsAway + " turn(s) away, you decide to face them right away!");
+                                                }
+                                                turnsAway = 0;
                                              if(player.skill.uses){
                                                  if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                                      if (player.stats[2]>=Hellish_Abomination.enemyStats[3]) {
                                                          int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
-                                                         int HPgained = player.skill.use();
+                                                         int HPgained = player.skill.use(player.stats);
                                                          System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                                          player.stats[0] += HPgained;
                                                          System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -2314,7 +3141,7 @@ public class HOD_GAME {
                                                          }
                                                      }
                                                      if (player.stats[2]<Hellish_Abomination.enemyStats[3]) {
-                                                         int HPgained = player.skill.use();
+                                                         int HPgained = player.skill.use(player.stats);
                                                          int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
                                                          System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                          player.stats[0] -= EdmgDealt;
@@ -2332,7 +3159,7 @@ public class HOD_GAME {
                                                  }
                                                  else{
                                                      if (player.stats[2]>=Hellish_Abomination.enemyStats[3]) {
-                                                         int dmgDealt = player.skill.use();
+                                                         int dmgDealt = player.skill.use(player.stats);
                                                          int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
                                                          System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                                          Hellish_Abomination.enemyStats[1] -= dmgDealt;
@@ -2359,7 +3186,7 @@ public class HOD_GAME {
                                                          }
                                                      }
                                                      if (player.stats[2]<Hellish_Abomination.enemyStats[3]) {
-                                                         int dmgDealt = player.skill.use();
+                                                         int dmgDealt = player.skill.use(player.stats);
                                                          int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
                                                          System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                          player.stats[0] -= EdmgDealt;
@@ -2391,78 +3218,117 @@ public class HOD_GAME {
                                                  System.out.println("You cannot use that skill again this battle!");
                                              break;
                                          case "skill info":
+                                         case "si":
                                              System.out.println("\t"+player.skill.getSkillInfo());
                                              break;
                                          case "equipment":
+                                         case"se":
                                              System.out.println(Arrays.toString(player.equipment));
                                              break;
                                          case "bag":
+                                         case "b":
                                              System.out.println(Arrays.toString(player.inventory));
                                              break;
                                          case "use":
+                                         case "u":
                                              System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
                                              System.out.println("\t" + Arrays.toString(player.inventory));
                                              try{
                                                  int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                 if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
-                                                     System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                     player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                     player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                 if(tempa < player.inventory.length){
+                                                    if(player.inventory[tempa] != null){
+                                                        if(player.inventory[tempa].typeCheckConsumable()){
+                                                            System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                            player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                            player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                        }
+                                                        else
+                                                            System.out.println("That is not a usable item.");
+                                                    }
+                                                    else
+                                                     System.out.println("You do not have an item in that slot.");
                                                  }
                                                  else
-                                                     System.out.println("That is not a usable item or you do not have an item in that slot.");
+                                                     System.out.println("You do not have an item in that slot.");
                                              }
                                              catch(NumberFormatException e){
                                                  System.out.println("Please enter a number.");
                                                  break;
                                              }
+                                             if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                     }
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(Hellish_Abomination.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
+                                                     }
                                              break;
-                                         case "item stats":
-                                             System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
-                                             try {
-                                                 int temp = Integer.parseInt(scan.nextLine());
-                                                 switch (temp) {
-                                                     case 1:
-                                                         System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                         System.out.println("\tBag: " + Arrays.toString(player.inventory));
-                                                         try {
-                                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                             if(player.inventory[tempa] != null){
-                                                                 System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                                                 player.inventory[tempa].getStats();
-                                                             }
-                                                             else{
-                                                                 System.out.println("You do not have an item in that slot. Please try again.");
-                                                             }   } catch (NumberFormatException e) {
-                                                                 System.out.println("Please try again and enter a number.");
-                                                                 break OUTER_11;
-                                                             }
-                                                         break OUTER_11;
-                                                     case 2:
-                                                         System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                         System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
-                                                         try {
-                                                             int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                             if(player.equipment[tempa] != null){
-                                                                 System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                                                 player.equipment[tempa].getStats();
-                                                             }
-                                                             else{
-                                                                 System.out.println("You do not have an item in that slot. Please try again.");
-                                                             }   } catch (NumberFormatException e) {
-                                                                 System.out.println("Please try again and enter a number.");
-                                                                 break OUTER_11;
-                                                             }
-                                                         break OUTER_11;
-                                                     default:
-                                                         System.out.println("Please try again and enter a valid answer.");
-                                                         break;
-                                                 }
-                                             }catch(NumberFormatException e){
-                                                 System.out.println("Please try again and enter a number.");
-                                                 break;
-                                             }   break;
+                                        case "item stats":
+                                        case "is":
+                                            System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                            try {
+                                                int temp = Integer.parseInt(scan.nextLine());
+                                                switch (temp) {
+                                                    case 1:
+                                                        System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                        System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                        try {
+                                                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                            if(player.inventory[tempa] != null){
+                                                                System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                                player.inventory[tempa].getStats();
+                                                            }
+                                                            else{
+                                                                System.out.println("You do not have an item in that slot. Please try again.");
+                                                            }
+                                                        } catch (NumberFormatException e) {
+                                                            System.out.println("Please try again and enter a number.");
+                                                            break OUTER_11;
+                                                        }
+                                                        break OUTER_11;
+                                                    case 2:
+                                                        System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                        System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                        try {
+                                                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                            if(player.equipment[tempa] != null){
+                                                                System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                                player.equipment[tempa].getStats();
+                                                            }
+                                                            else{
+                                                                System.out.println("You do not have an item in that slot. Please try again.");
+                                                            }
+                                                        } catch (NumberFormatException e) {
+                                                            System.out.println("Please try again and enter a number.");
+                                                            break OUTER_11;
+                                                        }
+                                                        break OUTER_11;
+                                                    default:
+                                                        System.out.println("Please try again and enter a valid answer.");
+                                                        break;
+                                                }
+                                            }catch(NumberFormatException e){
+                                                System.out.println("Please try again and enter a number.");
+                                                break;
+                                            }
+                                            break;
                                          case "stats":
+                                         case "s":
                                              player.showStats();
                                              break;
                                          case "combat help":
@@ -2477,15 +3343,46 @@ public class HOD_GAME {
                              break;
                          case 1:
                              a3_enemy.getEnemy3();
+                             int turnsAway = rand.nextInt(3);
                              System.out.println("\n\n----------------------------F I G H T !!!----------------------------");
                              System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
                              OUTER:
                              while (true) {
+                                 if(turnsAway > 0)
+                                        {
+                                            System.out.println("\n\n\tThe enemy is currently " + turnsAway + " turn(s) away!\n\tNow's your chance for ranged attacks "
+                                                    + "(type \"ranged attack\"), or just type \"attack\" or \"a\" to charge the enemy straight on!\n\t"
+                                                    + "(all skills are considered ranged)\n\t(you can still identify enemy and/or manage items)");
+                                        }
                                  System.out.println("\nWhat will you do " + player.name + "?");
                                  input = scan.nextLine();
                                  OUTER_12:
                                  switch (input) {
+                                     case "ranged attack":
+                                     case "ra": 
+                                                if(turnsAway == 0 || turnsAway<0)
+                                                {
+                                                    System.out.println("\n\tThe enemy is within melee distance! You cannot use ranged attacks right now!");
+                                                }
+                                                else if(turnsAway > 0)
+                                                {
+                                                   try{
+                                        for (Items equipment : player.equipment) 
+                                        {
+                                            if (equipment.typeCheckRanged()) 
+                                            {
+                                                int dmg = rand.nextInt((player.stats[1]) + (player.stats[2]));
+                                                turnsAway--;
+                                                System.out.println("You deal " + dmg + " to the enemy from afar!\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                a1_enemy.enemyStats[1] -= dmg;
+                                                break;
+                                            } 
+                                        }
+                                                   }catch(NullPointerException e){System.out.println("\n\tYou don't have a ranged weapon in your equipment! You cannot do ranged attacks!");}
+                                                }
+                                                    break;
                                      case "attack":
+                                     case "a":
                                          if (player.stats[2]>=a3_enemy.enemyStats[3]) {
                                              int dmgDealt = rand.nextInt(player.stats[1]);
                                              int EdmgDealt = rand.nextInt(a3_enemy.enemyStats[2]);
@@ -2494,8 +3391,9 @@ public class HOD_GAME {
                                              if (a3_enemy.enemyStats[1]<0) {
                                                  System.out.println("ENEMY DEFEATED!!!");
                                                  System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                 a3_enemy.newEnemy3();
+                                                 a3_enemy.newEnemy3(player.getDiffNum());
                                                  player.stats[0] = MAX_HEALTH;
+                                                 player.skill.recharge();
                                                  break OUTER;
                                              }
                                              System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -2527,13 +3425,15 @@ public class HOD_GAME {
                                              if (a3_enemy.enemyStats[1]<0) {
                                                  System.out.println("ENEMY DEFEATED!!!");
                                                  System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                 a3_enemy.newEnemy3();
+                                                 a3_enemy.newEnemy3(player.getDiffNum());
                                                  player.stats[0] = MAX_HEALTH;
+                                                 player.skill.recharge();
                                                  break OUTER;
                                              }
                                          }
                                          break;
                                      case "identify":
+                                     case "i":
                                          if(player.stats[5]>=7)
                                          {
                                              System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
@@ -2543,13 +3443,41 @@ public class HOD_GAME {
                                          {
                                              System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
                                          }
+                                         if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                     }
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(a3_enemy.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
+                                                     }
                                          break;
                                      case "use skill":
+                                     case "us":
+                                         if(turnsAway > 0)
+                                                {
+                                                    System.out.println("\n\tEven though the enemy is " + turnsAway + " turn(s) away, you decide to face them right away!");
+                                                }
+                                                turnsAway = 0;
                                          if(player.skill.uses){
                                              if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                                  if (player.stats[2]>=a3_enemy.enemyStats[3]) {
                                                      int EdmgDealt = rand.nextInt(a3_enemy.enemyStats[2]);
-                                                     int HPgained = player.skill.use();
+                                                     int HPgained = player.skill.use(player.stats);
                                                      System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                                      player.stats[0] += HPgained;
                                                      System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -2564,7 +3492,7 @@ public class HOD_GAME {
                                                      }
                                                  }
                                                  if (player.stats[2]<a3_enemy.enemyStats[3]) {
-                                                     int HPgained = player.skill.use();
+                                                     int HPgained = player.skill.use(player.stats);
                                                      int EdmgDealt = rand.nextInt(a3_enemy.enemyStats[2]);
                                                      System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                      player.stats[0] -= EdmgDealt;
@@ -2582,14 +3510,14 @@ public class HOD_GAME {
                                              }
                                              else{
                                                  if (player.stats[2]>=a3_enemy.enemyStats[3]) {
-                                                     int dmgDealt = player.skill.use();
+                                                     int dmgDealt = player.skill.use(player.stats);
                                                      int EdmgDealt = rand.nextInt(a3_enemy.enemyStats[2]);
                                                      System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                                      a3_enemy.enemyStats[1] -= dmgDealt;
                                                      if (a3_enemy.enemyStats[1]<0) {
                                                          System.out.println("ENEMY DEFEATED!!!");
                                                          System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                         a3_enemy.newEnemy();
+                                                         a3_enemy.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
                                                          break OUTER;
@@ -2606,7 +3534,7 @@ public class HOD_GAME {
                                                      }
                                                  }
                                                  if (player.stats[2]<a3_enemy.enemyStats[3]) {
-                                                     int dmgDealt = player.skill.use();
+                                                     int dmgDealt = player.skill.use(player.stats);
                                                      int EdmgDealt = rand.nextInt(a3_enemy.enemyStats[2]);
                                                      System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                      player.stats[0] -= EdmgDealt;
@@ -2623,7 +3551,7 @@ public class HOD_GAME {
                                                      if (a3_enemy.enemyStats[1]<0) {
                                                          System.out.println("ENEMY DEFEATED!!!");
                                                          System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                         a3_enemy.newEnemy();
+                                                         a3_enemy.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
                                                          break OUTER;
@@ -2635,81 +3563,117 @@ public class HOD_GAME {
                                              System.out.println("You cannot use that skill again this battle!");
                                          break;
                                      case "skill info":
+                                     case "si":
                                          System.out.println("\t"+player.skill.getSkillInfo());
                                          break;
                                      case "equipment":
+                                     case"se":
                                          System.out.println(Arrays.toString(player.equipment));
                                          break;
                                      case "bag":
+                                     case "b":
                                          System.out.println(Arrays.toString(player.inventory));
                                          break;
                                      case "use":
+                                     case "u":
                                          System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
                                          System.out.println("\t" + Arrays.toString(player.inventory));
                                          try{
                                              int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                             if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
-                                                 System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                 player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                 player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                             if(tempa < player.inventory.length){
+                                                if(player.inventory[tempa] != null){
+                                                    if(player.inventory[tempa].typeCheckConsumable()){
+                                                        System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                        player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                        player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                    }
+                                                    else
+                                                        System.out.println("That is not a usable item.");
+                                                }
+                                                else
+                                                 System.out.println("You do not have an item in that slot.");
                                              }
                                              else
-                                                 System.out.println("That is not a usable item or you do not have an item in that slot.");
+                                                 System.out.println("You do not have an item in that slot.");
                                          }
                                          catch(NumberFormatException e){
                                              System.out.println("Please enter a number.");
                                              break;
                                          }
-                                         break;
-                                     case "item stats":
-                                         System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
-                                         try {
-                                             int temp = Integer.parseInt(scan.nextLine());
-                                             switch (temp) {
-                                                 case 1:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tBag: " + Arrays.toString(player.inventory));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.inventory[tempa] != null){
-                                                             System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                                             player.inventory[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_12;
+                                         if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
                                                      }
-                                                     break OUTER_12;
-                                                 case 2:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.equipment[tempa] != null){
-                                                             System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                                             player.equipment[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_12;
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(a3_enemy.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
                                                      }
-                                                     break OUTER_12;
-                                                 default:
-                                                     System.out.println("Please try again and enter a valid answer.");
-                                                     break;
-                                             }
-                                         }catch(NumberFormatException e){
-                                             System.out.println("Please try again and enter a number.");
-                                             break;
-                                         }
                                          break;
+                                    case "item stats":
+                                    case "is":
+                                        System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                        try {
+                                            int temp = Integer.parseInt(scan.nextLine());
+                                            switch (temp) {
+                                                case 1:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.inventory[tempa] != null){
+                                                            System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                            player.inventory[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_12;
+                                                    }
+                                                    break OUTER_12;
+                                                case 2:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.equipment[tempa] != null){
+                                                            System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                            player.equipment[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_12;
+                                                    }
+                                                    break OUTER_12;
+                                                default:
+                                                    System.out.println("Please try again and enter a valid answer.");
+                                                    break;
+                                            }
+                                        }catch(NumberFormatException e){
+                                            System.out.println("Please try again and enter a number.");
+                                            break;
+                                        }
+                                        break;
                                      case "stats":
+                                     case "s":
                                          player.showStats();
                                          break;
                                      case "combat help":
@@ -2750,16 +3714,72 @@ public class HOD_GAME {
                              } //CHEST END
                              break;
                          case 3:
-                             Enemy bigBoi = new Enemy(100, 1, 100, 1, 1, 1, 1, 1);
+                             int mod = 1;
+                                    switch (player.getDiffNum()) {
+                                        case 1:
+                                            {
+                                                mod = 1;
+                                                break;
+                                            }
+                                        case 2:
+                                            {
+                                                mod = 2;
+                                                break;
+                                            }
+                                        case 3:
+                                            {
+                                                mod = 3;
+                                                break;
+                                            }
+                                        case 4:
+                                            {
+                                                mod = 4;
+                                                break;
+                                            }
+                                        default:
+                                            break;
+                                    }
+                             Enemy bigBoi = new Enemy(100 * mod, 50 * mod, 15 * mod, 15, 15, 15, 15, 15);
+                             turnsAway = 2;
                              System.out.println("\n\n----------------------------I T ' S   B O S S   T I M E   B O i S----------------------------");
                              System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
                              OUTER:
                              while (true) {
+                                 if(turnsAway > 0)
+                                        {
+                                            System.out.println("\n\n\tThe enemy is currently " + turnsAway + " turn(s) away!\n\tNow's your chance for ranged attacks "
+                                                    + "(type \"ranged attack\"), or just type \"attack\" or \"a\" to charge the enemy straight on!\n\t"
+                                                    + "(all skills are considered ranged)\n\t(you can still identify enemy and/or manage items)");
+                                        }
                                  System.out.println("\nWhat will you do " + player.name + "?");
                                  input = scan.nextLine();
                                  OUTER_13:
                                  switch (input) {
+                                     case "ranged attack":
+                                     case "ra": 
+                                                if(turnsAway == 0 || turnsAway<0)
+                                                {
+                                                    System.out.println("\n\tThe enemy is within melee distance! You cannot use ranged attacks right now!");
+                                                }
+                                                else if(turnsAway > 0)
+                                                {
+                                                   try{
+                                        for (Items equipment : player.equipment) 
+                                        {
+                                            if (equipment.typeCheckRanged())  
+                                            {
+                                                int dmg = rand.nextInt((player.stats[1]) + (player.stats[2]));
+                                                turnsAway--;
+                                                System.out.println("You deal " + dmg + " to the enemy from afar!\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                a1_enemy.enemyStats[1] -= dmg;
+                                                break;
+                                            } 
+                                        }
+                                                   }catch(NullPointerException e){System.out.println("\n\tYou don't have a ranged weapon in your equipment! You cannot do ranged attacks!");}
+                                                }
+                                                    break;
                                      case "attack":
+                                     case "a":
                                          if (player.stats[2]>=bigBoi.enemyStats[3]) {
                                              int dmgDealt = rand.nextInt(player.stats[1]);
                                              int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
@@ -2770,6 +3790,7 @@ public class HOD_GAME {
                                                  System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
                                                  bigBoi.enemyStats[1] = 100;
                                                  player.stats[0] = MAX_HEALTH;
+                                                 player.skill.recharge();
                                                  break OUTER;
                                              }
                                              System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -2803,11 +3824,13 @@ public class HOD_GAME {
                                                  System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
                                                  bigBoi.enemyStats[1] = 100;
                                                  player.stats[0] = MAX_HEALTH;
+                                                 player.skill.recharge();
                                                  break OUTER;
                                              }
                                          }
                                          break;
                                      case "identify":
+                                     case "i":
                                          if(player.stats[5]>=7)
                                          {
                                              System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
@@ -2817,13 +3840,41 @@ public class HOD_GAME {
                                          {
                                              System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
                                          }
+                                         if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                     }
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
+                                                     }
                                          break;
                                      case "use skill":
+                                     case "us":
+                                         if(turnsAway > 0)
+                                                {
+                                                    System.out.println("\n\tEven though the enemy is " + turnsAway + " turn(s) away, you decide to face them right away!");
+                                                }
+                                                turnsAway = 0;
                                          if(player.skill.uses){
                                              if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                                  if (player.stats[2]>=bigBoi.enemyStats[3]) {
                                                      int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
-                                                     int HPgained = player.skill.use();
+                                                     int HPgained = player.skill.use(player.stats);
                                                      System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                                      player.stats[0] += HPgained;
                                                      System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -2838,7 +3889,7 @@ public class HOD_GAME {
                                                      }
                                                  }
                                                  if (player.stats[2]<bigBoi.enemyStats[3]) {
-                                                     int HPgained = player.skill.use();
+                                                     int HPgained = player.skill.use(player.stats);
                                                      int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
                                                      System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                      player.stats[0] -= EdmgDealt;
@@ -2856,14 +3907,14 @@ public class HOD_GAME {
                                              }
                                              else{
                                                  if (player.stats[2]>=bigBoi.enemyStats[3]) {
-                                                     int dmgDealt = player.skill.use();
+                                                     int dmgDealt = player.skill.use(player.stats);
                                                      int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
                                                      System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                                      bigBoi.enemyStats[1] -= dmgDealt;
                                                      if (bigBoi.enemyStats[1]<0) {
                                                          System.out.println("ENEMY DEFEATED!!!");
                                                          System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                         bigBoi.newEnemy();
+                                                         bigBoi.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
                                                          break OUTER;
@@ -2880,7 +3931,7 @@ public class HOD_GAME {
                                                      }
                                                  }
                                                  if (player.stats[2]<bigBoi.enemyStats[3]) {
-                                                     int dmgDealt = player.skill.use();
+                                                     int dmgDealt = player.skill.use(player.stats);
                                                      int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
                                                      System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                      player.stats[0] -= EdmgDealt;
@@ -2897,7 +3948,7 @@ public class HOD_GAME {
                                                      if (bigBoi.enemyStats[1]<0) {
                                                          System.out.println("ENEMY DEFEATED!!!");
                                                          System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                         bigBoi.newEnemy();
+                                                         bigBoi.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
                                                          break OUTER;
@@ -2909,81 +3960,117 @@ public class HOD_GAME {
                                              System.out.println("You cannot use that skill again this battle!");
                                          break;
                                      case "skill info":
+                                     case "si":
                                          System.out.println("\t"+player.skill.getSkillInfo());
                                          break;
                                      case "equipment":
+                                     case"se":
                                          System.out.println(Arrays.toString(player.equipment));
                                          break;
                                      case "bag":
+                                     case "b":
                                          System.out.println(Arrays.toString(player.inventory));
                                          break;
                                      case "use":
+                                     case "u":
                                          System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
                                          System.out.println("\t" + Arrays.toString(player.inventory));
                                          try{
                                              int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                             if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
-                                                 System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                 player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                 player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                             if(tempa < player.inventory.length){
+                                                if(player.inventory[tempa] != null){
+                                                    if(player.inventory[tempa].typeCheckConsumable()){
+                                                        System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                        player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                        player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                    }
+                                                    else
+                                                        System.out.println("That is not a usable item.");
+                                                }
+                                                else
+                                                 System.out.println("You do not have an item in that slot.");
                                              }
                                              else
-                                                 System.out.println("That is not a usable item or you do not have an item in that slot.");
+                                                 System.out.println("You do not have an item in that slot.");
                                          }
                                          catch(NumberFormatException e){
                                              System.out.println("Please enter a number.");
                                              break;
                                          }
-                                         break;
-                                     case "item stats":
-                                         System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
-                                         try {
-                                             int temp = Integer.parseInt(scan.nextLine());
-                                             switch (temp) {
-                                                 case 1:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tBag: " + Arrays.toString(player.inventory));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.inventory[tempa] != null){
-                                                             System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                                             player.inventory[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_13;
+                                         if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
                                                      }
-                                                     break OUTER_13;
-                                                 case 2:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.equipment[tempa] != null){
-                                                             System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                                             player.equipment[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_13;
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
                                                      }
-                                                     break OUTER_13;
-                                                 default:
-                                                     System.out.println("Please try again and enter a valid answer.");
-                                                     break;
-                                             }
-                                         }catch(NumberFormatException e){
-                                             System.out.println("Please try again and enter a number.");
-                                             break;
-                                         }
                                          break;
+                                    case "item stats":
+                                    case "is":
+                                        System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                        try {
+                                            int temp = Integer.parseInt(scan.nextLine());
+                                            switch (temp) {
+                                                case 1:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.inventory[tempa] != null){
+                                                            System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                            player.inventory[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_13;
+                                                    }
+                                                    break OUTER_13;
+                                                case 2:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.equipment[tempa] != null){
+                                                            System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                            player.equipment[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_13;
+                                                    }
+                                                    break OUTER_13;
+                                                default:
+                                                    System.out.println("Please try again and enter a valid answer.");
+                                                    break;
+                                            }
+                                        }catch(NumberFormatException e){
+                                            System.out.println("Please try again and enter a number.");
+                                            break;
+                                        }
+                                        break;
                                      case "stats":
+                                     case "s":
                                          player.showStats();
                                          break;
                                      case "combat help":
@@ -3007,12 +4094,15 @@ public class HOD_GAME {
                      } // AREA GET DATA END
                      break;
                  case "equipment":
+                 case"se":
                      System.out.println(Arrays.toString(player.equipment));
                      break;
                  case "bag":
+                 case "b":
                      System.out.println(Arrays.toString(player.inventory));
                      break;
                  case "drop":
+                 case "d":
                      System.out.println("From where would you like to drop something?\n\t1. Bag\n\t2. Equipment");
                      try {
                          int temp = Integer.parseInt(scan.nextLine());
@@ -3022,11 +4112,16 @@ public class HOD_GAME {
                                  System.out.println("\t" + Arrays.toString(player.inventory));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if (player.inventory[tempa] != null) {
-                                         System.out.println("You dropped your " + player.inventory[tempa].name + ".");
-                                         player.inventory = player.inventory[tempa].dropInventory(player.inventory);
-                                         break OUTER_14;
-                                     } else {
+                                     if(tempa < player.inventory.length){
+                                        if (player.inventory[tempa] != null) {
+                                            System.out.println("You dropped your " + player.inventory[tempa].name + ".");
+                                            player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                            break OUTER_14;
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
+                                     }
+                                     else {
                                          System.out.println("You do not have an item in that slot. Please try again.");
                                      }
                                  } catch (NumberFormatException e) {
@@ -3039,12 +4134,17 @@ public class HOD_GAME {
                                  System.out.println("\t" + Arrays.toString(player.equipment));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if (player.equipment[tempa] != null) {
-                                         System.out.println("You dropped your " + player.equipment[tempa].name + ".");
-                                         player.stats = player.equipment[tempa].SUBstats(player.stats);
-                                         player.equipment = player.equipment[tempa].dropEquipment(player.equipment);
-                                         break OUTER_14;
-                                     } else {
+                                     if(tempa < player.equipment.length){
+                                        if (player.equipment[tempa] != null) {
+                                            System.out.println("You dropped your " + player.equipment[tempa].name + ".");
+                                            player.stats = player.equipment[tempa].SUBstats(player.stats);
+                                            player.equipment = player.equipment[tempa].dropEquipment(player.equipment);
+                                            break OUTER_14;
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
+                                     }
+                                     else {
                                          System.out.println("You do not have an item in that slot. Please try again.");
                                      }
                                  } catch (NumberFormatException e) {
@@ -3062,59 +4162,88 @@ public class HOD_GAME {
                      }
                      break;
                  case "equip":
-                     System.out.println("What item did you want to equip from your bag? Type 1 for first item, 2 for second, and so on.");
-                     System.out.println("\t" + Arrays.toString(player.inventory));
-                     try{
-                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                         if(player.inventory[tempa] != null){
-                             System.out.println("You equipped your " + player.inventory[tempa].name + ".");
-                             player.stats = player.inventory[tempa].ADDstats(player.stats);
-                             Items[][] temp = player.inventory[tempa].equip(player.inventory, player.equipment);
-                             player.inventory = temp[0];
-                             player.equipment = temp[1];
-                             break;
-                         }
-                         else
-                             System.out.println("You do not have an equipped item in that slot.");
-                     }
-                     catch(NumberFormatException e){
-                         System.out.println("Please enter a number.");
-                         break;
-                     }
-                     break;
-                 case "unequip":
-                     System.out.println("What item did you want to unequip from your equipment? Type 1 for first item, 2 for second, and so on.");
-                     System.out.println("\t" + Arrays.toString(player.equipment));
-                     try{
-                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                         if(player.equipment[tempa] != null){
-                             System.out.println("You unequipped your " + player.equipment[tempa].name + ".");
-                             player.stats = player.equipment[tempa].SUBstats(player.stats);
-                             Items[][] temp = player.equipment[tempa].unequip(player.inventory, player.equipment);
-                             player.inventory = temp[0];
-                             player.equipment = temp[1];
-                             break;
-                         }
-                         else
-                             System.out.println("You do not have an equipped item in that slot.");
-                     }
-                     catch(NumberFormatException e){
-                         System.out.println("Please enter a number.");
-                         break;
-                     }
-                     break;
+                 case "e":
+                    if(!dummy.isFull(player.equipment)){
+                        System.out.println("What item did you want to equip from your bag? Type 1 for first item, 2 for second, and so on.");
+                        System.out.println("\t" + Arrays.toString(player.inventory));
+                        try{
+                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                            if(tempa < player.inventory.length){
+                                if(player.inventory[tempa] != null){
+                                    System.out.println("You equipped your " + player.inventory[tempa].name + ".");
+                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                    Items[][] temp = player.inventory[tempa].equip(player.inventory, player.equipment);
+                                    player.inventory = temp[0];
+                                    player.equipment = temp[1];
+                                    break;
+                                }
+                                else
+                                    System.out.println("You do not have an item in that slot.");
+                            }
+                            else
+                                System.out.println("You do not have an equipped item in that slot.");
+                        }
+                        catch(NumberFormatException e){
+                            System.out.println("Please enter a number.");
+                            break;
+                        }
+                        break;
+                    }
+                    else
+                        System.out.println("Your equipment is full! You can't equip an item.");
+                    break;
+                case "unequip":
+                case "ue":
+                    if(!dummy.isFull(player.inventory)){
+                        System.out.println("What item did you want to unequip from your equipment? Type 1 for first item, 2 for second, and so on.");
+                        System.out.println("\t" + Arrays.toString(player.equipment));
+                        try{
+                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                            if(tempa < player.equipment.length){
+                                if(player.equipment[tempa] != null){
+                                    System.out.println("You unequipped your " + player.equipment[tempa].name + ".");
+                                    player.stats = player.equipment[tempa].SUBstats(player.stats);
+                                    Items[][] temp = player.equipment[tempa].unequip(player.inventory, player.equipment);
+                                    player.inventory = temp[0];
+                                    player.equipment = temp[1];
+                                    break;
+                                }
+                                else
+                                    System.out.println("You do not have an item in that slot.");
+                            }
+                            else
+                                System.out.println("You do not have an equipped item in that slot.");
+                        }
+                        catch(NumberFormatException e){
+                            System.out.println("Please enter a number.");
+                            break;
+                        }
+                        break;
+                    }
+                  else
+                    System.out.println("Your bag is full! You can't unequip an item.");
+                  break;
                  case "use":
+                 case "u":
                      System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
                      System.out.println("\t" + Arrays.toString(player.inventory));
                      try{
                          int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                         if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
-                             System.out.println("You use " + player.inventory[tempa].name + ".");
-                             player.stats = player.inventory[tempa].ADDstats(player.stats);
-                             player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                         if(tempa < player.inventory.length){
+                            if(player.inventory[tempa] != null){
+                                if(player.inventory[tempa].typeCheckConsumable()){
+                                    System.out.println("You use " + player.inventory[tempa].name + ".");
+                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                    player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                }
+                                else
+                                    System.out.println("That is not a usable item.");
+                            }
+                            else
+                                System.out.println("You do not have an item in that slot.");
                          }
                          else
-                             System.out.println("That is not a usable item or you do not have an item in that slot.");
+                             System.out.println("You do not have an item in that slot.");
                      }
                      catch(NumberFormatException e){
                          System.out.println("Please enter a number.");
@@ -3122,6 +4251,7 @@ public class HOD_GAME {
                      }
                      break;
                  case "item stats":
+                 case "is":
                      System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
                      try {
                          int temp = Integer.parseInt(scan.nextLine());
@@ -3131,9 +4261,13 @@ public class HOD_GAME {
                                  System.out.println("\tBag: " + Arrays.toString(player.inventory));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if(player.inventory[tempa] != null){
-                                         System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                         player.inventory[tempa].getStats();
+                                     if(tempa < player.inventory.length){
+                                        if(player.inventory[tempa] != null){
+                                            System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                            player.inventory[tempa].getStats();
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
                                      }
                                      else{
                                          System.out.println("You do not have an item in that slot. Please try again.");
@@ -3148,9 +4282,13 @@ public class HOD_GAME {
                                  System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if(player.equipment[tempa] != null){
-                                         System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                         player.equipment[tempa].getStats();
+                                     if(tempa < player.equipment.length){
+                                        if(player.equipment[tempa] != null){
+                                            System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                            player.equipment[tempa].getStats();
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
                                      }
                                      else{
                                          System.out.println("You do not have an item in that slot. Please try again.");
@@ -3170,9 +4308,11 @@ public class HOD_GAME {
                      }
                      break;
                  case "stats":
+                 case "s":
                      player.showStats();
                      break;
                  case "skill info":
+                 case "si":
                      System.out.println("\t"+player.skill.getSkillInfo());
                      break;
                  default:
@@ -3198,7 +4338,7 @@ public class HOD_GAME {
                Area area4_pp = area4;
                Chest area4_chest = new Chest();
                Enemy a4_enemy = new Enemy(1, 1, 1, 1, 1, 1, 1, 1);
-               a4_enemy.newEnemy4();
+               a4_enemy.newEnemy4(player.getDiffNum());
           /////////////////////////////AREA 4 CREATION////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3220,6 +4360,7 @@ public class HOD_GAME {
                      player.help();
                      break;
                  case "forward":
+                 case "f":
                      area4_pp = area4_pp.getForeLink();
                      System.out.println(area4_pp.getData());
                      switch (area4_pp.getData()) {
@@ -3237,15 +4378,46 @@ public class HOD_GAME {
                              break;
                          case 1:
                              a4_enemy.getEnemy4();
+                             int turnsAway = rand.nextInt(3);
                              System.out.println("\n\n----------------------------F I G H T !!!----------------------------");
                              System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
                              OUTER:
                              while (true) {
+                                 if(turnsAway > 0)
+                                        {
+                                            System.out.println("\n\n\tThe enemy is currently " + turnsAway + " turn(s) away!\n\tNow's your chance for ranged attacks "
+                                                    + "(type \"ranged attack\"), or just type \"attack\" or \"a\" to charge the enemy straight on!\n\t"
+                                                    + "(all skills are considered ranged)\n\t(you can still identify enemy and/or manage items)");
+                                        }
                                  System.out.println("\nWhat will you do " + player.name + "?");
                                  input = scan.nextLine();
                                  OUTER_15:
                                  switch (input) {
+                                     case "ranged attack":
+                                     case "ra": 
+                                                if(turnsAway == 0 || turnsAway<0)
+                                                {
+                                                    System.out.println("\n\tThe enemy is within melee distance! You cannot use ranged attacks right now!");
+                                                }
+                                                else if(turnsAway > 0)
+                                                {
+                                                   try{
+                                        for (Items equipment : player.equipment) 
+                                        {
+                                            if (equipment.typeCheckRanged()) 
+                                            {
+                                                int dmg = rand.nextInt((player.stats[1]) + (player.stats[2]));
+                                                turnsAway--;
+                                                System.out.println("You deal " + dmg + " to the enemy from afar!\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                a1_enemy.enemyStats[1] -= dmg;
+                                                break;
+                                            } 
+                                        }
+                                                   }catch(NullPointerException e){System.out.println("\n\tYou don't have a ranged weapon in your equipment! You cannot do ranged attacks!");}
+                                                }
+                                                    break;
                                      case "attack":
+                                     case "a":
                                          if (player.stats[2]>=a4_enemy.enemyStats[3]) {
                                              int dmgDealt = rand.nextInt(player.stats[1]);
                                              int EdmgDealt = rand.nextInt(a4_enemy.enemyStats[2]);
@@ -3254,8 +4426,9 @@ public class HOD_GAME {
                                              if (a4_enemy.enemyStats[1]<0) {
                                                  System.out.println("ENEMY DEFEATED!!!");
                                                  System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                 a4_enemy.newEnemy4();
+                                                 a4_enemy.newEnemy4(player.getDiffNum());
                                                  player.stats[0] = MAX_HEALTH;
+                                                 player.skill.recharge();
                                                  break OUTER;
                                              }
                                              System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -3285,13 +4458,15 @@ public class HOD_GAME {
                                              if (a4_enemy.enemyStats[1]<0) {
                                                  System.out.println("ENEMY DEFEATED!!!");
                                                  System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                 a4_enemy.newEnemy4();
+                                                 a4_enemy.newEnemy4(player.getDiffNum());
                                                  player.stats[0] = MAX_HEALTH;
+                                                 player.skill.recharge();
                                                  break OUTER;
                                              }
                                          }
                                          break;
                                      case "identify":
+                                     case "i":
                                          if(player.stats[5]>=7)
                                          {
                                              System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
@@ -3301,13 +4476,41 @@ public class HOD_GAME {
                                          {
                                              System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
                                          }
+                                         if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                     }
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(a4_enemy.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
+                                                     }
                                          break;
                                      case "use skill":
+                                     case "us":
+                                         if(turnsAway > 0)
+                                                {
+                                                    System.out.println("\n\tEven though the enemy is " + turnsAway + " turn(s) away, you decide to face them right away!");
+                                                }
+                                                turnsAway = 0;
                                          if(player.skill.uses){
                                              if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                                  if (player.stats[2]>=a4_enemy.enemyStats[3]) {
                                                      int EdmgDealt = rand.nextInt(a4_enemy.enemyStats[2]);
-                                                     int HPgained = player.skill.use();
+                                                     int HPgained = player.skill.use(player.stats);
                                                      System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                                      player.stats[0] += HPgained;
                                                      System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -3321,7 +4524,7 @@ public class HOD_GAME {
                                                      }
                                                  }
                                                  if (player.stats[2]<a4_enemy.enemyStats[3]) {
-                                                     int HPgained = player.skill.use();
+                                                     int HPgained = player.skill.use(player.stats);
                                                      int EdmgDealt = rand.nextInt(a4_enemy.enemyStats[2]);
                                                      System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                      player.stats[0] -= EdmgDealt;
@@ -3338,14 +4541,14 @@ public class HOD_GAME {
                                              }
                                              else{
                                                  if (player.stats[2]>=a4_enemy.enemyStats[3]) {
-                                                     int dmgDealt = player.skill.use();
+                                                     int dmgDealt = player.skill.use(player.stats);
                                                      int EdmgDealt = rand.nextInt(a4_enemy.enemyStats[2]);
                                                      System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                                      a4_enemy.enemyStats[1] -= dmgDealt;
                                                      if (a4_enemy.enemyStats[1]<0) {
                                                          System.out.println("ENEMY DEFEATED!!!");
                                                          System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                         a4_enemy.newEnemy();
+                                                         a4_enemy.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
                                                          break OUTER;
@@ -3361,7 +4564,7 @@ public class HOD_GAME {
                                                      }
                                                  }
                                                  if (player.stats[2]<a4_enemy.enemyStats[3]) {
-                                                     int dmgDealt = player.skill.use();
+                                                     int dmgDealt = player.skill.use(player.stats);
                                                      int EdmgDealt = rand.nextInt(a4_enemy.enemyStats[2]);
                                                      System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                      player.stats[0] -= EdmgDealt;
@@ -3377,7 +4580,7 @@ public class HOD_GAME {
                                                      if (a4_enemy.enemyStats[1]<0) {
                                                          System.out.println("ENEMY DEFEATED!!!");
                                                          System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                         a4_enemy.newEnemy();
+                                                         a4_enemy.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
                                                          break OUTER;
@@ -3389,81 +4592,117 @@ public class HOD_GAME {
                                              System.out.println("You cannot use that skill again this battle!");
                                          break;
                                      case "skill info":
+                                     case "si":
                                          System.out.println("\t"+player.skill.getSkillInfo());
                                          break;
                                      case "equipment":
+                                     case"se":
                                          System.out.println(Arrays.toString(player.equipment));
                                          break;
                                      case "bag":
+                                     case "b":
                                          System.out.println(Arrays.toString(player.inventory));
                                          break;
                                      case "use":
+                                     case "u":
                                          System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
                                          System.out.println("\t" + Arrays.toString(player.inventory));
                                          try{
                                              int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                             if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
-                                                 System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                 player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                 player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                             if(tempa < player.inventory.length){
+                                                if(player.inventory[tempa] != null){
+                                                    if(player.inventory[tempa].typeCheckConsumable()){
+                                                        System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                        player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                        player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                    }
+                                                    else
+                                                        System.out.println("That is not a usable item.");
+                                                }
+                                                else
+                                                 System.out.println("You do not have an item in that slot.");
                                              }
                                              else
-                                                 System.out.println("That is not a usable item or you do not have an item in that slot.");
+                                                 System.out.println("You do not have an item in that slot.");
                                          }
                                          catch(NumberFormatException e){
                                              System.out.println("Please enter a number.");
                                              break;
                                          }
-                                         break;
-                                     case "item stats":
-                                         System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
-                                         try {
-                                             int temp = Integer.parseInt(scan.nextLine());
-                                             switch (temp) {
-                                                 case 1:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tBag: " + Arrays.toString(player.inventory));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.inventory[tempa] != null){
-                                                             System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                                             player.inventory[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_15;
+                                         if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
                                                      }
-                                                     break OUTER_15;
-                                                 case 2:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.equipment[tempa] != null){
-                                                             System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                                             player.equipment[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_15;
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(a4_enemy.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
                                                      }
-                                                     break OUTER_15;
-                                                 default:
-                                                     System.out.println("Please try again and enter a valid answer.");
-                                                     break;
-                                             }
-                                         }catch(NumberFormatException e){
-                                             System.out.println("Please try again and enter a number.");
-                                             break;
-                                         }
                                          break;
+                                    case "item stats":
+                                    case "is":
+                                        System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                        try {
+                                            int temp = Integer.parseInt(scan.nextLine());
+                                            switch (temp) {
+                                                case 1:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.inventory[tempa] != null){
+                                                            System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                            player.inventory[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_15;
+                                                    }
+                                                    break OUTER_15;
+                                                case 2:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.equipment[tempa] != null){
+                                                            System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                            player.equipment[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_15;
+                                                    }
+                                                    break OUTER_15;
+                                                default:
+                                                    System.out.println("Please try again and enter a valid answer.");
+                                                    break;
+                                            }
+                                        }catch(NumberFormatException e){
+                                            System.out.println("Please try again and enter a number.");
+                                            break;
+                                        }
+                                        break;
                                      case "stats":
+                                     case "s":
                                          player.showStats();
                                          break;
                                      case "combat help":
@@ -3504,16 +4743,72 @@ public class HOD_GAME {
                              } //CHEST END
                              break;
                          case 3:
-                             Enemy bigBoi = new Enemy(100, 1, 100, 1, 1, 1, 1, 1);
+                             int mod = 1;
+                                    switch (player.getDiffNum()) {
+                                        case 1:
+                                            {
+                                                mod = 1;
+                                                break;
+                                            }
+                                        case 2:
+                                            {
+                                                mod = 2;
+                                                break;
+                                            }
+                                        case 3:
+                                            {
+                                                mod = 3;
+                                                break;
+                                            }
+                                        case 4:
+                                            {
+                                                mod = 4;
+                                                break;
+                                            }
+                                        default:
+                                            break;
+                                    }
+                             Enemy bigBoi = new Enemy(100 * mod, 50 * mod, 15 * mod, 15, 15, 15, 15, 15);
+                             turnsAway = 2;
                              System.out.println("\n\n----------------------------I T ' S   B O S S   T I M E   B O i S----------------------------");
                              System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
                              OUTER:
                              while (true) {
+                                 if(turnsAway > 0)
+                                        {
+                                            System.out.println("\n\n\tThe enemy is currently " + turnsAway + " turn(s) away!\n\tNow's your chance for ranged attacks "
+                                                    + "(type \"ranged attack\"), or just type \"attack\" or \"a\" to charge the enemy straight on!\n\t"
+                                                    + "(all skills are considered ranged)\n\t(you can still identify enemy and/or manage items)");
+                                        }
                                  System.out.println("\nWhat will you do " + player.name + "?");
                                  input = scan.nextLine();
                                  OUTER_17:
                                  switch (input) {
+                                     case "ranged attack":
+                                     case "ra": 
+                                                if(turnsAway == 0 || turnsAway<0)
+                                                {
+                                                    System.out.println("\n\tThe enemy is within melee distance! You cannot use ranged attacks right now!");
+                                                }
+                                                else if(turnsAway > 0)
+                                                {
+                                                   try{
+                                        for (Items equipment : player.equipment) 
+                                        {
+                                            if (equipment.typeCheckRanged())  
+                                            {
+                                                int dmg = rand.nextInt((player.stats[1]) + (player.stats[2]));
+                                                turnsAway--;
+                                                System.out.println("You deal " + dmg + " to the enemy from afar!\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                a1_enemy.enemyStats[1] -= dmg;
+                                                break;
+                                            } 
+                                        }
+                                                   }catch(NullPointerException e){System.out.println("\n\tYou don't have a ranged weapon in your equipment! You cannot do ranged attacks!");}
+                                                }
+                                                    break;
                                      case "attack":
+                                     case "a":
                                          if (player.stats[2]>=bigBoi.enemyStats[3]) {
                                              int dmgDealt = rand.nextInt(player.stats[1]);
                                              int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
@@ -3524,6 +4819,7 @@ public class HOD_GAME {
                                                  System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
                                                  bigBoi.enemyStats[1] = 100;
                                                  player.stats[0] = MAX_HEALTH;
+                                                 player.skill.recharge();
                                                  break OUTER;
                                              }
                                              System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -3555,11 +4851,13 @@ public class HOD_GAME {
                                                  System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
                                                  bigBoi.enemyStats[1] = 100;
                                                  player.stats[0] = MAX_HEALTH;
+                                                 player.skill.recharge();
                                                  break OUTER;
                                              }
                                          }
                                          break;
                                      case "identify":
+                                     case "i":
                                          if(player.stats[5]>=7)
                                          {
                                              System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou were able to identify their stats!");
@@ -3569,13 +4867,41 @@ public class HOD_GAME {
                                          {
                                              System.out.println("\n\tyou take time to analyze your enemy\n\t...\n\tyou fail to accurately tell their stats...");
                                          }
+                                         if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
+                                                     }
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
+                                                     }
                                          break;
                                      case "use skill":
+                                     case "us":
+                                         if(turnsAway > 0)
+                                                {
+                                                    System.out.println("\n\tEven though the enemy is " + turnsAway + " turn(s) away, you decide to face them right away!");
+                                                }
+                                                turnsAway = 0;
                                          if(player.skill.uses){
                                              if(player.skill.getName().equalsIgnoreCase("Blessing")){
                                                  if (player.stats[2]>=bigBoi.enemyStats[3]) {
                                                      int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
-                                                     int HPgained = player.skill.use();
+                                                     int HPgained = player.skill.use(player.stats);
                                                      System.out.println("You were healed for " + HPgained + " health points by your skill!");
                                                      player.stats[0] += HPgained;
                                                      System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -3589,7 +4915,7 @@ public class HOD_GAME {
                                                      }
                                                  }
                                                  if (player.stats[2]<bigBoi.enemyStats[3]) {
-                                                     int HPgained = player.skill.use();
+                                                     int HPgained = player.skill.use(player.stats);
                                                      int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
                                                      System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                      player.stats[0] -= EdmgDealt;
@@ -3606,14 +4932,14 @@ public class HOD_GAME {
                                              }
                                              else{
                                                  if (player.stats[2]>=bigBoi.enemyStats[3]) {
-                                                     int dmgDealt = player.skill.use();
+                                                     int dmgDealt = player.skill.use(player.stats);
                                                      int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
                                                      System.out.println("The enemy has taken " + dmgDealt + " damage becuase of your skill!");
                                                      bigBoi.enemyStats[1] -= dmgDealt;
                                                      if (bigBoi.enemyStats[1]<0) {
                                                          System.out.println("ENEMY DEFEATED!!!");
                                                          System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                         bigBoi.newEnemy();
+                                                         bigBoi.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
                                                          break OUTER;
@@ -3629,7 +4955,7 @@ public class HOD_GAME {
                                                      }
                                                  }
                                                  if (player.stats[2]<bigBoi.enemyStats[3]) {
-                                                     int dmgDealt = player.skill.use();
+                                                     int dmgDealt = player.skill.use(player.stats);
                                                      int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
                                                      System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
                                                      player.stats[0] -= EdmgDealt;
@@ -3645,7 +4971,7 @@ public class HOD_GAME {
                                                      if (bigBoi.enemyStats[1]<0) {
                                                          System.out.println("ENEMY DEFEATED!!!");
                                                          System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
-                                                         bigBoi.newEnemy();
+                                                         bigBoi.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
                                                          break OUTER;
@@ -3657,81 +4983,117 @@ public class HOD_GAME {
                                              System.out.println("You cannot use that skill again this battle!");
                                          break;
                                      case "skill info":
+                                     case "si":
                                          System.out.println("\t"+player.skill.getSkillInfo());
                                          break;
                                      case "equipment":
+                                     case"se":
                                          System.out.println(Arrays.toString(player.equipment));
                                          break;
                                      case "bag":
+                                     case "b":
                                          System.out.println(Arrays.toString(player.inventory));
                                          break;
                                      case "use":
+                                     case "u":
                                          System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
                                          System.out.println("\t" + Arrays.toString(player.inventory));
                                          try{
                                              int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                             if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
-                                                 System.out.println("You use " + player.inventory[tempa].name + ".");
-                                                 player.stats = player.inventory[tempa].ADDstats(player.stats);
-                                                 player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                             if(tempa < player.inventory.length){
+                                                if(player.inventory[tempa] != null){
+                                                    if(player.inventory[tempa].typeCheckConsumable()){
+                                                        System.out.println("You use " + player.inventory[tempa].name + ".");
+                                                        player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                                        player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                                    }
+                                                    else
+                                                        System.out.println("That is not a usable item.");
+                                                }
+                                                else
+                                                 System.out.println("You do not have an item in that slot.");
                                              }
                                              else
-                                                 System.out.println("That is not a usable item or you do not have an item in that slot.");
+                                                 System.out.println("You do not have an item in that slot.");
                                          }
                                          catch(NumberFormatException e){
                                              System.out.println("Please enter a number.");
                                              break;
                                          }
-                                         break;
-                                     case "item stats":
-                                         System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
-                                         try {
-                                             int temp = Integer.parseInt(scan.nextLine());
-                                             switch (temp) {
-                                                 case 1:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tBag: " + Arrays.toString(player.inventory));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.inventory[tempa] != null){
-                                                             System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                                             player.inventory[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_17;
+                                         if(turnsAway>0)
+                                                     {
+                                                         turnsAway--;
+                                                         System.out.println("\n\n\tThe enemy is now " + turnsAway + " turn(s) away!");
                                                      }
-                                                     break OUTER_17;
-                                                 case 2:
-                                                     System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
-                                                     System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
-                                                     try {
-                                                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                                         if(player.equipment[tempa] != null){
-                                                             System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                                             player.equipment[tempa].getStats();
-                                                         }
-                                                         else{
-                                                             System.out.println("You do not have an item in that slot. Please try again.");
-                                                         }
-                                                     } catch (NumberFormatException e) {
-                                                         System.out.println("Please try again and enter a number.");
-                                                         break OUTER_17;
+                                                     else if(turnsAway == 0 || turnsAway<0)
+                                                     {
+                                                        int EdmgDealt = rand.nextInt(bigBoi.enemyStats[2]);
+                                                            System.out.println("The enemy deals " + EdmgDealt + " damage to you!");
+                                                            player.stats[0] -= EdmgDealt;
+                                                            if (player.stats[0]<0) 
+                                                            {
+                                                                System.out.println("YOU DIED");
+                                                                System.out.println("\n\n----------------------------G A M E   O V E R----------------------------\n\n");
+                                                                area1_cleared = true;
+                                                                area2_cleared = true;
+                                                                area3_cleared = true;
+                                                                area4_cleared = true;
+                                                                running = false;
+                                                                break OUTER; 
+                                                            }
                                                      }
-                                                     break OUTER_17;
-                                                 default:
-                                                     System.out.println("Please try again and enter a valid answer.");
-                                                     break;
-                                             }
-                                         }catch(NumberFormatException e){
-                                             System.out.println("Please try again and enter a number.");
-                                             break;
-                                         }
                                          break;
+                                    case "item stats":
+                                    case "is":
+                                        System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
+                                        try {
+                                            int temp = Integer.parseInt(scan.nextLine());
+                                            switch (temp) {
+                                                case 1:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tBag: " + Arrays.toString(player.inventory));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.inventory[tempa] != null){
+                                                            System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                                            player.inventory[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_17;
+                                                    }
+                                                    break OUTER_17;
+                                                case 2:
+                                                    System.out.println("What item do you want to know the stats for? Type 1 for first item, 2 for second, and so on.");
+                                                    System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
+                                                    try {
+                                                        int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                                                        if(player.equipment[tempa] != null){
+                                                            System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                                            player.equipment[tempa].getStats();
+                                                        }
+                                                        else{
+                                                            System.out.println("You do not have an item in that slot. Please try again.");
+                                                        }
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Please try again and enter a number.");
+                                                        break OUTER_17;
+                                                    }
+                                                    break OUTER_17;
+                                                default:
+                                                    System.out.println("Please try again and enter a valid answer.");
+                                                    break;
+                                            }
+                                        }catch(NumberFormatException e){
+                                            System.out.println("Please try again and enter a number.");
+                                            break;
+                                        }
+                                        break;
                                      case "stats":
+                                     case "s":
                                          player.showStats();
                                          break;
                                      case "combat help":
@@ -3747,7 +5109,9 @@ public class HOD_GAME {
                              } // BOSS FIGHT END
                              break;
                          case 4:
-                             System.out.println("You have found the exit to the area! But alas... you only get deeper into this hell hole instead of having freedom");
+                             System.out.println("\n\n\tUpon killing Evil boi, you find a portal. You figure there is no point staying in such\n\tan area, so you go inside."
+                                     + "\n\tEverything goes white. Then all a sudden you wake up, in the middle of a tranquil field. No enemies, no traps...\n\tNo "
+                                     + "Evil Boi. You feel safe here. You feel like... you've finally returned \"home\" ");
                              area4_cleared = true;
                              break;
                          default:
@@ -3755,12 +5119,15 @@ public class HOD_GAME {
                      } // AREA GET DATA END
                      break;
                  case "equipment":
+                 case"se":
                      System.out.println(Arrays.toString(player.equipment));
                      break;
                  case "bag":
+                 case "b":
                      System.out.println(Arrays.toString(player.inventory));
                      break;
                  case "drop":
+                 case "d":
                      System.out.println("From where would you like to drop something?\n\t1. Bag\n\t2. Equipment");
                      try {
                          int temp = Integer.parseInt(scan.nextLine());
@@ -3770,11 +5137,16 @@ public class HOD_GAME {
                                  System.out.println("\t" + Arrays.toString(player.inventory));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if (player.inventory[tempa] != null) {
-                                         System.out.println("You dropped your " + player.inventory[tempa].name + ".");
-                                         player.inventory = player.inventory[tempa].dropInventory(player.inventory);
-                                         break OUTER_18;
-                                     } else {
+                                     if(tempa < player.inventory.length){
+                                        if (player.inventory[tempa] != null) {
+                                            System.out.println("You dropped your " + player.inventory[tempa].name + ".");
+                                            player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                            break OUTER_18;
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
+                                     }
+                                     else {
                                          System.out.println("You do not have an item in that slot. Please try again.");
                                      }
                                  } catch (NumberFormatException e) {
@@ -3787,12 +5159,17 @@ public class HOD_GAME {
                                  System.out.println("\t" + Arrays.toString(player.equipment));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if (player.equipment[tempa] != null) {
-                                         System.out.println("You dropped your " + player.equipment[tempa].name + ".");
-                                         player.stats = player.equipment[tempa].SUBstats(player.stats);
-                                         player.equipment = player.equipment[tempa].dropEquipment(player.equipment);
-                                         break OUTER_18;
-                                     } else {
+                                     if(tempa < player.equipment.length){
+                                        if (player.equipment[tempa] != null) {
+                                            System.out.println("You dropped your " + player.equipment[tempa].name + ".");
+                                            player.stats = player.equipment[tempa].SUBstats(player.stats);
+                                            player.equipment = player.equipment[tempa].dropEquipment(player.equipment);
+                                            break OUTER_18;
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
+                                     }
+                                     else {
                                          System.out.println("You do not have an item in that slot. Please try again.");
                                      }
                                  } catch (NumberFormatException e) {
@@ -3810,59 +5187,88 @@ public class HOD_GAME {
                      }
                      break;
                  case "equip":
-                     System.out.println("What item did you want to equip from your bag? Type 1 for first item, 2 for second, and so on.");
-                     System.out.println("\t" + Arrays.toString(player.inventory));
-                     try{
-                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                         if(player.inventory[tempa] != null){
-                             System.out.println("You equipped your " + player.inventory[tempa].name + ".");
-                             player.stats = player.inventory[tempa].ADDstats(player.stats);
-                             Items[][] temp = player.inventory[tempa].equip(player.inventory, player.equipment);
-                             player.inventory = temp[0];
-                             player.equipment = temp[1];
-                             break;
-                         }
-                         else
-                             System.out.println("You do not have an equipped item in that slot.");
-                     }
-                     catch(NumberFormatException e){
-                         System.out.println("Please enter a number.");
-                         break;
-                     }
-                     break;
-                 case "unequip":
-                     System.out.println("What item did you want to unequip from your equipment? Type 1 for first item, 2 for second, and so on.");
-                     System.out.println("\t" + Arrays.toString(player.equipment));
-                     try{
-                         int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                         if(player.equipment[tempa] != null){
-                             System.out.println("You unequipped your " + player.equipment[tempa].name + ".");
-                             player.stats = player.equipment[tempa].SUBstats(player.stats);
-                             Items[][] temp = player.equipment[tempa].unequip(player.inventory, player.equipment);
-                             player.inventory = temp[0];
-                             player.equipment = temp[1];
-                             break;
-                         }
-                         else
-                             System.out.println("You do not have an equipped item in that slot.");
-                     }
-                     catch(NumberFormatException e){
-                         System.out.println("Please enter a number.");
-                         break;
-                     }
-                     break;
+                 case "e":
+                    if(!dummy.isFull(player.equipment)){
+                        System.out.println("What item did you want to equip from your bag? Type 1 for first item, 2 for second, and so on.");
+                        System.out.println("\t" + Arrays.toString(player.inventory));
+                        try{
+                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                            if(tempa < player.inventory.length){
+                                if(player.inventory[tempa] != null){
+                                    System.out.println("You equipped your " + player.inventory[tempa].name + ".");
+                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                    Items[][] temp = player.inventory[tempa].equip(player.inventory, player.equipment);
+                                    player.inventory = temp[0];
+                                    player.equipment = temp[1];
+                                    break;
+                                }
+                                else
+                                    System.out.println("You do not have an item in that slot.");
+                            }
+                            else
+                                System.out.println("You do not have an equipped item in that slot.");
+                        }
+                        catch(NumberFormatException e){
+                            System.out.println("Please enter a number.");
+                            break;
+                        }
+                        break;
+                    }
+                    else
+                        System.out.println("Your equipment is full! You can't equip an item.");
+                    break;
+                case "unequip":
+                case "ue":
+                    if(!dummy.isFull(player.inventory)){
+                        System.out.println("What item did you want to unequip from your equipment? Type 1 for first item, 2 for second, and so on.");
+                        System.out.println("\t" + Arrays.toString(player.equipment));
+                        try{
+                            int tempa = Integer.parseInt(scan.nextLine()) - 1;
+                            if(tempa < player.equipment.length){
+                                if(player.equipment[tempa] != null){
+                                    System.out.println("You unequipped your " + player.equipment[tempa].name + ".");
+                                    player.stats = player.equipment[tempa].SUBstats(player.stats);
+                                    Items[][] temp = player.equipment[tempa].unequip(player.inventory, player.equipment);
+                                    player.inventory = temp[0];
+                                    player.equipment = temp[1];
+                                    break;
+                                }
+                                else
+                                    System.out.println("You do not have an item in that slot.");
+                            }
+                            else
+                                System.out.println("You do not have an equipped item in that slot.");
+                        }
+                        catch(NumberFormatException e){
+                            System.out.println("Please enter a number.");
+                            break;
+                        }
+                        break;
+                    }
+                  else
+                    System.out.println("Your bag is full! You can't unequip an item.");
+                  break;
                  case "use":
+                 case "u":
                      System.out.println("What item did you want to use from your bag? Type 1 for first item, 2 for second, and so on.");
                      System.out.println("\t" + Arrays.toString(player.inventory));
                      try{
                          int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                         if(player.inventory[tempa] != null || player.inventory[tempa].typeCheckConsumable()){
-                             System.out.println("You use " + player.inventory[tempa].name + ".");
-                             player.stats = player.inventory[tempa].ADDstats(player.stats);
-                             player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                         if(tempa < player.inventory.length){
+                            if(player.inventory[tempa] != null){
+                                if(player.inventory[tempa].typeCheckConsumable()){
+                                    System.out.println("You use " + player.inventory[tempa].name + ".");
+                                    player.stats = player.inventory[tempa].ADDstats(player.stats);
+                                    player.inventory = player.inventory[tempa].dropInventory(player.inventory);
+                                }
+                                else
+                                    System.out.println("That is not a usable item.");
+                            }
+                            else
+                                System.out.println("You do not have an item in that slot.");
                          }
                          else
-                             System.out.println("That is not a usable item or you do not have an item in that slot.");
+                             System.out.println("You do not have an item in that slot.");
                      }
                      catch(NumberFormatException e){
                          System.out.println("Please enter a number.");
@@ -3870,6 +5276,7 @@ public class HOD_GAME {
                      }
                      break;
                  case "item stats":
+                 case "is":
                      System.out.println("Where is this item located?\n\t1. Bag\n\t2. Equipment");
                      try {
                          int temp = Integer.parseInt(scan.nextLine());
@@ -3879,9 +5286,13 @@ public class HOD_GAME {
                                  System.out.println("\tBag: " + Arrays.toString(player.inventory));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if(player.inventory[tempa] != null){
-                                         System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
-                                         player.inventory[tempa].getStats();
+                                     if(tempa < player.inventory.length){
+                                        if(player.inventory[tempa] != null){
+                                            System.out.println(player.inventory[tempa].name + " alters your stats in this way:");
+                                            player.inventory[tempa].getStats();
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
                                      }
                                      else{
                                          System.out.println("You do not have an item in that slot. Please try again.");
@@ -3896,9 +5307,13 @@ public class HOD_GAME {
                                  System.out.println("\tEquipment: " + Arrays.toString(player.equipment));
                                  try {
                                      int tempa = Integer.parseInt(scan.nextLine()) - 1;
-                                     if(player.equipment[tempa] != null){
-                                         System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
-                                         player.equipment[tempa].getStats();
+                                     if(tempa < player.equipment.length){
+                                        if(player.equipment[tempa] != null){
+                                            System.out.println(player.equipment[tempa].name + " alters your stats in this way:");
+                                            player.equipment[tempa].getStats();
+                                        }
+                                        else
+                                            System.out.println("You do not have an item in that slot.");
                                      }
                                      else{
                                          System.out.println("You do not have an item in that slot. Please try again.");
@@ -3918,9 +5333,11 @@ public class HOD_GAME {
                      }
                      break;
                  case "stats":
+                 case "s":
                      player.showStats();
                      break;
                  case "skill info":
+                 case "si":
                      System.out.println("\t"+player.skill.getSkillInfo());
                      break;
                  default:
@@ -3928,10 +5345,17 @@ public class HOD_GAME {
                      break;
              }
           }//WHILE AREA_4 CLEARED END 
-          
+          if(area1_cleared == true && area2_cleared == true && area3_cleared == true && area4_cleared == true && running == true)
+          {
+              System.out.println("\n\n\n\tAnd with that... you've deafeated Evil Boi and freed his land from his tyrannical reign.\n\tYou have finally freed yourself"
+                      + "from the eternal hour of devistation he has wrought upon you after\n\t(possibly) tens to hundreds of deaths.\n\tFinally... you are free from"
+                      + "the Hour of Devistation.\n\n\n\tCongratulations! You've beaten the game " + player.name + "! Amazing job!\n\n\tQuestion is... are you willing"
+                              + " to take it to the next difficulty?");
+              running = false;
+              break;
+          }
       }//WHILE RUNNING LOOP END       
 
         
     }//MAIN END
 }//CLASS (HOD_GAME) END
-  

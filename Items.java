@@ -1,4 +1,3 @@
-
 package hod_game;
 
 import java.util.Arrays;
@@ -46,6 +45,9 @@ public class Items<E>
       if(type == 4)
           System.out.println("consumable");
   }
+  public void getStats(){
+      System.out.println("\tHP: +" + this.ADD_hp + " and -" + this.SUB_hp + "\n\t Strength: +" + this.ADD_str + " and -" + this.SUB_str + "\n\t Dexterity: +" + this.ADD_dex + " and -" + this.SUB_dex + "\n\t Constitution: +" + this.ADD_con + " and -" + this.SUB_con + "\n\t Intelligence: +" + this.ADD_int + " and -" + this.SUB_int + "\n\t Wisdom: +" + this.ADD_wis + " and -" + this.SUB_wis + "\n\t Charisma: +" + this.ADD_cha + " and -" + this.SUB_cha);
+  }
   public int[] ADDstats(int[] stats)
   {
      
@@ -57,23 +59,43 @@ public class Items<E>
      else
      {
          int[] new_stats = new int[]{stats[0]+ADD_hp-SUB_hp, stats[1]+ADD_str-SUB_str, stats[2]+ADD_dex-SUB_dex, stats[3]+ADD_con-SUB_con, stats[4]+ADD_int-SUB_int, stats[5]+ADD_wis-SUB_wis, stats[6]+ADD_cha-SUB_cha};
+         if(new_stats[0] > 100){
+             new_stats[0] = 100;
+         }
          return new_stats;
      }
   }
-  public E[] ADDequipment(E[] equipment) //
+  public int[] SUBstats(int[] stats)
+  {
+     
+     if(type == 1 || type == 2)
+     {
+        int[] new_stats = new int[]{stats[0], stats[1]-ADD_str+SUB_str, stats[2]-ADD_dex+SUB_dex, stats[3]-ADD_con+SUB_con, stats[4]-ADD_int+SUB_int, stats[5]-ADD_wis+SUB_wis, stats[6]-ADD_cha+SUB_cha};  
+        return new_stats;
+     }
+     else
+     {
+         int[] new_stats = new int[]{stats[0]-ADD_hp+SUB_hp, stats[1]-ADD_str+SUB_str, stats[2]-ADD_dex+SUB_dex, stats[3]-ADD_con+SUB_con, stats[4]-ADD_int+SUB_int, stats[5]-ADD_wis+SUB_wis, stats[6]-ADD_cha+SUB_cha};
+         if(new_stats[0] <= 0){
+             new_stats[0] = 1;
+         }
+         return new_stats;
+     }
+  }
+  public Items[] ADDequipment(Items[] equipment) //
   {
       int full_slots = 0;
-      E[] new_equipment = (E[]) new Object[equipment.length];   //create new object array to replace old (passed)
+      Items[] new_equipment = (Items[]) new Items[equipment.length];   //create new object array to replace old (passed)
       
        System.arraycopy(equipment, 0, new_equipment, 0, new_equipment.length);  //make new array copy of old (passed) array (return passed array if array not null)
        
-       for(int y = 0; y<new_equipment.length; y++)  //loop checks to see if equipment is already "full"
+       for(int y = 0; y < new_equipment.length; y++)  //loop checks to see if equipment is already "full"
        {
            if(new_equipment[y]!=null)
-           full_slots++;
+            full_slots++;
        }
        
-      if(full_slots==new_equipment.length-1)
+      if(full_slots == new_equipment.length)
       {
           System.out.println("\n\tYour equipment is full! cannot equip any more items!");
           return equipment;
@@ -83,7 +105,7 @@ public class Items<E>
       {
           if(new_equipment[z] == null)
           {
-              new_equipment[z] = (E) this;
+              new_equipment[z] = (Items) this;
               break;
           }
           
@@ -91,20 +113,20 @@ public class Items<E>
       //System.out.println(Arrays.toString(new_equipment));
       return new_equipment;
   }
-  public E[] ADDinventory(E[] inventory)//
+  public Items[] ADDinventory(Items[] inventory)//
   {
       int full_slots = 0;
-      E[] new_inventory = (E[]) new Items[inventory.length];   //create new object array to replace old (passed)
+      Items[] new_inventory = (Items[]) new Items[inventory.length];   //create new object array to replace old (passed)
       
        System.arraycopy(inventory, 0, new_inventory, 0, new_inventory.length);  //make new array copy of old (passed) array (return passed array if array not null)
        
        for(int y = 0; y<new_inventory.length; y++)  //loop checks to see if inventory is already "full"
        {
            if(new_inventory[y]!=null)
-           full_slots++;
+            full_slots++;
        }
        
-      if(full_slots==new_inventory.length-1)
+      if(full_slots==new_inventory.length)
       {
           System.out.println("\n\tYour inventory is full! You cannot carry any more items!");
           return inventory;
@@ -114,7 +136,7 @@ public class Items<E>
       {
           if(new_inventory[z] == null)
           {
-              new_inventory[z] = (E) this;
+              new_inventory[z] = (Items) this;
               break;
           }
           
@@ -122,9 +144,9 @@ public class Items<E>
       //System.out.println(Arrays.toString(new_inventory));
       return new_inventory;
   }
-  public E[] swapInventory(E[] inventory, Items item) //command 
+  public Items[] swapInventory(Items[] inventory, Items item) //command 
   {
-      E[] new_inventory = (E[]) new Items[inventory.length];   //create new object array to replace old (passed)
+      Items[] new_inventory = (Items[]) new Items[inventory.length];   //create new object array to replace old (passed)
       
       System.arraycopy(inventory, 0, new_inventory, 0, new_inventory.length);
       int temp = 0;
@@ -132,91 +154,99 @@ public class Items<E>
       {
           if(new_inventory[i].equals(item))
           {
-              new_inventory[i] = (E) this;
+              new_inventory[i] = (Items) this;
               break;
           }
       }
       return new_inventory;
     }
-  public E[] dropInventory(E[] inventory) //command "drop"
+  public Items[] dropInventory(Items[] inventory) //command "drop"
   {
-      E[] new_inventory = (E[]) new Items[inventory.length];   //create new object array to replace old (passed)
+      Items[] new_inventory = (Items[]) new Items[inventory.length];   //create new object array to replace old (passed)
       
       System.arraycopy(inventory, 0, new_inventory, 0, new_inventory.length);
       
       for(int i = 0; i < new_inventory.length; i++)
       {
-          if(new_inventory[i].equals(this))
-          {
-              new_inventory[i] = null;
-              break;
+          if(new_inventory[i] != null){
+            if(new_inventory[i].equals(this))
+            {
+                new_inventory[i] = null;
+                break;
+            }
           }
           
       }
       return new_inventory;
   }
-  public E[] dropEquipment(E[] equipment) //command "drop"
+  public Items[] dropEquipment(Items[] equipment) //command "drop"
   {
-      E[] new_equipment = (E[]) new Items[equipment.length];   //create new object array to replace old (passed)
+      Items[] new_equipment = (Items[]) new Items[equipment.length];   //create new object array to replace old (passed)
       
       System.arraycopy(equipment, 0, new_equipment, 0, new_equipment.length);
       
       for(int i = 0; i < new_equipment.length; i++)
       {
-          if(new_equipment[i].equals(this))
-          {
-              new_equipment[i] = null;
-              break;
+          if(new_equipment[i] != null){
+            if(new_equipment[i].equals(this))
+            {
+                new_equipment[i] = null;
+                break;
+            }
           }
           
       }
       return new_equipment;
   }
-  public Object[][] equip(E[] inventory, E[] equipment) //command "equip (item name)"
+  public Items[][] equip(Items[] inventory, Items[] equipment) //command "equip (item name)"
   {
       int temp = 0;
-      E[] new_inventory = (E[]) new Items[inventory.length];
+      Items[] new_inventory = (Items[]) new Items[inventory.length];
       System.arraycopy(inventory, 0, new_inventory, 0, new_inventory.length);
-      E[] new_equipment = (E[]) new Object[equipment.length];
+      Items[] new_equipment = (Items[]) new Items[equipment.length];
       System.arraycopy(equipment, 0, new_equipment, 0, new_equipment.length);
        for(int i = 0; i < new_inventory.length; i++){
-          if(new_inventory[i].equals(this)) {
-               temp++;
-               break;
+           if(new_inventory[i] != null){
+            if(new_inventory[i].equals(this)) {
+                 temp++;
+                 break;
+            }
            }
        }
       if(temp > 0){
           new_inventory = this.dropInventory(inventory);
           new_equipment = this.ADDequipment(equipment);
-          return new Object[][]{new_inventory, new_equipment};
+          return new Items[][]{new_inventory, new_equipment};
       }
       else{
-          return new Object[][]{inventory, equipment};
+          return new Items[][]{inventory, equipment};
       }
   }
-  public Object[][] unequip(E[] inventory, E[] equipment) //command "unequip (item name)"
+  public Items[][] unequip(Items[] inventory, Items[] equipment) //command "unequip (item name)"
   {
       int temp = 0;
-      E[] new_inventory = (E[]) new Items[inventory.length];
+      Items[] new_inventory = (Items[]) new Items[inventory.length];
       System.arraycopy(inventory, 0, new_inventory, 0, new_inventory.length);
-      E[] new_equipment = (E[]) new Object[equipment.length];
+      Items[] new_equipment = (Items[]) new Items[equipment.length];
       System.arraycopy(equipment, 0, new_equipment, 0, new_equipment.length);
        for(int i = 0; i < new_equipment.length; i++){
-          if(new_equipment[i].equals(this)) {
-               temp++;
-               break;
+           if(new_equipment[i] != null){
+                if(new_equipment[i].equals(this)) {
+                    temp++;
+                    break;
+                }
            }
        }
       if(temp > 0){
           new_equipment = this.dropEquipment(equipment);
           new_inventory = this.ADDinventory(inventory);
-          return new Object[][]{new_inventory, new_equipment};
+          return new Items[][]{new_inventory, new_equipment};
       }
       else{
-          return new Object[][]{inventory, equipment};
+          return new Items[][]{inventory, equipment};
       }
   }
-  public boolean containedIn(E[] array) //
+  public boolean containedIn(Items[] array) //
   {
     for(int i = 0; i < array.length; i++){
         if(array[i].equals(this)) {
@@ -224,6 +254,18 @@ public class Items<E>
         }
     }
     return false;
+  }
+  public boolean isFull(Items[] array){
+      int full_slots = 0;
+      for(int y = 0; y < array.length; y++)  //loop checks to see if inventory is already "full"
+       {
+           if(array[y]!=null)
+                full_slots++;
+       }
+      if(full_slots == array.length)
+          return true;
+      else
+          return false;
   }
     @Override
     public boolean equals(Object object) 
@@ -242,24 +284,13 @@ public class Items<E>
        else
            return "Empty";
    }
-   public boolean typeCheckRanged(int itemType)
+   public boolean typeCheckRanged()
    {
-       if(itemType == 2)
-           return true;
-       else
-       {
-           System.out.println("this isn't a ranged weapon... dummy");
-           return false;
-       }
+      return this.type == 2;
    }
-   public boolean typeCheckComsumable(int itemType)
+   public boolean typeCheckConsumable()
    {
-       if(itemType == 3)
-           return true;
-       else
-       {
-           System.out.println("this isn't a consumable... dummy");
-           return false;
-       }
+       return this.type == 4;
    }
+   
 }

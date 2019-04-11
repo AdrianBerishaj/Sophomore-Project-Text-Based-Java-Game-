@@ -93,7 +93,7 @@ public class Area<E>
                String choice = scan.nextLine();
                if(choice.equals(pName))
                {
-                   int encounter = rand.nextInt(1);
+                   int encounter = rand.nextInt(2);
                    if(encounter == 0)
                    {
                        System.out.println("\n\n\t\"Oh, I know you! you're one of the expedition leaders here to take out Big Boi!"
@@ -121,11 +121,12 @@ public class Area<E>
                    decision = scan.nextLine();
                    if(decision.equals("1"))
                    {
-                       int random = rand.nextInt(1);
+                       int random = rand.nextInt(2);
                        if(random == 0)
                        {
                        System.out.println("\n\tWell whataya know... It contained a potion!\n\tYou've gained DEX_Boost Potion!");
                        value = 1113;
+                       break;
                        }
                        else if(random == 1)
                        {
@@ -192,8 +193,8 @@ public class Area<E>
                }
                break;
            case 3://value can be 2223, 2224, 2225: 2223 - add 5 to INT,  2224 - add 5 to INT + initiate battle in main,  2225 - sub 10 HP and sub 3 STR
-               System.out.println("\n\n\tAs you traverse the woods, your eye catches a bush with what looks like edible berries. You can't even remember the last time you ate"
-                       + "and it's tearing you apart. What do you do?   1. eat the berries     2. leave them be and continue on   (type 1 or 2 for decision)");
+               System.out.println("\n\n\tAs you traverse the woods, your eye catches a bush with what looks like edible berries. \n\tYou can't even remember the last time you ate"
+                       + "and it's tearing you apart. \n\tWhat do you do?   1. eat the berries     2. leave them be and continue on   (type 1 or 2 for decision)");
                
                String decision;
                while (true)
@@ -201,7 +202,7 @@ public class Area<E>
                    decision = scan.nextLine();
                    if(decision.equals("1"))
                    {
-                       int random = rand.nextInt(1);
+                       int random = rand.nextInt(2);
                        if(random == 0)
                        {
                            System.out.println("\n\n\tYou say crew it and devour them all. You have satisified your hunger, but not only that, you feel like"
@@ -210,7 +211,7 @@ public class Area<E>
                        }
                        else if(random == 1)
                        {
-                          System.out.println("\n\n\tYou say crew it and devour them all. You have satisified your hunger, but not only that, you feel like"
+                          System.out.println("\n\n\tYou say screw it and devour them all. You have satisified your hunger, but not only that, you feel like"
                                    + "\n\tyou've gained a surge of knowledge, almost like... a bunch of memories. \n\t Your Intelligence grew!"
                                   + "\n\n\tHowever, all a sudden, you hear a loud shrieking noise above you. You look and see this gigantic creature, shrieking at you"
                                   + "\n\twith an intent to kill you. You question to yourself \"I... prooooobably ate its children\" (you did :/ )");
@@ -275,8 +276,8 @@ public class Area<E>
                }
                break;
            case 3://value can be 0 or 3332: 3332 - initate battle in Main
-               System.out.println("\n\n\tYou encounter a wicked looking alter with a little portal like object in it's center. You sense terrible evil coming from "
-                       + "/n/tthe portal, and can faintly hear screaming coming from it. What will you do? 1. LooL go inside   2. that ain't happening (type 1 or 2)");
+               System.out.println("\n\n\tYou encounter a wicked looking alter with a little portal like object in it's center. \n\tYou sense terrible evil coming from "
+                       + "/n/tthe portal, and can faintly hear screaming coming from it. \n\tWhat will you do? 1. LooL go inside   2. that ain't happening (type 1 or 2)");
                String decision;
                while(true)
                {
@@ -322,6 +323,7 @@ public class Area<E>
                    if(decision.equals("1"))
                    {
                        value = bolt - pSTR - pCON;
+                       System.out.println("\n\tYou shield yourself from the bolt, but take " + value + " damage!");
                        break;
                    }
                    else if(decision.equals("2"))
