@@ -1,5 +1,14 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package hod_game;
+
+/**
+ *
+ * @author justinchor
+ */
 
 
 import java.util.Arrays;
@@ -698,7 +707,33 @@ public class HOD_GAME {
                                 } //CHEST END
                                 break;
                             case 3:
-                                Enemy bigBoi = new Enemy(100, 1, 100, 1, 1, 1, 1, 1);
+                                    int mod = 1;
+                                    switch (player.getDiffNum()) {
+                                        case 1:
+                                            {
+                                                mod = 1;
+                                                break;
+                                            }
+                                        case 2:
+                                            {
+                                                mod = 2;
+                                                break;
+                                            }
+                                        case 3:
+                                            {
+                                                mod = 3;
+                                                break;
+                                            }
+                                        case 4:
+                                            {
+                                                mod = 4;
+                                                break;
+                                            }
+                                        default:
+                                            break;
+                                    }
+                                Enemy bigBoi = new Enemy(100 * mod, 50 * mod, 15 * mod, 15, 15, 15, 15, 15);
+
                                 System.out.println("\n\n----------------------------I T ' S   B O S S   T I M E   B O i S----------------------------");
                                 System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
                                 OUTER:
@@ -821,7 +856,7 @@ public class HOD_GAME {
                                                         bigBoi.enemyStats[1] -= dmgDealt;
                                                         if (bigBoi.enemyStats[1]<0) {
                                                             System.out.println("ENEMY DEFEATED!!!");
-                                                            System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
+                                                            System.out.println("\n\n----------------------------bigboi HAS BEEN Y E E T E D----------------------------\n\n");
                                                             bigBoi.newEnemy(player.getDiffNum());
                                                             player.stats[0] = MAX_HEALTH;
                                                             player.skill.recharge();
@@ -1827,7 +1862,32 @@ public class HOD_GAME {
                              } //CHEST END
                              break;
                          case 3:
-                             Enemy bigBoi = new Enemy(100, 1, 100, 1, 1, 1, 1, 1);
+                             int mod = 1;
+                                    switch (player.getDiffNum()) {
+                                        case 1:
+                                            {
+                                                mod = 1;
+                                                break;
+                                            }
+                                        case 2:
+                                            {
+                                                mod = 2;
+                                                break;
+                                            }
+                                        case 3:
+                                            {
+                                                mod = 3;
+                                                break;
+                                            }
+                                        case 4:
+                                            {
+                                                mod = 4;
+                                                break;
+                                            }
+                                        default:
+                                            break;
+                                    }
+                                Enemy bigBoi = new Enemy(100 * mod, 50 * mod, 15 * mod, 15, 15, 15, 15, 15);
                              System.out.println("\n\n----------------------------I T ' S   B O S S   T I M E   B O i S----------------------------");
                              System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
                              OUTER:
@@ -2936,7 +2996,32 @@ public class HOD_GAME {
                              } //CHEST END
                              break;
                          case 3:
-                             Enemy bigBoi = new Enemy(100, 1, 100, 1, 1, 1, 1, 1);
+                             int mod = 1;
+                                    switch (player.getDiffNum()) {
+                                        case 1:
+                                            {
+                                                mod = 1;
+                                                break;
+                                            }
+                                        case 2:
+                                            {
+                                                mod = 2;
+                                                break;
+                                            }
+                                        case 3:
+                                            {
+                                                mod = 3;
+                                                break;
+                                            }
+                                        case 4:
+                                            {
+                                                mod = 4;
+                                                break;
+                                            }
+                                        default:
+                                            break;
+                                    }
+                                Enemy bigBoi = new Enemy(100 * mod, 50 * mod, 15 * mod, 15, 15, 15, 15, 15);
                              System.out.println("\n\n----------------------------I T ' S   B O S S   T I M E   B O i S----------------------------");
                              System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
                              OUTER:
@@ -3757,7 +3842,32 @@ public class HOD_GAME {
                              } //CHEST END
                              break;
                          case 3:
-                             Enemy bigBoi = new Enemy(100, 1, 100, 1, 1, 1, 1, 1);
+                             int mod = 1;
+                                    switch (player.getDiffNum()) {
+                                        case 1:
+                                            {
+                                                mod = 1;
+                                                break;
+                                            }
+                                        case 2:
+                                            {
+                                                mod = 2;
+                                                break;
+                                            }
+                                        case 3:
+                                            {
+                                                mod = 3;
+                                                break;
+                                            }
+                                        case 4:
+                                            {
+                                                mod = 4;
+                                                break;
+                                            }
+                                        default:
+                                            break;
+                                    }
+                                Enemy bigBoi = new Enemy(100 * mod, 50 * mod, 15 * mod, 15, 15, 15, 15, 15);
                              System.out.println("\n\n----------------------------I T ' S   B O S S   T I M E   B O i S----------------------------");
                              System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
                              OUTER:
