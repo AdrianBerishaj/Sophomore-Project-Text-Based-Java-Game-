@@ -4,12 +4,23 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
+/////GUI/////
+import java.awt.FlowLayout;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 
 public class HOD_GAME {
 
    
-    public static void main(String[] args) 
+    public static void main(String[] args) throws IOException 
     {
+         
         boolean running = true;
         boolean selection = true;
         String input;
@@ -93,7 +104,7 @@ public class HOD_GAME {
            System.out.println("\n\n\t\tYou wake up and you have no clue where you are. It's dark, smells bad, and you feel evil prescenses all around. "
                       + "\n\t\tAll you can remember is who you are, and what you are good at... mostly");
               
-            
+            HOD_GAME area1_pic = new HOD_GAME (5);
             while (area1_cleared == false) {
                 System.out.println("\n\t\tWhat would you like to do?");
                 input = scan.nextLine();
@@ -928,6 +939,7 @@ public class HOD_GAME {
                                     }
                                 Enemy bigBoi = new Enemy(100 * mod, 50 * mod, 15 * mod, 15, 15, 15, 15, 15);
                                 turnsAway = 2;
+                                HOD_GAME boss1 = new HOD_GAME (1);
                                 System.out.println("\n\n----------------------------I T ' S   B O S S   T I M E   B O i S----------------------------");
                                 System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
                                 OUTER:
@@ -1551,6 +1563,7 @@ public class HOD_GAME {
           {
               System.out.println("\n\n\tYou some how find yourself in a forest like area. Massive vegatation and gigantic forest creatures are visable everywhere around you."
                      + "\n\tYou decide there really is no going back now, and continue to press on.");
+              HOD_GAME area2_pic = new HOD_GAME (6);
           }
           while(area2_cleared == false)
           {
@@ -2374,6 +2387,7 @@ public class HOD_GAME {
                                     }
                              Enemy bigBoi = new Enemy(100 * mod, 50 * mod, 15 * mod, 15, 15, 15, 15, 15);
                              turnsAway = 2;
+                             HOD_GAME boss2 = new HOD_GAME (2);
                              System.out.println("\n\n----------------------------I T ' S   B O S S   T I M E   B O i S----------------------------");
                              System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
                              OUTER:
@@ -2995,6 +3009,7 @@ public class HOD_GAME {
           {
               System.out.println("\n\n\tIt's very dark in these catacombs, and very sp00ky. This place smells worse than the first. Nonetheless, you continue"
                      + "\n\tto press forward, driven by what could possibly be at the end of all this devistation");
+              HOD_GAME area3_pic = new HOD_GAME (7);
           }
           while(area3_cleared == false)
           {
@@ -3804,6 +3819,7 @@ public class HOD_GAME {
                                     }
                              Enemy bigBoi = new Enemy(100 * mod, 50 * mod, 15 * mod, 15, 15, 15, 15, 15);
                              turnsAway = 2;
+                             HOD_GAME boss3 = new HOD_GAME (3);
                              System.out.println("\n\n----------------------------I T ' S   B O S S   T I M E   B O i S----------------------------");
                              System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
                              OUTER:
@@ -4422,6 +4438,7 @@ public class HOD_GAME {
                      + "\n\tVery dangerous looking enemies appear to roam these parts, each establishing its territory on the more bigger floating landscapes"
                      + "\n\tYou notice at the end of this floating trail there is a ginormous... very rediculos looking figure that appears to be... "
                      + "\n\twaiting for you(?) you'll just have to find out! You've made it this far (surprisingly), no giving up now!");
+              HOD_GAME area4_pic = new HOD_GAME (8);
           }
           while(area4_cleared == false)
           {
@@ -4852,6 +4869,7 @@ public class HOD_GAME {
                                     }
                              Enemy bigBoi = new Enemy(100 * mod, 50 * mod, 15 * mod, 15, 15, 15, 15, 15);
                              turnsAway = 2;
+                             HOD_GAME boss4 = new HOD_GAME (4);
                              System.out.println("\n\n----------------------------I T ' S   B O S S   T I M E   B O i S----------------------------");
                              System.out.println("combat commands can be pulled up at any time by typing \"combat help\"");
                              OUTER:
@@ -5434,10 +5452,120 @@ public class HOD_GAME {
                       + "the Hour of Devistation.\n\n\n\tCongratulations! You've beaten the game " + player.name + "! Amazing job!\n\n\tQuestion is... are you willing"
                               + " to take it to the next difficulty?");
               running = false;
+              System.exit(0);
               break;
           }
       }//WHILE RUNNING LOOP END       
 
-        
+      System.exit(0);
     }//MAIN END
+    
+    
+    
+     public HOD_GAME(int x) throws IOException
+    {
+        switch (x)
+        {
+            case 1:
+        BufferedImage img=ImageIO.read(new File("C:\\Users\\G\\Documents\\OU\\HOD//big boi.png"));
+        ImageIcon icon=new ImageIcon(img);
+        JFrame frame=new JFrame();
+        frame.setLayout(new FlowLayout());
+        frame.setSize(960,1080);
+        JLabel lbl=new JLabel();
+        lbl.setIcon(icon);
+        frame.add(lbl);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                break;
+            case 2:
+        BufferedImage img2=ImageIO.read(new File("C:\\Users\\G\\Documents\\OU\\HOD//hackerwoman.jpg"));
+        ImageIcon icon2=new ImageIcon(img2);
+        JFrame frame2=new JFrame();
+        frame2.setLayout(new FlowLayout());
+        frame2.setSize(960,1080);
+        JLabel lbl2=new JLabel();
+        lbl2.setIcon(icon2);
+        frame2.add(lbl2);
+        frame2.setVisible(true);
+        frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                break;
+            case 3:
+        BufferedImage img3=ImageIO.read(new File("C:\\Users\\G\\Documents\\OU\\HOD//girlCollage.jpg"));
+        ImageIcon icon3=new ImageIcon(img3);
+        JFrame frame3=new JFrame();
+        frame3.setLayout(new FlowLayout());
+        frame3.setSize(960,1080);
+        JLabel lbl3=new JLabel();
+        lbl3.setIcon(icon3);
+        frame3.add(lbl3);
+        frame3.setVisible(true);
+        frame3.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                break;
+            case 4:
+        BufferedImage img4=ImageIO.read(new File("C:\\Users\\G\\Documents\\OU\\HOD//Evil Boi.png"));
+        ImageIcon icon4=new ImageIcon(img4);
+        JFrame frame4=new JFrame();
+        frame4.setLayout(new FlowLayout());
+        frame4.setSize(960,1080);
+        JLabel lbl4=new JLabel();
+        lbl4.setIcon(icon4);
+        frame4.add(lbl4);
+        frame4.setVisible(true);
+        frame4.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        break;
+        case 5:
+        BufferedImage img5=ImageIO.read(new File("C:\\Users\\G\\Documents\\OU\\HOD//cave.jpg"));
+        ImageIcon icon5=new ImageIcon(img5);
+        JFrame frame5=new JFrame();
+        frame5.setLayout(new FlowLayout());
+        frame5.setSize(960,1080);
+        JLabel lbl5=new JLabel();
+        lbl5.setIcon(icon5);
+        frame5.add(lbl5);
+        frame5.setVisible(true);
+        frame5.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            break;
+        case 6:
+        BufferedImage img6=ImageIO.read(new File("C:\\Users\\G\\Documents\\OU\\HOD//forest.jpg"));
+        ImageIcon icon6=new ImageIcon(img6);
+        JFrame frame6=new JFrame();
+        frame6.setLayout(new FlowLayout());
+        frame6.setSize(960,1080);
+        JLabel lbl6=new JLabel();
+        lbl6.setIcon(icon6);
+        frame6.add(lbl6);
+        frame6.setVisible(true);
+        frame6.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            break;
+        case 7:
+        BufferedImage img7=ImageIO.read(new File("C:\\Users\\G\\Documents\\OU\\HOD//catacombs.jpg"));
+        ImageIcon icon7=new ImageIcon(img7);
+        JFrame frame7=new JFrame();
+        frame7.setLayout(new FlowLayout());
+        frame7.setSize(960,1080);
+        JLabel lbl7=new JLabel();
+        lbl7.setIcon(icon7);
+        frame7.add(lbl7);
+        frame7.setVisible(true);
+        frame7.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            break;
+        case 8:
+        BufferedImage img8=ImageIO.read(new File("C:\\Users\\G\\Documents\\OU\\HOD//floating islands.jpg"));
+        ImageIcon icon8=new ImageIcon(img8);
+        JFrame frame8=new JFrame();
+        frame8.setLayout(new FlowLayout());
+        frame8.setSize(960,1080);
+        JLabel lbl8=new JLabel();
+        lbl8.setIcon(icon8);
+        frame8.add(lbl8);
+        frame8.setVisible(true);
+        frame8.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            break;
+        }
+        
+    }
+     
+     
+     
 }//CLASS (HOD_GAME) END
