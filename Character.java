@@ -1,13 +1,27 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author Adrian
+ */
+
 package hod_game;
+
 
 import java.util.*;
 
 public class Character<E> {
     int lvl, health, exp, inv;
+    int maxExp = 100 + (50 * lvl);
     String name, gameClass;
     int[] stats;
     Items[] inventory, equipment;
     Skills skill;
+    private int str, dex, con, intel, wis, cha;
     int difficultyNum = 0; //Used for determining stats of enemies
     
     public Character(){
@@ -44,13 +58,8 @@ public class Character<E> {
         if (this.health > 100)   //Limiting health to 100
             this.health = 100;
     }
-    public void gainExp(int gain){
-        this.exp = exp + gain;
-        if (this.exp >= 100){   //Checking if a level up is in order
-            this.exp = exp - 100;
-            this.lvl++;
-        }
-    }
+    
+    
     public void useInvSlot(){
         this.inv = inv - 1;
         if (inv <= 0)
@@ -400,6 +409,65 @@ public class Character<E> {
         System.out.println("Charisma: " + cha);
         this.stats = new int[]{health, str, dex, con, intel, wis, cha};
     }
+    public void gainExp(int gain){
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Exp has been gained" );
+        this.exp = exp + gain; 
+       
+        if (this.exp >= maxExp){ //Checking if a level up is in order
+           System.out.println("You have attained more power to yeet your enemies!!!");
+           System.out.println("Choose a stat to increase by 3");
+           System.out.println("1 = strength");
+           System.out.println("2 = Dexterity");
+           System.out.println("3 = Constitution");
+           System.out.println("4 = Intelligence");
+           System.out.println("5 = Wisdom");
+           System.out.println("6 = Charisma");
+           
+           int statPoint = sc.nextInt() ;
+           switch (statPoint){
+           case 1:
+            str = str + 3;
+            System.out.println("3 points has been added to your strength");
+            break;
+            
+           case 2:
+            dex = dex + 3;
+            System.out.println("3 points have been added to your dexterity");
+            break;
+            
+            case 3:
+            con = con + 3;
+            System.out.println("3 points have been added to your constitution");
+            break;
+            
+            case 4:
+            intel = intel + 3;
+            System.out.println("3 points have been added to your intelligence");
+            break;
+            
+            case 5:
+            wis = wis + 3;
+            System.out.println("3 points have been added to your wisdom");
+            break;
+            
+            case 6:
+            cha = cha + 3;
+            System.out.println("3 points have been added to your charisma");
+            break;
+            
+            default:
+                System.out.println("Choose a stat please");
+           
+           }
+          this.exp = exp - maxExp;
+            this.lvl++;
+            this.stats = new int[]{health, str, dex, con, intel, wis, cha};
+                
+        }        
+            
+        }
      public void showInv() //command "bag"
     {
         for (Items inventory1 : inventory) {
