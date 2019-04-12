@@ -277,6 +277,10 @@ public class Enemy
                        }
                        break;
                    }
+                   else
+                   {
+                       System.out.println("\n\tPlease type either 1 or 2");
+                   }
                }
                break;
        }
@@ -303,7 +307,7 @@ public class Enemy
                break;
            case 1:
                System.out.println("\n\tHacker Girl stares at a tree with an odd sense of purpose. Soon you realize that she is hacking into the world itself! You can't believe what you're seeing and rationalize that it shouldn't be possible unless you are in some sort of game! You need to try and stop her!\n\n\t"
-                       + "Do you   1. Try to talk her out of doing anything.    2. Try to curl into a ball and defend yourself      3. Steel yourself for what she's about to do   (type 1, 2, or 3 for decision)");
+                       + "Do you   1. Try to talk her out of doing anything.    2. Try to curl into a ball and defend yourself      3. Brace yourself for what she's about to do   (type 1, 2, or 3 for decision)");
                while(true)
                {
                    choice = scan.nextLine();
@@ -412,10 +416,112 @@ public class Enemy
        return Bdmg;
    }
    
-   public int bossFourSkills()
+   public int[] bossFourSkills(int skillUse, int[] pSTATS, int[] eSTATS, String pNAME, boolean TNR)
    {
-       int Bdmg = 0;
-       
-       return Bdmg;
+       int[] newPSTATS = new int[pSTATS.length];
+       System.arraycopy(pSTATS, 0, newPSTATS, 0, newPSTATS.length);
+       int mES = eSTATS[2], lPS = newPSTATS[1], dmg = 0, dodge;
+       String choice;
+       switch (skillUse)
+       {
+           case 0:
+               if(TNR == true)
+               {
+                   System.out.println("\n\t\"I will SUCC the power right out of you!\"\n\n\tEvil Boi drained your stats!");
+                   for(int i = 0; i<pSTATS.length; i++)
+                   {
+                       pSTATS[i] -= rand.nextInt(6)+1;
+                   }     
+               }
+               else if(TNR == false)
+               {
+                   dmg = rand.nextInt(eSTATS[2]) + 10;
+                   newPSTATS[0] -= dmg;
+                   System.out.println("\n\tEvil Boi simply snaps his fingers and a series of explosions hit you!\n\tYou took " + dmg + " damage!");
+               }
+               break;
+           case 1:
+               if(TNR == true)
+               {
+                   System.out.println("\n\n\t\"I will exploit your biggest weaknesses!\"");
+                   for(int i = 2; i<newPSTATS.length; i++) //find lowest player stat
+                   {
+                       if(lPS>newPSTATS[i])
+                           lPS = newPSTATS[i];
+                   }
+                    for(int i = 3; i<eSTATS.length; i++) //find highest enemy stat
+                   {
+                       if(mES<eSTATS[i])
+                           mES = eSTATS[i];
+                   }
+                    newPSTATS[0] -= ((mES - lPS) * 5);
+                    System.out.println("\n\tEvil Boi used the power of his strongest stat against your weakest stat and blasted you\n\twith a powerful beam!"
+                            + " You took " + ((mES - lPS) * 5) + " damage!");
+               }
+               else if(TNR == false)
+               {
+                   System.out.println("\n\t\"Fear my lazer beams!\"\n\tEvil Boi shoots a massive lazer toward you!\n\tDo you: "
+                           + "1. shield from the attack    2. attempt dodging it");
+                    while(true)
+               {
+                   choice = scan.nextLine();
+                   if(choice.equals("1"))
+                   {
+                       dmg = (rand.nextInt(eSTATS[2] + 30)) - newPSTATS[1] - newPSTATS[3];
+                       newPSTATS[0] -= dmg;
+                       System.out.println("");
+                       break;
+                   }
+                   else if(choice.equals("2"))
+                   {
+                       if(rand.nextInt(newPSTATS[2])>10)
+                        {
+                            System.out.println("\n\tYou managed to dodge his lazer attack!");
+                        }
+                       else
+                       {
+                           dmg = (rand.nextInt(eSTATS[2] + 30));
+                           newPSTATS[0] -= dmg;
+                           System.out.println("\n\n\tYou failed to dodge the lazer beam! You took " + dmg + " damage!");
+                       }
+                       break;
+                   }
+                   else
+                   {
+                       System.out.println("\n\tPlease type either 1 or 2");
+                   }
+               }
+               }
+               break;
+           case 2:
+               if(TNR == true)
+               {
+                  System.out.println("\n\n\t\"Hey bud, pick a number between 1 and 10\"");
+                  choice = scan.nextLine();
+                  dmg = rand.nextInt(eSTATS[2] * 2);
+                  newPSTATS[0] -= dmg;
+                  System.out.println("\n\n\t\"LooL I didn't even have a number in mind. Die\"\n\n\tEvil Boi's eyes glow red, then he snaps his fingers."
+                          + "\n\tA massive line of explosions blast right into you!\n\n\tYou took " + dmg + " damage!");
+               }
+               else if(TNR == false)
+               {
+                   System.out.println("\n\n\t\"Bet your armor isn't as cool as mine\"\n\tEvil Boi proceeds to show off his crocs. As you were mesmerized by the crocs, "
+                           + "\n\tHe shoots a lazer beam at you!");
+                   dodge = rand.nextInt(2);
+                   if(dodge == 0)
+                   {
+                       System.out.println("\n\n\tYou managed to dodge the attack!");
+                   }
+                   else if(dodge == 1)
+                   {
+                       dmg = eSTATS[2];
+                       newPSTATS[0] -= dmg;
+                       System.out.println("\n\n\tYou didn't see the attack coming! You took " + dmg + " damage!");
+                   }
+               }
+               break;
+       }
+       return newPSTATS;
    }
+   
 }
