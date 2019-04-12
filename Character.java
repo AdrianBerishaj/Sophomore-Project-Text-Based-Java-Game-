@@ -1,15 +1,27 @@
-package hod_game;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
+/**
+ *
+ * @author Adrian
+ */
+
+import java.util.Scanner;
+import java.util.Random;
 import java.util.*;
 
 public class Character<E> {
     int lvl, health, exp, inv;
+    int maxExp = 100 + (50 * lvl);
     String name, gameClass;
     int[] stats;
     Items[] inventory, equipment;
     Skills skill;
-    int difficultyNum = 0; //Used for determining stats of enemies
-    
+    private int str, dex, con, intel, wis, cha;
+    Random rand = new Random();
     public Character(){
         this.lvl = 0;
         this.health = 100;
@@ -44,57 +56,35 @@ public class Character<E> {
         if (this.health > 100)   //Limiting health to 100
             this.health = 100;
     }
-    public void gainExp(int gain){
-        this.exp = exp + gain;
-        if (this.exp >= 100){   //Checking if a level up is in order
-            this.exp = exp - 100;
-            this.lvl++;
-        }
-    }
+    
+          
+    
+    
     public void useInvSlot(){
         this.inv = inv - 1;
         if (inv <= 0)
             System.out.println("Inventory is full.");
     }
-    public int getDifficulty(){
+    public void getDifficulty(){
         Scanner sc = new Scanner(System.in);
         //Choosing difficulty
-        
         System.out.println("What difficulty would you like to play?");
         System.out.println("  Easy, Normal, Hard, or Very Hard?");
         System.out.println("  (This just changes your character's starting level)");
         System.out.println("Type Below:");
         while (lvl == 0){   //Ensuring that a correct choice is entered
             String dif = sc.nextLine();
-            if (dif.equalsIgnoreCase("Easy")){
+            if (dif.equalsIgnoreCase("Easy"))
                 lvl = 15;
-                difficultyNum = 1;
-            }
-            
-            else if (dif.equalsIgnoreCase("Normal")){
+            else if (dif.equalsIgnoreCase("Normal"))
                 lvl = 10;
-                difficultyNum = 2;
-            }
-            
-            else if (dif.equalsIgnoreCase("Hard")){
+            else if (dif.equalsIgnoreCase("Hard"))
                 lvl = 5;
-                difficultyNum = 3;
-            }
-            
-            else if (dif.equalsIgnoreCase("Very Hard")){
+            else if (dif.equalsIgnoreCase("Very Hard"))
                 lvl = 1;
-                difficultyNum = 4;
-            }
-            
             else
                 System.out.println("Please enter a valid difficulty:");
-                
         }
-        return difficultyNum;
-    }
-    
-    public int getDiffNum(){
-        return difficultyNum;
     }
     public void getName(){
         Scanner sc = new Scanner(System.in);
@@ -146,7 +136,7 @@ public class Character<E> {
     
     public void getStats(){
         Scanner sc = new Scanner(System.in);
-        int str, dex, con, intel, wis, cha;
+        
         int one = new Random().nextInt(14) + 7;
         int two = new Random().nextInt(14) + 7;
         if (two == one){
@@ -400,6 +390,69 @@ public class Character<E> {
         System.out.println("Charisma: " + cha);
         this.stats = new int[]{health, str, dex, con, intel, wis, cha};
     }
+    
+    public void gainExp(int gain){
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Exp has been gained" );
+        this.exp = exp + gain; 
+       
+        if (this.exp >= maxExp){ //Checking if a level up is in order
+           System.out.println("You have attained more power to yeet your enemies!!!");
+           System.out.println("Choose a stat to increase by 3");
+           System.out.println("1 = strength");
+           System.out.println("2 = Dexterity");
+           System.out.println("3 = Constitution");
+           System.out.println("4 = Intelligence");
+           System.out.println("5 = Wisdom");
+           System.out.println("6 = Charisma");
+           
+           int statPoint = sc.nextInt() ;
+           switch (statPoint){
+           case 1:
+            str = str + 3;
+            System.out.println("3 points has been added to your strength");
+            break;
+            
+           case 2:
+            dex = dex + 3;
+            System.out.println("3 points have been added to your dexterity");
+            break;
+            
+            case 3:
+            con = con + 3;
+            System.out.println("3 points have been added to your constitution");
+            break;
+            
+            case 4:
+            intel = intel + 3;
+            System.out.println("3 points have been added to your intelligence");
+            break;
+            
+            case 5:
+            wis = wis + 3;
+            System.out.println("3 points have been added to your wisdom");
+            break;
+            
+            case 6:
+            cha = cha + 3;
+            System.out.println("3 points have been added to your charisma");
+            break;
+            
+            default:
+                System.out.println("Choose a stat please");
+           
+           }
+          this.exp = exp - 100;
+            this.lvl++;
+            this.stats = new int[]{health, str, dex, con, intel, wis, cha};
+                
+        }        
+            
+        }
+    
+    
+    
      public void showInv() //command "bag"
     {
         for (Items inventory1 : inventory) {
@@ -421,28 +474,30 @@ public class Character<E> {
      {
          System.out.println("\n\n\tbasic commands:");
          System.out.println("\tforward (or f) - move forward");
-         System.out.println("\tequipment (or \"se\") - show player equipment");
-         System.out.println("\tbag (or \"b\") - display player inventory");
-         System.out.println("\tstats (or \"s\") - display current player stats");
-         System.out.println("\tskill info (or \"si\") - display info of player's skill");
-         System.out.println("\titem stats (or \"is\") - show how a specific item will echange your character stats when equipped");
+         System.out.println("\tback - move back");
+         System.out.println("\tequipment - show player equipment");
+         System.out.println("\tbag - display player inventory");
+         System.out.println("\tstats - display current player stats");
+         System.out.println("\tskill info - display info of player's skill");
+         System.out.println("\titem stats - show how a specific item will echange your character stats when equipped");
          System.out.println("\n\tcommands for managing items:");
-         System.out.println("\tdrop (or \"d\") - drop an item from your bag or equipment");
-         System.out.println("\tuse (or \"u\") - use any usable item from your bag");
-         System.out.println("\tequip (or \"e\") - equip an item from your bag to your equipment");
-         System.out.println("\tunequip (or \"ue\") - unequip an item from your equipment and place it in your bag");
+         System.out.println("\tdrop - drop an item from your bag or equipment");
+         System.out.println("\tuse - use any usable item from your bag");
+         System.out.println("\tequip - equip an item from your bag to your equipment");
+         System.out.println("\tunequip - unequip an item from your equipment and place it in your bag");
         // System.out.println("\td");
      }
      public void combatHelp()
      {
          System.out.println("\n\n\tcombat commands:");
-         System.out.println("\tattack (or \"a\") - attack the enemy head on with a melee attack \n\t(if used while still >0 turns from enemy, you will \"run up to\" enemy, bringing the amount to 0)");
-         System.out.println("\tuse skill (or \"us\")- uses your character's skill! It can only be used once per battle. \n\t(like \"attack\", it will set \"turns away\" to 0)");
-         System.out.println("\tskill info (or \"si\") - display info of player's skill");
-         System.out.println("\tuse (or \"u\") - use any usable item from your bag \n\t(will consume a turn, even if you try using an \"empty\" item)");
-         System.out.println("\titem stats (\"is\") - show how a specific item will echange your character stats when equipped");
-         System.out.println("\tranged attack (or \"ra\") - attack the enemy from afar with a ranged attack! (need a ranged weapon)");
-         System.out.println("\tidentify (or \"i\") - use your wisdom to possibly identify enemy stats! (will consume a turn!)");
-         System.out.println("\tany time during combat you may CHECK your current equipment, inventory, and current stats; will NOT consume a turn");
+         System.out.println("\tattack (or a) - attack the enemy head on with a melee attack!");
+         System.out.println("\tuse skill - uses your character's skill! It can only be used once per battle.");
+         System.out.println("\tskill info - display info of player's skill");
+         System.out.println("\tuse - use any usable item from your bag");
+         System.out.println("\titem stats - show how a specific item will echange your character stats when equipped");
+         //System.out.println("\tranged attack - attack the enemy from afar with a ranged attack! (need a ranged weapon/ throwable item)");
+         System.out.println("\tidentify - use your wisdom to possibly identify enemy stats and possibly weakpoints! (will consume a turn)");
+         System.out.println("\tany time during combat you may check your current equipment, inventory, and current stats; will not consume a turn");
+         //System.out.println("\tany time during combat you may swap out items or use consumables, but it will cost you a turn!");
      }
 }

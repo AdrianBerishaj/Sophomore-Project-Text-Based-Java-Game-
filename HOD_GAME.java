@@ -1,6 +1,3 @@
-package hod_game;
-
-
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -182,6 +179,8 @@ public class HOD_GAME {
                                                         player.inventory = Bandit_Dagger.ADDinventory(player.inventory);
                                                         player.stats[0] = MAX_HEALTH;
                                                         player.skill.recharge();
+                                                        int gain = rand.nextInt(15) + 15;
+                                                        player.gainExp(gain);
                                                         break OUTER;
                                                     }
                                                     System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -222,6 +221,8 @@ public class HOD_GAME {
                                                         player.inventory = Bandit_Dagger.ADDinventory(player.inventory);
                                                         player.stats[0] = MAX_HEALTH;
                                                         player.skill.recharge();
+                                                        int gain = rand.nextInt(15) + 15;
+                                                        player.gainExp(gain);
                                                         break OUTER;
                                                     }
                                                 }
@@ -320,6 +321,8 @@ public class HOD_GAME {
                                                                 player.inventory = Bandit_Dagger.ADDinventory(player.inventory);
                                                                 player.stats[0] = MAX_HEALTH;
                                                                 player.skill.recharge();
+                                                                int gain = rand.nextInt(15) + 15;
+                                                                player.gainExp(gain);
                                                                 break OUTER;
                                                             }
                                                             System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -360,6 +363,8 @@ public class HOD_GAME {
                                                                 player.inventory = Bandit_Dagger.ADDinventory(player.inventory);
                                                                 player.stats[0] = MAX_HEALTH;
                                                                 player.skill.recharge();
+                                                                int gain = rand.nextInt(15) + 15;
+                                                                player.gainExp(gain);
                                                                 break OUTER;
                                                             }
                                                         }
@@ -549,6 +554,8 @@ public class HOD_GAME {
                                                     a1_enemy.newEnemy(player.getDiffNum());
                                                     player.stats[0] = MAX_HEALTH;
                                                     player.skill.recharge();
+                                                    int gain = rand.nextInt(15) + 15;
+                                                    player.gainExp(gain);
                                                     break OUTER;
                                                 }
                                                 System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -587,6 +594,8 @@ public class HOD_GAME {
                                                     a1_enemy.newEnemy(player.getDiffNum());
                                                     player.stats[0] = MAX_HEALTH;
                                                     player.skill.recharge();
+                                                    int gain = rand.nextInt(15) + 15;
+                                                    player.gainExp(gain);
                                                     break OUTER;
                                                 }
                                             }
@@ -691,6 +700,8 @@ public class HOD_GAME {
                                                             a1_enemy.newEnemy(player.getDiffNum());
                                                             player.stats[0] = MAX_HEALTH;
                                                             player.skill.recharge();
+                                                            int gain = rand.nextInt(15) + 15;
+                                                            player.gainExp(gain);
                                                             break OUTER;
                                                         }
                                                         System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -729,6 +740,8 @@ public class HOD_GAME {
                                                             a1_enemy.newEnemy(player.getDiffNum());
                                                             player.stats[0] = MAX_HEALTH;
                                                             player.skill.recharge();
+                                                            int gain = rand.nextInt(15) + 15;
+                                                            player.gainExp(gain);
                                                             break OUTER;
                                                         }
                                                     }
@@ -963,6 +976,8 @@ public class HOD_GAME {
                                                     bigBoi.enemyStats[1] = 100;
                                                     player.stats[0] = MAX_HEALTH;
                                                     player.skill.recharge();
+                                                    int gain = player.maxExp;
+                                                    player.gainExp(gain);
                                                     break OUTER;
                                                 }
                                                 System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -1001,6 +1016,8 @@ public class HOD_GAME {
                                                     bigBoi.enemyStats[1] = 100;
                                                     player.stats[0] = MAX_HEALTH;
                                                     player.skill.recharge();
+                                                    int gain = player.maxExp;
+                                                    player.gainExp(gain);
                                                     break OUTER;
                                                 }
                                             }
@@ -1097,6 +1114,8 @@ public class HOD_GAME {
                                                             bigBoi.newEnemy(player.getDiffNum());
                                                             player.stats[0] = MAX_HEALTH;
                                                             player.skill.recharge();
+                                                            int gain = player.maxExp;
+                                                            player.gainExp(gain);
                                                             break OUTER;
                                                         }
                                                         System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -1135,6 +1154,8 @@ public class HOD_GAME {
                                                             bigBoi.newEnemy(player.getDiffNum());
                                                             player.stats[0] = MAX_HEALTH;
                                                             player.skill.recharge();
+                                                            int gain = player.maxExp;
+                                                            player.gainExp(gain);
                                                             break OUTER;
                                                         }
                                                     }
@@ -1622,6 +1643,8 @@ public class HOD_GAME {
                                                      player.inventory = Giant_Claw.ADDinventory(player.inventory);
                                                      player.stats[0] = MAX_HEALTH;
                                                      player.skill.recharge();
+                                                     int gain = rand.nextInt(25) + 15;
+                                                     player.gainExp(gain);
                                                      break OUTER;
                                                  }
                                                  System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -1660,6 +1683,8 @@ public class HOD_GAME {
                                                      player.inventory = Giant_Claw.ADDinventory(player.inventory);
                                                      player.stats[0] = MAX_HEALTH;
                                                      player.skill.recharge();
+                                                     int gain = rand.nextInt(25) + 15;
+                                                     player.gainExp(gain);
                                                      break OUTER;
                                                  }
                                              }
@@ -1756,6 +1781,8 @@ public class HOD_GAME {
                                                              player.inventory = Giant_Claw.ADDinventory(player.inventory);
                                                              player.stats[0] = MAX_HEALTH;
                                                              player.skill.recharge();
+                                                             int gain = rand.nextInt(25) + 15;
+                                                             player.gainExp(gain);
                                                              break OUTER;
                                                          }
                                                          System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -1794,6 +1821,8 @@ public class HOD_GAME {
                                                              player.inventory = Giant_Claw.ADDinventory(player.inventory);
                                                              player.stats[0] = MAX_HEALTH;
                                                              player.skill.recharge();
+                                                             int gain = rand.nextInt(25) + 15;
+                                                             player.gainExp(gain);
                                                              break OUTER;
                                                          }
                                                      }
@@ -1984,6 +2013,8 @@ public class HOD_GAME {
                                                  a2_enemy.newEnemy2(player.getDiffNum());
                                                  player.stats[0] = MAX_HEALTH;
                                                  player.skill.recharge();
+                                                 int gain = rand.nextInt(30) + 20;
+                                                 player.gainExp(gain);
                                                  break OUTER;
                                              }
                                              System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -2020,6 +2051,8 @@ public class HOD_GAME {
                                                  a2_enemy.newEnemy2(player.getDiffNum());
                                                  player.stats[0] = MAX_HEALTH;
                                                  player.skill.recharge();
+                                                 int gain = rand.nextInt(30) + 20;
+                                                 player.gainExp(gain);
                                                  break OUTER;
                                              }
                                          }
@@ -2114,6 +2147,8 @@ public class HOD_GAME {
                                                          a2_enemy.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
+                                                         int gain = rand.nextInt(30) + 20;
+                                                         player.gainExp(gain);
                                                          break OUTER;
                                                      }
                                                      System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -2150,6 +2185,8 @@ public class HOD_GAME {
                                                          a2_enemy.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
+                                                         int gain = rand.nextInt(30) + 20;
+                                                         player.gainExp(gain);  
                                                          break OUTER;
                                                      }
                                                  }
@@ -2387,6 +2424,8 @@ public class HOD_GAME {
                                                  bigBoi.enemyStats[1] = 100;
                                                  player.stats[0] = MAX_HEALTH;
                                                  player.skill.recharge();
+                                                 int gain = player.maxExp;
+                                                 player.gainExp(gain);
                                                  break OUTER;
                                              }
                                              System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -2423,6 +2462,8 @@ public class HOD_GAME {
                                                  bigBoi.enemyStats[1] = 100;
                                                  player.stats[0] = MAX_HEALTH;
                                                  player.skill.recharge();
+                                                 int gain = player.maxExp;
+                                                 player.gainExp(gain);
                                                  break OUTER;
                                              }
                                          }
@@ -2517,6 +2558,8 @@ public class HOD_GAME {
                                                          bigBoi.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
+                                                         int gain = player.maxExp;
+                                                         player.gainExp(gain);
                                                          break OUTER;
                                                      }
                                                      System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -2553,6 +2596,8 @@ public class HOD_GAME {
                                                          bigBoi.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
+                                                         int gain = player.maxExp;
+                                                         player.gainExp(gain);
                                                          break OUTER;
                                                      }
                                                  }
@@ -3040,6 +3085,8 @@ public class HOD_GAME {
                                                      player.inventory = SOTV.ADDinventory(player.inventory);
                                                      player.stats[0] = MAX_HEALTH;
                                                      player.skill.recharge();
+                                                     int gain = rand.nextInt(35) + 25;
+                                                     player.gainExp(gain);
                                                      break OUTER;
                                                  }
                                                  System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -3077,6 +3124,8 @@ public class HOD_GAME {
                                                      player.inventory = SOTV.ADDinventory(player.inventory);
                                                      player.stats[0] = MAX_HEALTH;
                                                      player.skill.recharge();
+                                                     int gain = rand.nextInt(35) + 25;
+                                                     player.gainExp(gain);
                                                      break OUTER;
                                                  }
                                              }
@@ -3172,6 +3221,8 @@ public class HOD_GAME {
                                                              player.inventory = SOTV.ADDinventory(player.inventory);
                                                              player.stats[0] = MAX_HEALTH;
                                                              player.skill.recharge();
+                                                             int gain = rand.nextInt(35) + 25;
+                                                             player.gainExp(gain);
                                                              break OUTER;
                                                          }
                                                          System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -3209,6 +3260,8 @@ public class HOD_GAME {
                                                              player.inventory = SOTV.ADDinventory(player.inventory);
                                                              player.stats[0] = MAX_HEALTH;
                                                              player.skill.recharge();
+                                                             int gain = rand.nextInt(35) + 25;
+                                                             player.gainExp(gain);
                                                              break OUTER;
                                                          }
                                                      }
@@ -3394,6 +3447,8 @@ public class HOD_GAME {
                                                  a3_enemy.newEnemy3(player.getDiffNum());
                                                  player.stats[0] = MAX_HEALTH;
                                                  player.skill.recharge();
+                                                 int gain = rand.nextInt(40) + 25;
+                                                 player.gainExp(gain);
                                                  break OUTER;
                                              }
                                              System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -3428,6 +3483,8 @@ public class HOD_GAME {
                                                  a3_enemy.newEnemy3(player.getDiffNum());
                                                  player.stats[0] = MAX_HEALTH;
                                                  player.skill.recharge();
+                                                 int gain = rand.nextInt(40) + 25;
+                                                 player.gainExp(gain);
                                                  break OUTER;
                                              }
                                          }
@@ -3520,6 +3577,8 @@ public class HOD_GAME {
                                                          a3_enemy.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
+                                                         int gain = rand.nextInt(40) + 25;
+                                                         player.gainExp(gain);
                                                          break OUTER;
                                                      }
                                                      System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -3554,6 +3613,8 @@ public class HOD_GAME {
                                                          a3_enemy.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
+                                                         int gain = rand.nextInt(40) + 25;
+                                                         player.gainExp(gain);
                                                          break OUTER;
                                                      }
                                                  }
@@ -3791,6 +3852,8 @@ public class HOD_GAME {
                                                  bigBoi.enemyStats[1] = 100;
                                                  player.stats[0] = MAX_HEALTH;
                                                  player.skill.recharge();
+                                                 int gain = player.maxExp;
+                                                 player.gainExp(gain);
                                                  break OUTER;
                                              }
                                              System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -3825,6 +3888,8 @@ public class HOD_GAME {
                                                  bigBoi.enemyStats[1] = 100;
                                                  player.stats[0] = MAX_HEALTH;
                                                  player.skill.recharge();
+                                                 int gain = player.maxExp;
+                                                 player.gainExp(gain);
                                                  break OUTER;
                                              }
                                          }
@@ -3913,10 +3978,12 @@ public class HOD_GAME {
                                                      bigBoi.enemyStats[1] -= dmgDealt;
                                                      if (bigBoi.enemyStats[1]<0) {
                                                          System.out.println("ENEMY DEFEATED!!!");
-                                                         System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                         System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
                                                          bigBoi.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
+                                                         int gain = player.maxExp;
+                                                         player.gainExp(gain);
                                                          break OUTER;
                                                      }
                                                      System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -3947,10 +4014,12 @@ public class HOD_GAME {
                                                      bigBoi.enemyStats[1] -= dmgDealt;
                                                      if (bigBoi.enemyStats[1]<0) {
                                                          System.out.println("ENEMY DEFEATED!!!");
-                                                         System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                         System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
                                                          bigBoi.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
+                                                         int gain = player.maxExp;
+                                                         player.gainExp(gain);
                                                          break OUTER;
                                                      }
                                                  }
@@ -4429,6 +4498,8 @@ public class HOD_GAME {
                                                  a4_enemy.newEnemy4(player.getDiffNum());
                                                  player.stats[0] = MAX_HEALTH;
                                                  player.skill.recharge();
+                                                 int gain = rand.nextInt(40) + 35;
+                                                 player.gainExp(gain);
                                                  break OUTER;
                                              }
                                              System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -4461,6 +4532,8 @@ public class HOD_GAME {
                                                  a4_enemy.newEnemy4(player.getDiffNum());
                                                  player.stats[0] = MAX_HEALTH;
                                                  player.skill.recharge();
+                                                 int gain = rand.nextInt(40) + 35;
+                                                 player.gainExp(gain);
                                                  break OUTER;
                                              }
                                          }
@@ -4551,6 +4624,8 @@ public class HOD_GAME {
                                                          a4_enemy.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
+                                                         int gain = rand.nextInt(40) + 35;
+                                                         player.gainExp(gain);
                                                          break OUTER;
                                                      }
                                                      System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -4583,6 +4658,8 @@ public class HOD_GAME {
                                                          a4_enemy.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
+                                                         int gain = rand.nextInt(40) + 35;
+                                                         player.gainExp(gain);
                                                          break OUTER;
                                                      }
                                                  }
@@ -4820,6 +4897,8 @@ public class HOD_GAME {
                                                  bigBoi.enemyStats[1] = 100;
                                                  player.stats[0] = MAX_HEALTH;
                                                  player.skill.recharge();
+                                                 int gain = player.maxExp;
+                                                 player.gainExp(gain);
                                                  break OUTER;
                                              }
                                              System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -4852,6 +4931,8 @@ public class HOD_GAME {
                                                  bigBoi.enemyStats[1] = 100;
                                                  player.stats[0] = MAX_HEALTH;
                                                  player.skill.recharge();
+                                                 int gain = player.maxExp;
+                                                 player.gainExp(gain);
                                                  break OUTER;
                                              }
                                          }
@@ -4938,10 +5019,12 @@ public class HOD_GAME {
                                                      bigBoi.enemyStats[1] -= dmgDealt;
                                                      if (bigBoi.enemyStats[1]<0) {
                                                          System.out.println("ENEMY DEFEATED!!!");
-                                                         System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                         System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
                                                          bigBoi.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
+                                                         int gain = player.maxExp;
+                                                         player.gainExp(gain);
                                                          break OUTER;
                                                      }
                                                      System.out.println("The enemy does " + EdmgDealt + " damage back at you!");
@@ -4970,10 +5053,12 @@ public class HOD_GAME {
                                                      bigBoi.enemyStats[1] -= dmgDealt;
                                                      if (bigBoi.enemyStats[1]<0) {
                                                          System.out.println("ENEMY DEFEATED!!!");
-                                                         System.out.println("\n\n----------------------------ENEMY HAS BEEN Y E E T E D----------------------------\n\n");
+                                                         System.out.println("\n\n----------------------------BOSS HAS BEEN Y E E T E D----------------------------\n\n");
                                                          bigBoi.newEnemy(player.getDiffNum());
                                                          player.stats[0] = MAX_HEALTH;
                                                          player.skill.recharge();
+                                                         int gain = player.maxExp;
+                                                         player.gainExp(gain);
                                                          break OUTER;
                                                      }
                                                  }
