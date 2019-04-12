@@ -1,14 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author Adrian
- */
-
 package hod_game;
 
 
@@ -425,45 +414,54 @@ public class Character<E> {
            System.out.println("5 = Wisdom");
            System.out.println("6 = Charisma");
            
-           int statPoint = sc.nextInt() ;
-           switch (statPoint){
-           case 1:
-            str = str + 3;
-            System.out.println("3 points has been added to your strength");
-            break;
-            
-           case 2:
-            dex = dex + 3;
-            System.out.println("3 points have been added to your dexterity");
-            break;
-            
-            case 3:
-            con = con + 3;
-            System.out.println("3 points have been added to your constitution");
-            break;
-            
-            case 4:
-            intel = intel + 3;
-            System.out.println("3 points have been added to your intelligence");
-            break;
-            
-            case 5:
-            wis = wis + 3;
-            System.out.println("3 points have been added to your wisdom");
-            break;
-            
-            case 6:
-            cha = cha + 3;
-            System.out.println("3 points have been added to your charisma");
-            break;
-            
-            default:
-                System.out.println("Choose a stat please");
-           
-           }
+           String statPoint;
+          while(true)
+          {
+              statPoint = sc.nextLine();
+              if(statPoint.equals("1"))
+              {
+                  this.stats[1] += 3;
+                  System.out.println("\n\tYou can feel your muscles growing muscles");
+                  break;
+              }
+              if(statPoint.equals("2"))
+              {
+                  this.stats[2] += 3;
+                  System.out.println("\n\tYou become more of a speedy boi, speeding past all the other bois");
+                  break;
+              }
+              if(statPoint.equals("3"))
+              {
+                  this.stats[3] += 3;
+                  System.out.println("\n\tI'm sure you deeeeefinitely wont regret this decision");
+                  break;
+              }
+              if(statPoint.equals("4"))
+              {
+                  this.stats[4] += 3;
+                  System.out.println("\n\t9000000000000000000IQ");
+                  break;
+              }
+              if(statPoint.equals("5"))
+              {
+                  this.stats[5] += 3;
+                  System.out.println("\n\tLooL you actually leveled this, what a loser");
+                  break;
+              }
+              if(statPoint.equals("6"))
+              {
+                  this.stats[6] += 3;
+                  System.out.println("\n\tYou can level this as much as you'd like, you're still ugly");
+                  break;
+              }
+              else
+              {
+                  System.out.println("\n\tPlease type a number between 1-6");
+              }
+          }
           this.exp = exp - maxExp;
             this.lvl++;
-            this.stats = new int[]{health, str, dex, con, intel, wis, cha};
+            //this.stats = new int[]{health, str, dex, con, intel, wis, cha};
                 
         }        
             

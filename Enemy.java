@@ -361,7 +361,7 @@ public class Enemy
                    choice = scan.nextLine();
                    if(choice.equals("1"))
                    {
-                       if(rand.nextInt(pCHA)>7)
+                       if(rand.nextInt(pCHA)>7) /////////////////////ERROR//////////////////
                         {
                             System.out.println("\n\tYou were able to calm down the girls! That was weird.");
                         }
@@ -376,6 +376,7 @@ public class Enemy
                    {
                        Bdmg = ((rand.nextInt(eSTR) + (eSTR/2))*3);
                        System.out.println("\n\tWow, that's rude. They simply dismiss your attack as it appears that they were charging a powerful spell this whole time!  You took " + Bdmg + " damage!");
+                       break;
                    }
                    else
                        System.out.println("\n\tPlease choose a valid option!");
@@ -390,7 +391,7 @@ public class Enemy
                    if(choice.equals("1"))
                    {
                        Bdmg = ((rand.nextInt(eSTR) + (eSTR/2))*3) - pSTR - pCON;
-                       System.out.println("\n\tYou have enough time to take a defensive stance and shield yourself from a powerful blow from their now huge fist, but still take " + Bdmg + " damage! They fall back out into individual girls after they hit you.");
+                       System.out.println("\n\tYou have enough time to take a defensive stance and shield yourself from a powerful blow from their now huge fist,\n\t but still take " + Bdmg + " damage! They fall back out into individual girls after they hit you.");
                        break;
                    }
                    else if(choice.equals("2"))
@@ -400,13 +401,16 @@ public class Enemy
                        }
                        else{
                            Bdmg = ((rand.nextInt(eSTR) + (eSTR/2))*3);
-                           System.out.println("\n\tYou aren't quick enough to stop them from transforming! They kick you away as hard as they can in their enlargened state before returning to their original individual children selves. You took " + Bdmg + " damage!");
+                           System.out.println("\n\tYou aren't quick enough to stop them from transforming! They kick you away as hard as they can in their enlargened\n\t state before returning to their original individual children selves. You took " + Bdmg + " damage!");
                        }
+                       break;
                    }
                    else if(choice.equals("3"))
                    {
                        Bdmg = ((rand.nextInt(eSTR) + (eSTR/2))*4);
-                       System.out.println("\n\tThat's really mean, they're just trying to live their abnormal lives you meanie! Once they fully transform, they see how you're looking at them and scream at you! They bring their now mighty fist down for one attack before all falling out back into their original formation. You took " + Bdmg + " damage!");
+                       System.out.println("\n\tThat's really mean, they're just trying to live their abnormal lives you meanie! Once they fully transform, they see how you're looking at them and scream at you!"
+                               + "\n\t They bring their now mighty fist down for one attack before all falling out back into their original formation. You took " + Bdmg + " damage!");
+                       break;
                    }
                    else
                        System.out.println("\n\tPlease choose a valid option!");
@@ -416,7 +420,7 @@ public class Enemy
        return Bdmg;
    }
    
-   public int[] bossFourSkills(int skillUse, int[] pSTATS, int[] eSTATS, String pNAME, boolean TNR)
+   public int[] bossFourSkills(int skillUse, int[] pSTATS, int[] eSTATS, boolean TNR)
    {
        int[] newPSTATS = new int[pSTATS.length];
        System.arraycopy(pSTATS, 0, newPSTATS, 0, newPSTATS.length);

@@ -1,3 +1,4 @@
+
 package hod_game;
 
 import java.util.Random;
@@ -43,7 +44,7 @@ public class Area<E>
    public void addNode(int data)
    {
        this.forelink = new Area(data, this.forelink, this);
-       System.out.println("Data: " + data);
+       //System.out.println("Data: " + data);
    }
    
    public void ensureBoss()
@@ -62,7 +63,7 @@ public class Area<E>
         int answer = 0;
         for(cursor = head; cursor!=null; cursor = cursor.getForeLink())
             answer++;
-        System.out.println(answer);      //LENGTH OF AREA
+        //System.out.println(answer);      //LENGTH OF AREA
         return answer;
     }
    
@@ -116,35 +117,31 @@ public class Area<E>
                System.out.println("\n\n\tYou enter the room and find this very delactable looking bag on the floor that looks like it contains something amazing"
                        + "\n\tWhat do you do? 1. open   2. leave it be   (type 1  or  2)");
                String decision;
-               while(true)
-               {
-                   decision = scan.nextLine();
-                   if(decision.equals("1"))
-                   {
-                       int random = rand.nextInt(2);
-                       if(random == 0)
-                       {
+       OUTER:
+       while (true) {
+           decision = scan.nextLine();
+           switch (decision) {
+               case "1":
+                   int random = rand.nextInt(2);
+                   if (random == 0) {
                        System.out.println("\n\tWell whataya know... It contained a potion!\n\tYou've gained DEX_Boost Potion!");
                        value = 1113;
-                       break;
-                       }
-                       else if(random == 1)
-                       {
-                          value = rand.nextInt(26);
-                          System.out.println("\n\n\tUpon opening the bag, a bunch of tiny explosions flood out of the bag like a sparkler!"
-                                  + "\n\t You take " + value + " Damage!    and hear laughter out in the distance");
-                          break;
-                       }
+                       break OUTER;
+                   } else if (random == 1) {
+                       value = rand.nextInt(26);
+                       System.out.println("\n\n\tUpon opening the bag, a bunch of tiny explosions flood out of the bag like a sparkler!"
+                               + "\n\t You take " + value + " Damage!    and hear laughter out in the distance");
+                       break OUTER;
                    }
-                   else if(decision.equals("2"))
-                   {
-                       System.out.println("\n\n\tFine... suit yourself. It was a nice looking bag though");
-                       break;
-                   }
-                   else
-                       System.out.println("type either 1 or 2 for your decision");
-                   
-               }
+                   break;
+               case "2":
+                   System.out.println("\n\n\tFine... suit yourself. It was a nice looking bag though");
+                   break OUTER;
+               default:
+                   System.out.println("type either 1 or 2 for your decision");
+                   break;
+           }
+       }
                break;
        }
        return value;
@@ -162,7 +159,8 @@ public class Area<E>
                         break;
            case 1://value can be 0-50
                System.out.println("\n\n\tYou've rustled your ways through trees and such, when all a sudden a massive snake falls right on top of you!");
-               if(rand.nextInt(pInt) > 7)
+               
+               if(rand.nextInt(pInt) > 7) //////////////////////ERROR////////////////////
                {
                    System.out.println("\tYou were smart enough what to do in this situation, so you were able to get out of it safely");
                }
@@ -172,6 +170,7 @@ public class Area<E>
                    System.out.println("\tYou were not smart enough what to do in this situation, casuing the snake to bite! You have taken " + value + " damage!");
                }        
                break;
+               
            case 2://value can be 2221 or 2222: 2221 - sub 3 from all stats,  2222 - add 3 to all stats
                System.out.println("\n\n\tYou find yourself in an open area, with a forest spirit of some sort floating above a small lake. She motions you to confront her"
                        + "\n\t\"Traveler lost in the woods... how did you even end up in these woods... Who are you? And why are you here? (she wants to know your name)");
@@ -197,38 +196,37 @@ public class Area<E>
                        + "and it's tearing you apart. \n\tWhat do you do?   1. eat the berries     2. leave them be and continue on   (type 1 or 2 for decision)");
                
                String decision;
-               while (true)
-               {
-                   decision = scan.nextLine();
-                   if(decision.equals("1"))
+       OUTER:
+       while (true) {
+           decision = scan.nextLine();
+           switch (decision) {
+               case "1":
+                   int random = rand.nextInt(2);
+                   if(random == 0)
                    {
-                       int random = rand.nextInt(2);
-                       if(random == 0)
-                       {
-                           System.out.println("\n\n\tYou say crew it and devour them all. You have satisified your hunger, but not only that, you feel like"
-                                   + "\n\tyou've gained a surge of knowledge, almost like... a bunch of memories. \n\t Your Intelligence grew!");
-                           value = 2223;
-                       }
-                       else if(random == 1)
-                       {
-                          System.out.println("\n\n\tYou say screw it and devour them all. You have satisified your hunger, but not only that, you feel like"
-                                   + "\n\tyou've gained a surge of knowledge, almost like... a bunch of memories. \n\t Your Intelligence grew!"
-                                  + "\n\n\tHowever, all a sudden, you hear a loud shrieking noise above you. You look and see this gigantic creature, shrieking at you"
-                                  + "\n\twith an intent to kill you. You question to yourself \"I... prooooobably ate its children\" (you did :/ )");
-                          value = 2224;
-                       }
-                       break;
+                       System.out.println("\n\n\tYou say crew it and devour them all. You have satisified your hunger, but not only that, you feel like"
+                               + "\n\tyou've gained a surge of knowledge, almost like... a bunch of memories. \n\t Your Intelligence grew!");
+                       value = 2223;
                    }
-                   else if(decision.equals("2"))
+                   else if(random == 1)
                    {
-                       System.out.println("\n\n\tYou decide it's probably best to not eat unknown berries. Nonetheless though, you are drained by starvation"
-                               + "\n\tYour HP and Strength have been drained!");
-                       value = 2225;
-                       break;
+                       System.out.println("\n\n\tYou say screw it and devour them all. You have satisified your hunger, but not only that, you feel like"
+                               + "\n\tyou've gained a surge of knowledge, almost like... a bunch of memories. \n\t Your Intelligence grew!"
+                               + "\n\n\tHowever, all a sudden, you hear a loud shrieking noise above you. You look and see this gigantic creature, shrieking at you"
+                               + "\n\twith an intent to kill you. You question to yourself \"I... prooooobably ate its children\" (you did :/ )");
+                       value = 2224;
                    }
-                   else 
-                       System.out.println("type either 1 or 2 for your decision");
-               }
+                   break OUTER;
+               case "2":
+                   System.out.println("\n\n\tYou decide it's probably best to not eat unknown berries. Nonetheless though, you are drained by starvation"
+                           + "\n\tYour HP and Strength have been drained!");
+                   value = 2225;
+                   break OUTER;
+               default:
+                   System.out.println("type either 1 or 2 for your decision");
+                   break;
+           }
+       }
                
                break;
        }
@@ -279,25 +277,24 @@ public class Area<E>
                System.out.println("\n\n\tYou encounter a wicked looking alter with a little portal like object in it's center. \n\tYou sense terrible evil coming from "
                        + "/n/tthe portal, and can faintly hear screaming coming from it. \n\tWhat will you do? 1. LooL go inside   2. that ain't happening (type 1 or 2)");
                String decision;
-               while(true)
-               {
-                   decision = scan.nextLine();
-                   if(decision.equals("1"))
-                   {
-                       System.out.println("\n\n\tFor some profound reason, you're like \"yeet\" then swan dived right into the portal."
-                               + "\n\tyou fall a decent height, land, then end up in this... void of some sort. Everything is black, all around. Then all a sudden, a great flash"
-                               + "\n\tappears off in the distance, and a unholy shriek is heard followed by loud stomping heading your way!\n\n\t\"well... imma die\"\n\n");
-                       value = 3332;
-                       break;
-                   }
-                   else if(decision.equals("2"))
-                   {
-                       System.out.println("You, a sane person ,decide you shouldn't yeet right on into a hellish portal, and move on");
-                       break;
-                   }
-                   else
-                       System.out.println("type either 1 or 2 for your decision");
-               }
+       OUTER:
+       while (true) {
+           decision = scan.nextLine();
+           switch (decision) {
+               case "1":
+                   System.out.println("\n\n\tFor some profound reason, you're like \"yeet\" then swan dived right into the portal."
+                           + "\n\tyou fall a decent height, land, then end up in this... void of some sort. Everything is black, all around. Then all a sudden, a great flash"
+                           + "\n\tappears off in the distance, and a unholy shriek is heard followed by loud stomping heading your way!\n\n\t\"well... imma die\"\n\n");
+                   value = 3332;
+                   break OUTER;
+               case "2":
+                   System.out.println("You, a sane person ,decide you shouldn't yeet right on into a hellish portal, and move on");
+                   break OUTER;
+               default:
+                   System.out.println("type either 1 or 2 for your decision");
+                   break;
+           }
+       }
                break;
        }
        return value;
@@ -315,33 +312,32 @@ public class Area<E>
                int evade = rand.nextInt(pDEX);
                System.out.println("\n\n\tThe rediculous figure's eyes glow red off in the distance. Suddenly, a massive bolt comes your way!"
                        + "\n\n\tDo you:   1. Shield yourself from the bolt(take some damage)     2. take a huge risk and try evading it(take all or no damage)"
-                       + "\n\t(type 1 or 2 for decision");
+                       + "\n\t(type 1 or 2 for decision)");
                String decision;
-               while(true)
-               {
-                   decision = scan.nextLine();
-                   if(decision.equals("1"))
+       OUTER:
+       while (true) {
+           decision = scan.nextLine();
+           switch (decision) {
+               case "1":
+                   value = bolt - pSTR - pCON;
+                   System.out.println("\n\tYou shield yourself from the bolt, but take " + value + " damage!");
+                   break OUTER;
+               case "2":
+                   if(evade > 10)
                    {
-                       value = bolt - pSTR - pCON;
-                       System.out.println("\n\tYou shield yourself from the bolt, but take " + value + " damage!");
-                       break;
+                       System.out.println("\n\n\tYou've managed to dodge the bolt! nice");
                    }
-                   else if(decision.equals("2"))
+                   else if(evade<10)
                    {
-                      if(rand.nextInt(evade) > 10)
-                      {
-                          System.out.println("\n\n\tYou've managed to dodge the bolt! nice");
-                      }
-                      else if(evade<10)
-                      {
-                          System.out.println("\n\n\tYou failed to dodge the bolt and took all of it's power! \nYou took " + bolt + " damage!");
-                          value = bolt;
-                      }
-                       break;
+                       System.out.println("\n\n\tYou failed to dodge the bolt and took all of it's power! \nYou took " + bolt + " damage!");
+                       value = bolt;
                    }
-                   else
-                       System.out.println("please type either 1 or 2");
-               }
+                   break OUTER;
+               default:
+                   System.out.println("please type either 1 or 2");
+                   break;
+           }
+       }
                
                         break;
            case 1://value can be 0 or 999999999 LooL
