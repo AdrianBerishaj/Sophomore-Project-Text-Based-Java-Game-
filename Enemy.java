@@ -1,6 +1,7 @@
 package hod_game;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class Enemy  
 {
@@ -10,6 +11,7 @@ public class Enemy
     String enemyType4[] = {"(high tier) Mage", "(not so good) Angel", "Gigantic Fist boi"};
     int lvl, enemyHealth, enemyatt, damageDealt, str, dex, con, intel, wis, cha; ;
     Random rand = new Random();
+    Scanner scan = new Scanner(System.in);
     int[] enemyStats;
     int difficulty;
     public Enemy(int Elvl, int Ehealth, int Estr, int Edex, int Econ, int Eintel, int Ewis, int Echa)
@@ -232,24 +234,75 @@ public class Enemy
         }
    }
    
-   public void bossOneSkills()
+   public int bossOneSkills(int skillUse, int pDEX, int pSTR, int pCON, int eSTR)
    {
-       
+       int Bdmg = 0;
+       String choice;
+       switch (skillUse)
+       {
+           case 0:
+               System.out.println("\n\tBig Boi enrages himself and charges straight toward you!");
+               if(rand.nextInt(pDEX)>7)
+               {
+                   System.out.println("\n\tYou managed to dodge his charge attack!");
+               }
+               else
+               {
+                   Bdmg = rand.nextInt(eSTR) + (eSTR/2);
+                   System.out.println("\n\tBig Boi slams you and knocks you down! You took " + Bdmg + " damage!");
+               }
+               break;
+           case 1:
+               System.out.println("\n\tBig Boi looks like he's going for a powerful swing, looks risky to try dodging, but the choice is yours.\n\n\t"
+                       + "Do you   1. Shield yourself from the attack    2. Take a risk and try dodging    (type 1 or 2 for decision)");
+               while(true)
+               {
+                   choice = scan.nextLine();
+                   if(choice.equals("1"))
+                   {
+                       Bdmg = ((rand.nextInt(eSTR) + (eSTR/2))*3) - pSTR - pCON;
+                       System.out.println("\n\tYou shield youself from his powerful blow, but still take " + Bdmg + " damage!");
+                       break;
+                   }
+                   else if(choice.equals("2"))
+                   {
+                       if(rand.nextInt(pDEX)>7)
+                        {
+                            System.out.println("\n\tYou managed to dodge his charge attack!");
+                        }
+                       else
+                       {
+                           Bdmg = ((rand.nextInt(eSTR) + (eSTR/2))*3);
+                           System.out.println("\n\tYou couldn't dodge his attack! You took " + Bdmg + " damage!");
+                       }
+                       break;
+                   }
+               }
+               break;
+       }
+       return Bdmg;
    }
    
-   public void bossTwoSkills()
+   public int bossTwoSkills()
    {
+       int Bdmg = 0;
        
+       return Bdmg;
    }
    
-   public void bossThreeSkills()
+   public int bossThreeSkills()
    {
+       int Bdmg = 0;
        
+       
+       return Bdmg;
    }
    
-   public void bossFourSkills()
+   public int bossFourSkills()
    {
+       int Bdmg = 0;
        
+       return Bdmg;
    }
    
 }
